@@ -22,7 +22,7 @@ Cieľovou skupinou sú milovníci nostalgie a starí hráči Mravencov ako aj no
 
 #### Fázy aplikácie
   - **Úvodná prihlasovacia obrazovka** Používateľ sa môže registrovať či prihlásiť.
-  - **Game lobby** Hráč vidí svoje rozohraté korešpondenčné partie, rebríček top hráčov a svoje achievementy či informácie o poslednej dokončenej partií.
+  - **Game lobby** Hráč vidí svoje rozohraté korešpondenčné partie, rebríček top hráčov a svoje achievementy či informácie o poslednej dokončenej partií. Môže tiež iniciovať novú hru.
   - **Hracia obrazovka** Spoločná pre každý mód aj druh hry. Tu hráč vykonáva svoje ťahy. Rozhranie bude pravdepodobne rovnaké ako v pôvodných mravencoch, s tým rozdielom, že grafika bude lepšia.
 
 Skóre bude implementované pravdepodobne systémom +2 za výhru, +1 za remízu a -1 za prehru. Samotná logika hry vrátane sady kariet bude rovnaká ako v originálnych Mravencoch.
@@ -64,7 +64,7 @@ Skóre bude implementované pravdepodobne systémom +2 za výhru, +1 za remízu 
   - 50 prehier
   - 100 prehier
   - Hráč dostal kliadbu
-  - Hráč dostalsmrtku
+  - Hráč dostal smrtku
   - 50 zbraní naraz v jednej hre
   - Prvý korešpondenčný duel
   - Výhra z hradu pod 20
@@ -81,26 +81,27 @@ Skóre bude implementované pravdepodobne systémom +2 za výhru, +1 za remízu 
 ![EntityRelation](img/ER.png)
 
 Tabuľka userov spolu so skóre a záležitosťami pre matchmaking.
-Tabuľka achievementov a tabuľka many to many user-achievement.
+
+Tabuľka achievementov a tabuľka many to many users_achievements.
+
 Tabuľka zápasov - či je zápas korešpondenčný, aktuálny stav hry, kto je na ťahu a pod.
-Tabuľka kariet - karta, jej vzácnosť a vlastnosti. umožňuje jednoducho meniť balíčky bez väčších zmien kódu
 
-
+Tabuľka kariet - karta, jej vzácnosť a vlastnosti. Umožňuje jednoducho meniť balíčky bez väčších zmien kódu
 
 ## Použité technológie
 
-Pr vývoji aplikácie plánujem využiť framework React (asi v16.2.0 - zdá sa mi vhodný, pretože grafická stránka hry nie je tak náročná, aby vyžadovala sofistikované používanie canvasu) pre klientskú časť a NodeJS(v8.11.0) s relačnou DB podľa výberu v podľa možnosti najnovšej stabilnej verzii pre server. Komunikácia bude prostredníctvom AJAXu. (S NodeJS ani s Reactom som ešte nerobil, tak v prípade problémov skúsim pre server ako náhradu Python s Flaskom alebo v najhoršom PHP )
+Pri vývoji aplikácie plánujem využiť framework React (asi v16.2.0 - zdá sa mi vhodný, pretože grafická stránka hry nie je tak náročná, aby vyžadovala sofistikované používanie canvasu) pre klientskú časť a NodeJS(v8.11.0) s relačnou DB podľa výberu v podľa možnosti najnovšej stabilnej verzii pre server. Komunikácia bude prostredníctvom AJAXu. (S NodeJS ani s Reactom som ešte nerobil, tak v prípade problémov skúsim pre server ako náhradu Python s Flaskom alebo v najhoršom PHP )
 
 Z prehliadačov plánujem podporovať najmä nové verzie Firefoxu a Chromu.
 
 ## Časový plán
 
-  - cca. do *3.4.* rozbehať všetky komponenty
+  - cca. do *3.4.* spustiť všetky potrebné komponenty
   - cca do *15.4.* implementovať základnú logiku hry, komunikáciu so serverom
   - cca fo *14.5.* doladiť grafiku, zvuky, gameplay a pod.
 
 ## Možné rozšírenia
 
-Podobne ako rôzne iné hry založené na Arcomage, je možné pridaním dodatkov do samotnej hernej logiky zvýšiť náročnosť a komplexnosť hry. Tieto dodatky sú vo forme pridania kariet do hracieho balíčka, pričom karty sú rôznym spôsobom kombinovateľné, obsahujú conditions (efekt karty závisí od predch. hracej karty či herného stavu) a pod. Taktiež je možné pridať nové herné staty či zmeniť výherné kritériá.
+Podobne ako v rôznych iných hrách založených na Arcomage je možné pridaním dodatkov do samotnej hernej logiky zvýšiť náročnosť a komplexnosť hry. Tieto dodatky sú vo forme pridania kariet do hracieho balíčka, pričom karty sú rôznym spôsobom kombinovateľné, obsahujú conditions (efekt karty závisí od predch. hracej karty či herného stavu) a pod. Taktiež je možné pridať nové herné staty či zmeniť výherné kritériá.
 
-V záujme motivovania hráčov je možné pridať ďalšie achievementy. Taktiež je možné zlepšiť správanie systému, keď je nedostatok hráčov online. V prípade, že nejaký hráč čaká na oponenta určitý čas a stále nie je možné mu niekoho prideliť, mohol by mu server prideliť AI oponenta. Rebríčky by mohli byť implementované pomocou ELO systému a rozdelené podľa lokalizácie hráča.
+V záujme motivovania hráčov je možné pridať ďalšie achievementy. Taktiež je možné zlepšiť správanie systému, keď je nedostatok hráčov online. V prípade, že nejaký hráč čaká na oponenta určitý čas a stále nie je možné mu niekoho prideliť, mohol by mu server prideliť AI oponenta. Možnosťou je aj umožniť hráčom vyzývať sa navzájom, nie len pomocou náhodného pridelenia serverom. Rebríčky by mohli byť implementované pomocou ELO systému a rozdelené podľa lokalizácie hráča.
