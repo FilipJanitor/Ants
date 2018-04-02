@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/FilipJanitor/Ants/issues"
   },
-  "homepage": "https://github.com/FilipJanitor/Ants#readme"
+  "homepage": "https://github.com/FilipJanitor/Ants#readme",
+  "dependencies": {
+    "mysql": "^2.15.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "webpack": "^4.4.1"
+  }
 }
