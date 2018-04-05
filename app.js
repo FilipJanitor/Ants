@@ -1,8 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
 const bcrypt = require('bcryptjs');
-const schemaValidator = require('ajv');
+const { Validator, ValidationError } = require('express-json-validator-middleware');
 const bodyParser = require('body-parser')
+const validator = new Validator({allErrors: true});
+const validate = validator.validate;
 const app = express();
 
 if(process.argv.length != 3){
@@ -32,4 +34,5 @@ db.connect((err) => {
     }
 });
 
-app.use(bodyParser.json());
+//sample usage
+//app.post('/route',validate({requestProperty: schemaToUse}), bodyParser.json(), function(req,res){res.send()});
