@@ -66,10 +66,14 @@ app.post('/login',validate({body: loginSchema}), bodyParser.json(), catchValidat
             return;
         }
         if(rows.length == 1){
-
+            res.send({result: true, token: rows.token, userId: rows.userId});
         } else {
             res.send({result: false, error: 'LoginError'});
         }
     });
 });
 
+app.use(function (req, res){
+    console.log("default sender");
+    res.sendFile(__dirname + '/public/index.html');
+})
