@@ -39,6 +39,17 @@ db.connect((err) => {
     }
 });
 
+// __________________schemas___________________________________________________
+const loginSchema = {
+    "type": "object",
+    "properties": {
+        "name":     {"type": "string"},
+        "password": {"type": "string"}
+    },
+    "required": ["name","password"]
+}
+
+
 //sample usage
 //app.post('/route',validate({requestProperty: schemaToUse}), bodyParser.json(), catchValidationErrors, function(req,res){res.send()});
 
