@@ -4,7 +4,8 @@ import App from "./App.js";
 import Login from "./Login.js";
 import Lobby from "./Lobby.js";
 import Game from "./Game.js";
-import { makeRouteConfig } from "found";
+import Register from "./Register.js"
+import { makeRouteConfig, createMatchEnhancer, Matcher } from "found";
 
 
 //ten router vlastne ani nebude potrebny
@@ -15,15 +16,19 @@ import { makeRouteConfig } from "found";
 //     </BrowserRouter>
 // );
 
-const routes = makeRouteConfig(
+const routeConfig = makeRouteConfig(
     <Route path="/" Component={App}>
         <Route Component={Login} />
+        <Route path="register" Component={Register} />
         <Route path="lobby" Component={Lobby} />
-        <Route path=":game" Component={Game} />
+        <Route path="game" Component={Game} />
     </Route>
 );
 
-export default Router;
+//otayka je, ci to chceme davat do historie
+export default createMatchEnhancer(new Matcher(routeConfig));
+//matcher je na spajanie pathov k veciam som pochopil
+
 
 // Component or getComponent
 
