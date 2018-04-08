@@ -3,7 +3,7 @@
 //dobry je react material design
 import createReactClass from  'create-react-class';
 import React from 'react'
-import { Link } from 'found';
+import { Link } from 'react-router-dom';
 
 var Button = createReactClass({
     render: function() {

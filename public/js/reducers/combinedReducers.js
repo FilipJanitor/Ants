@@ -1,9 +1,10 @@
-import { combineReducers, createStore, compose } from "redux";
-import { foundReducer, resolver, createConnectedRouter, createRender } from "found";
+import { combineReducers } from "redux";
 
-import loginReducer from "./loginReducer"
+import loginReducer from "./loginReducer.js";
 
-export default reducer = combineReducers({
-    login: loginReducer,
-    found: foundReducer //tento sluzi na zapamatanie URLky v stave a pouzivanie toho ako argumentu
+const reducer = combineReducers({
+    login: loginReducer
+    //found: foundReducer //tento sluzi na zapamatanie URLky v stave a pouzivanie toho ako argumentu
 })
+
+export default reducer;

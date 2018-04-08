@@ -88,3 +88,9 @@ app.use(function (req, res){
     console.log("default sender");
     res.sendFile(__dirname + '/public/index.html');
 })
+
+//works just like
+// app.get('/*', (req,res) => {
+//     console.log("default sender");
+//     res.sendFile(__dirname + '/public/index.html'); 
+// })
