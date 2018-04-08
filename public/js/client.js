@@ -7,7 +7,38 @@ import { foundReducer, resolver, createConnectedRouter, createRender } from "fou
 import router from "./router.js"
 
 
+import React from "react";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import App from "./App.js";
+import Login from "./Login.js";
+import Lobby from "./Lobby.js";
+import Game from "./Game.js";
+import Register from "./Register.js"
+import { makeRouteConfig, createMatchEnhancer, Matcher } from "found";
 
+
+//ten router vlastne ani nebude potrebny
+//toto je cargocult, nechapem na co to vlastne je
+// const Router = ( //na bookmarkovanie a historiu
+//     <BrowserRouter>
+//         <Route path="/" component={App} />
+//     </BrowserRouter>
+// );
+
+const routeConfig = makeRouteConfig(
+    <Route path="/" Component={App}>
+        <Route Component={Login} />
+        <Route path="register" Component={Register} />
+        <Route path="lobby" Component={Lobby} />
+        <Route path="game" Component={Game} />
+    </Route>
+);
+// combineReducers({
+//     login: loginReducer,
+//     found: foundReducer //tento sluzi na zapamatanie URLky v stave a pouzivanie toho ako argumentu
+// })
+
+const router = createMatchEnhancer(new Matcher(routeConfig));
 const enhancer = compose(router);
 const store = createStore(reducer,enhancer);
 
@@ -25,5 +56,5 @@ ReactDOM.render(
     <Provider store={store}>
         <ConnectedRouter matchContext={ store } resolver={ resolver } />
     </Provider>,
-    document.getElementById("MainComponent")
+    document.getElementById("GameWindow")
 ); //matchcontext je na urobenie storu available v getData metodach v routach - snad to budeme potrebovat

@@ -1,10 +1,11 @@
 //dekonstrukcia z this.props
 //zatial to nechavam bez stylov 
 //dobry je react material design
+import createReactClass from  'create-react-class';
 import React from 'react'
 import { Link } from 'found';
 
-var Button = React.createClass({
+var Button = createReactClass({
     render: function() {
         return (
             <button

@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect } from "react-redux"; //toto spaja redux state do propsov
 
 
 //hlavny komponent
