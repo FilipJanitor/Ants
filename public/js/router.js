@@ -25,7 +25,7 @@ const routeConfig = makeRouteConfig(
     </Route>
 );
 
-//otayka je, ci to chceme davat do historie
+//otazka je, ci to chceme davat do historie
 export default createMatchEnhancer(new Matcher(routeConfig));
 //matcher je na spajanie pathov k veciam som pochopil
 
