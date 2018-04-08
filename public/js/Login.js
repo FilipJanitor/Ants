@@ -2,6 +2,7 @@
 //zatial to nechavam bez stylov 
 //dobry je react material design
 import React from 'react'
+import { Link } from 'found';
 
 var Button = React.createClass({
     render: function() {
@@ -25,7 +26,7 @@ const Login = ({ user, dispatch}) => {
                 label="login"
                 onClick={() => attemptToLogin(dispatch, user.name, user.password) } 
             />
-
+            <button><Link to='/register'/></button>
         </div>
     )
 };

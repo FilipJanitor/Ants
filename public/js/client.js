@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import React from "react";
 import { Provider } from "react-redux";
 import { combineReducers, createStore, compose } from "redux";
 import { foundReducer, resolver, createConnectedRouter, createRender } from "found";
