@@ -33,14 +33,19 @@ const routeConfig = makeRouteConfig(
         <Route path="game" Component={Game} />
     </Route>
 );
-// combineReducers({
-//     login: loginReducer,
-//     found: foundReducer //tento sluzi na zapamatanie URLky v stave a pouzivanie toho ako argumentu
-// })
+const reducer = 
 
 const router = createMatchEnhancer(new Matcher(routeConfig));
 const enhancer = compose(router);
-const store = createStore(reducer,enhancer);
+const store = createStore(
+    combineReducers({
+        login: loginReducer,
+        found: foundReducer //tento sluzi na zapamatanie URLky v stave a pouzivanie toho ako argumentu
+    }),
+    createMatchEnhancer(
+        new Matcher(routeConfig)
+    )
+);
 
 const ConnectedRouter = createConnectedRouter({
     render: createRender({
