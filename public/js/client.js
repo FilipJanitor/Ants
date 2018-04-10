@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Login from './Login.js';
-import Lobby from './Lobby.js';
-import Game from './Game.js';
-import Register from './Register.js';
-import NotFound from './NotFound.js';
+import Login from './components/Login.js';
+import Lobby from './components/Lobby.js';
+import Game from './components/Game.js';
+import Register from './components/Register.js';
+import NotFound from './components/NotFound.js';
 import reducer from './reducers/combinedReducers.js';
 
 const store = createStore(reducer);
