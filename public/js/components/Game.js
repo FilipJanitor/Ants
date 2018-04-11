@@ -1,0 +1,1 @@
+//https://github.com/FreezingMoon/AncientBeast/tree/master/assets/cards

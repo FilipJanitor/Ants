@@ -2,17 +2,24 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>Ants</title>
 	  <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <div class="page-header">
-      <h1> Ants </h1>
-    </div>
-    <div id="GameWindow" class="container"></div> <!-- tento bude treba resizovat na celu sirku -->
-    <div class="page-footer">
-      <footer> TODO legal info </footer>
-    </div>
+    <header id="header">
+      Ants
+    </header>
+    <div id="GameWindow" ></div> <!-- tento bude treba resizovat na celu sirku class="container"-->
+    <footer id="footer">
+      <p> TODO legal info </p> 
+    </footer>
+    <script>
+      document.getElementById("GameWindow").style.height = (window.innerHeight - 200 - 100).toString() + "px";
+      window.addEventListener("resize", () => {
+        document.getElementById("GameWindow").style.height = (window.innerHeight - 200 - 100).toString() + "px";
+      });
+      </script>
 	  <script src="./client.bundle.js"></script>
   </body>
 </html>
