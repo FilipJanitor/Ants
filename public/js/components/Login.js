@@ -1,6 +1,5 @@
 //dekonstrukcia z this.props
-//zatial to nechavam bez stylov 
-//dobry je react material design
+//zatial to nechavam bez stylov
 import createReactClass from  'create-react-class';
 import React from 'react'
 import { connect } from "react-redux"
