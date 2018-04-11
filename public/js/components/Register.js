@@ -18,7 +18,7 @@ var Button = createReactClass({
 //{user.failedLogin && <Text text=/>}
 //z this.props vytiahne dispatch a user 
 //na zaciatku je neinicializovany, ktovie preco
-const Register = ({ user = {failedLogin: false}, dispatch}) => {
+const Register = ({ user = {failedRegister: false}, dispatch}) => {
     return (
         <div>
             //nejaky signal na ukazanie ze login failol
@@ -43,12 +43,8 @@ const setPassword = function(dispatch, password){
     dispatch({ type: "SET_PASSWORD", data: password });
 };
 
-const attemptToLogin = function(dispatch, name, password) {
+const attemptToRegister = function(dispatch, name, password) {
 
-};
-
-const logOut = function() {
-    dispatch({ type: "LOGOUT" });
 };
 
 export default connect ((state) => {

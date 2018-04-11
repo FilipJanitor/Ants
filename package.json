@@ -22,7 +22,9 @@
   "homepage": "https://github.com/FilipJanitor/Ants#readme",
   "dependencies": {
     "ajv": "^6.4.0",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -30,6 +32,8 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "create-react-class": "^15.6.3",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0",
     "express": "^4.16.3",
     "express-json-validator-middleware": "^1.2.1",
     "found": "^0.3.8",
@@ -41,6 +45,7 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-router-redux": "^4.0.8",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13"
   }

@@ -1,16 +1,17 @@
 //dekonstrukcia z this.props
 //zatial to nechavam bez stylov
 import createReactClass from  'create-react-class';
-import React from 'react'
-import { connect } from "react-redux"
+import React from 'react';
+import { connect } from "react-redux";
+import { routeActions } from 'react-router-redux';
+//import { push } from 'react-router-redux';
 import { Link } from 'react-router-dom';
-import { compose } from 'redux'
+import { compose } from 'redux';
 
 var Button = createReactClass({
     render: function() {
         return (
-            <button
-                onClick={this.props.onClick}>
+            <button onClick={this.props.onClick}>
                 {this.props.label}
             </button>
         );
@@ -45,7 +46,20 @@ const setPassword = function(dispatch, password){
 };
 
 const attemptToLogin = function(dispatch, name, password) {
-
+    axios
+    .post("/login", { name, password })
+    .then(res => {
+      if (res.data.result == true) {
+        dispatch({
+          type: "LOGIN",
+          data: { name, password, userId: res.data.userId, token: res.data.token }
+        });
+        this.props.dispatch(routeActions.push('/lobby'));
+      } else {
+        dispatch({ type: "LOGIN_FAIL" });
+      }
+    })
+    .catch(() => dispatch({ type: "LOGIN_FAIL" }));
 };
 
 const logOut = function() {

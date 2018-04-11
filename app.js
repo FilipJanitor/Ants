@@ -79,7 +79,7 @@ app.post('/login',validate({body: loginSchema}), bodyParser.json(), catchValidat
         if(rows.length == 1){
             res.send({result: true, token: rows.token, userId: rows.userId});
         } else {
-            res.send({result: false, error: 'LoginError'});
+            res.send({result: false, error: 'Invalid credentials'});
         }
     });
 });
