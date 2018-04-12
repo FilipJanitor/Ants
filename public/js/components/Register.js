@@ -1,4 +1,3 @@
-
 import createReactClass from  'create-react-class';
 import React from 'react'
 import { connect } from "react-redux"
@@ -15,7 +14,7 @@ var Button = createReactClass({
         );
     }
 });
-//z this.props vytiahne dispatch a user 
+//z this.props vytiahne dispatch a user
 //na zaciatku je neinicializovany, ktovie preco
 const Register = ({ user = {failedRegister: false}, dispatch}) => {
     return (
@@ -23,11 +22,11 @@ const Register = ({ user = {failedRegister: false}, dispatch}) => {
             //nejaky signal na ukazanie ze login failol
             {user.failedRegister && <p> FAIL </p>}
             //ukladame, ked pouzivatel dopise
-            <input type="name" onBlur={() => setName(dispatch, value)} /> 
+            <input type="name" onBlur={() => setName(dispatch, value)} />
             <input type="password" onBlur={() => setPassword(dispatch, value)} />
-            <Button 
+            <Button
                 label="Register"
-                onClick={() => attemptToRegister(dispatch, user.name, user.password) } 
+                onClick={() => attemptToRegister(dispatch, user.name, user.password) }
             />
             <button><Link to='/register'/></button>
         </div>
