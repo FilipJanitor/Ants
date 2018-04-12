@@ -15,14 +15,13 @@ var Button = createReactClass({
         );
     }
 });
-//{user.failedLogin && <Text text=/>}
 //z this.props vytiahne dispatch a user 
 //na zaciatku je neinicializovany, ktovie preco
 const Register = ({ user = {failedRegister: false}, dispatch}) => {
     return (
         <div>
             //nejaky signal na ukazanie ze login failol
-            {user.failedLogin && <p> FAIL </p>}
+            {user.failedRegister && <p> FAIL </p>}
             //ukladame, ked pouzivatel dopise
             <input type="name" onBlur={() => setName(dispatch, value)} /> 
             <input type="password" onBlur={() => setPassword(dispatch, value)} />
@@ -36,15 +35,28 @@ const Register = ({ user = {failedRegister: false}, dispatch}) => {
 };
 
 const setName = function(dispatch, name){
-    dispatch({ type: "SET_NAME", data: name });
+    dispatch({ type: "SET_REG_NAME", data: name });
 };
 
 const setPassword = function(dispatch, password){
-    dispatch({ type: "SET_PASSWORD", data: password });
+    dispatch({ type: "SET_REG_PASSWORD", data: password });
 };
 
 const attemptToRegister = function(dispatch, name, password) {
-
+    axios
+    .post("/register", { name, password })
+    .then(res => {
+      if (res.data.result == true) {
+        dispatch({
+          type: "REGISTER",
+          data: { name, password, userId: res.data.userId, token: res.data.token }
+        });
+        this.props.dispatch(routeActions.push('/lobby'));
+      } else {
+        dispatch({ type: "REGISTER_FAIL" });
+      }
+    })
+    .catch(() => dispatch({ type: "REGISTER_FAIL" }));
 };
 
 export default connect ((state) => {

@@ -1,11 +1,16 @@
-const express = require('express');
-const mysql = require('mysql');
-const bcrypt = require('bcryptjs');
-const { Validator, ValidationError } = require('express-json-validator-middleware');
-const bodyParser = require('body-parser')
-const validator = new Validator({allErrors: true});
-const validate = validator.validate;
-const app = express();
+import express from 'express';
+import mysql from 'mysql';
+import bcrypt from 'bcryptjs';
+import { Validator, ValidationError } from 'express-json-validator-middleware';
+import bodyParser from 'body-parser';
+import crypto from 'crypto';
+const  validator = new Validator({allErrors: true});
+const  validate = validator.validate;
+const  app = express();
+
+
+
+const NOT_LOOKING_FOR_MATCH = 0;
 
 const catchValidationErrors = function(err,req,res,next) {
     console.log(err.ValidationErrors);
@@ -69,10 +74,10 @@ app.get('/style.css', function(req,res){
 
 app.post('/login',validate({body: loginSchema}), bodyParser.json(), catchValidationErrors, function(req,res){
     const data = req.body;
-    const query = 'SELECT token, userId FROM users where name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ')';
+    const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ')';
     db.query(query, (err, rows, fields) => {
         if(err){
-            consloe.log(err);
+            console.log(err);
             res.send({result: false, error: 'LoginError'});
             return;
         }
@@ -84,6 +89,69 @@ app.post('/login',validate({body: loginSchema}), bodyParser.json(), catchValidat
     });
 });
 
+app.post('/register',validate({body: loginSchema}), bodyParser.json(), catchValidationErrors, function(req,res){
+    const data = req.body;
+    const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ')';
+    const querySelect = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ')';
+    const userToken = crypto.randomBytes(64).toString('hex');
+    /*userId je autoincrement*/
+    const queryInsert = 'INSERT INTO users( token, name, password, lookingForMatch, score) VALUES('+
+                                userToken + ',' +
+                                db.escape(data.name) + 'sha2(' +
+                                db.escape(data.password) + ',' +
+                                NOT_LOOKING_FOR_MATCH.toString() + ',' +
+                                0 + ')';
+    db.beginTransaction(function(err) {
+        if (err) {
+            res.send({
+                result: false,
+                error: err
+            });
+        }
+        db.query(querySelect, function (error, results, fields) {
+            if(err){
+                return db.rollback(function() {
+                    res.send({result: false, error: 'RegisterError1'});
+                });
+            }
+            if(rows.length != 0){
+                return db.rollback(function() {
+                    res.send({result: false, error: 'NameTaken'});
+                });
+            }
+            db.query(queryInsert, function (error, results, fields) {
+                if (error) {
+                    return db.rollback(function() {
+                        res.send({result: false, error: 'RegisterError2'});
+                    });
+                }
+                db.query(query, (err, rows, fields) => {
+                    if(err){
+                        return db.rollback(function() {
+                            res.send({result: false, error: 'RegisterError3'});
+                        });
+                    }
+                    if(rows.length == 1){
+                        db.commit(function(err) {
+                            if (err) {
+                                return db.rollback(function() {
+                                    res.send({result: false, error: 'RegisterError4'});
+                                });
+                            }
+                            res.send({result: true, token: rows.token, userId: rows.userId});
+                        });
+                    } else {
+                        return db.rollback(function() {
+                            res.send({result: false, error: 'RegisterError5'});
+                        });
+                    }
+                });
+            });
+        });
+    });
+});
+
+
 app.use(function (req, res){
     console.log("default sender");
     res.sendFile(__dirname + '/public/index.html');
@@ -92,5 +160,5 @@ app.use(function (req, res){
 //works just like
 // app.get('/*', (req,res) => {
 //     console.log("default sender");
-//     res.sendFile(__dirname + '/public/index.html'); 
+//     res.sendFile(__dirname + '/public/index.html');
 // })

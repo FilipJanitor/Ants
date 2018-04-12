@@ -21,12 +21,12 @@ export default function reducer(state = initialState, action){
         case "LOGIN":
             return {
                 ...state, 
-                failedLogin: true,
+                failedLogin: flase,
                 userId: action.data.userId,
                 token: action.data.token,
                 name: action.data.name,
                 password: action.data.password
-            }
+            };
         default:
             return state;
     }
