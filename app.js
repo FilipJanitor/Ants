@@ -8,10 +8,16 @@ const  validator = new Validator({allErrors: true});
 const  validate = validator.validate;
 const  app = express();
 
+// ________________________________CONSTANTS___________________________________
+
+export const NOT_LOOKING_FOR_MATCH = 0;
+export const LOOKING_FOR_NORMAL_MATCH = 1;
+export const LOOKING_FOR_HARDCORE_MATCH = 2;
+export const LOOKING_FOR_CORRESPONDENCE_MATCH = 3;
+export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 
-const NOT_LOOKING_FOR_MATCH = 0;
-
+// ________________________________INIT___________________________________
 const catchValidationErrors = function(err,req,res,next) {
     console.log(err.ValidationErrors);
     res.send({result: false, error: 'SchemaError'});

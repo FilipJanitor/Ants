@@ -1,1 +1,12 @@
-//https://github.com/FreezingMoon/AncientBeast/tree/master/assets/cards
+/* predstava
++---+---------------+---+
+|Sta|               |Sta|
+|ts1|               |ts2|
+|---+   Game pics   +---+
+|   |               |   |
+|---+               +---+
+|---+-+-+-+-+-+-+-+-+---+
+|   |1|2|3|4|5|6|7|8|   |
+|   | | | | | | | | |   |
++---+-+-+-+-+-+-+-+-+---+
+*/

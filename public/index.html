@@ -2,8 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ants</title>
+    <!-- Bootstrap containers work well for resizing. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" />
 	  <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
@@ -12,7 +14,7 @@
     </header>
     <div id="GameWindow" ></div> <!-- tento bude treba resizovat na celu sirku class="container"-->
     <footer id="footer">
-      <p> TODO legal info </p> 
+      <p> TODO legal info </p>
     </footer>
     <script>
       document.getElementById("GameWindow").style.height = (window.innerHeight - 200 - 100).toString() + "px";
