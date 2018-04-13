@@ -17,8 +17,16 @@ const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 // ________________________________INIT___________________________________
 const catchValidationErrors = function(err,req,res,next) {
+    console.log("Validation error encountered");
     console.log(err.ValidationErrors);
     res.send({result: false, error: 'SchemaError'});
+}
+
+const debugMiddleware = function(req,res,next) {
+    console.log("____________________");
+    console.log(req.body);
+    console.log("____________________");
+    next();
 }
 
 if(process.argv.length != 3){
@@ -76,7 +84,8 @@ app.get('/style.css', function(req,res){
 
 // __________________interaction_______________________________________________
 
-app.post('/login',validate({body: loginSchema}), bodyParser.json(), catchValidationErrors, function(req,res){
+app.post('/login', bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, function(req,res){
+    console.log("inside")
     const data = req.body;
     const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ')';
     db.query(query, (err, rows, fields) => {
@@ -93,7 +102,7 @@ app.post('/login',validate({body: loginSchema}), bodyParser.json(), catchValidat
     });
 });
 
-app.post('/register',validate({body: loginSchema}), bodyParser.json(), catchValidationErrors, function(req,res){
+app.post('/register', debugMiddleware, validate({body: loginSchema}), bodyParser.json(), catchValidationErrors, function(req,res){
     const data = req.body;
     const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ')';
     const querySelect = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ')';
