@@ -35,8 +35,9 @@ CREATE TABLE users
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone="+00:00";
 
-CREATE TABLE public.users (
-    userid int(11) NOT NULL,
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    userId int(11) NOT NULL,
     name text NOT NULL,
     password text NOT NULL,
     score int(11) NOT NULL,
@@ -44,7 +45,7 @@ CREATE TABLE public.users (
     loses int(11) NOT NULL,
     ties int(11) NOT NULL,
     token text NOT NULL
-) TYPE=MyISAM;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE public.users
+ALTER TABLE users
     ADD CONSTRAINT pk_users PRIMARY KEY (userid);

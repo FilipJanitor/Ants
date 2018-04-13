@@ -1,20 +1,18 @@
-import express from 'express';
-import mysql from 'mysql';
-import bcrypt from 'bcryptjs';
-import { Validator, ValidationError } from 'express-json-validator-middleware';
-import bodyParser from 'body-parser';
-import crypto from 'crypto';
-const  validator = new Validator({allErrors: true});
-const  validate = validator.validate;
-const  app = express();
+const express = require('express');
+const mysql = require('mysql');
+const { Validator, ValidationError } = require('express-json-validator-middleware');
+const bodyParser = require('body-parser')
+const validator = new Validator({allErrors: true});
+const validate = validator.validate;
+const app = express();
 
 // ________________________________CONSTANTS___________________________________
 
-export const NOT_LOOKING_FOR_MATCH = 0;
-export const LOOKING_FOR_NORMAL_MATCH = 1;
-export const LOOKING_FOR_HARDCORE_MATCH = 2;
-export const LOOKING_FOR_CORRESPONDENCE_MATCH = 3;
-export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
+const NOT_LOOKING_FOR_MATCH = 0;
+const LOOKING_FOR_NORMAL_MATCH = 1;
+const LOOKING_FOR_HARDCORE_MATCH = 2;
+const LOOKING_FOR_CORRESPONDENCE_MATCH = 3;
+const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 
 // ________________________________INIT___________________________________

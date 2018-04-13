@@ -21,7 +21,7 @@ import {
            LOOKING_FOR_HARDCORE_MATCH,
            LOOKING_FOR_CORRESPONDENCE_MATCH,
            LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH
-       } from '../../../app.js';
+       } from '../client.js';
 
 export
 //USE REACT THEY SAID IT  WILL BE FUN THEY SAID
@@ -29,12 +29,6 @@ export
 //https://hackernoon.com/react-stateless-functional-components-nine-wins-you-might-have-overlooked-997b0d933dbc
 //https://stackoverflow.com/questions/44419650/react-js-set-a-default-value-into-a-prop
 class Lobby extends React.Component {
-    defaultProps = {
-        ongoingMatches: [],
-        achievements: [],
-        rank: {},//tu bude potreebne info na render
-        scores: []
-    }
 
     mapToAchievementObjects(list) {
       return list.map(i =>
@@ -121,6 +115,13 @@ class Lobby extends React.Component {
         );
     }
 }
+
+Lobby.defaultProps = {
+    ongoingMatches: [],
+    achievements: [],
+    rank: {},//tu bude potreebne info na render
+    scores: []
+};
 
 export default connect(state => {
     return {

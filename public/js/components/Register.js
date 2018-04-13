@@ -60,4 +60,4 @@ const attemptToRegister = function(dispatch, name, password) {
 
 export default connect ((state) => {
     return { user: state.user };//mapStateToProps
-})(Login); //toto spoji redux state s propsami komponentu
+})(Register); //toto spoji redux state s propsami komponentu
