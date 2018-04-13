@@ -19,7 +19,7 @@ export const LOOKING_FOR_CORRESPONDENCE_MATCH = 3;
 export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 
-const store = createStore(reducer);
+const store = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
     <Provider store={store}>
