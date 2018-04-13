@@ -101,11 +101,14 @@ app.post('/register',validate({body: loginSchema}), bodyParser.json(), catchVali
     const querySelect = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ')';
     const userToken = crypto.randomBytes(64).toString('hex');
     /*userId je autoincrement*/
-    const queryInsert = 'INSERT INTO users( token, name, password, lookingForMatch, score) VALUES('+
+    const queryInsert = 'INSERT INTO users( token, name, password, lookingForMatch, score, wins, loses, ties) VALUES('+
                                 userToken + ',' +
                                 db.escape(data.name) + 'sha2(' +
                                 db.escape(data.password) + ',' +
                                 NOT_LOOKING_FOR_MATCH.toString() + ',' +
+                                0 + ',' +
+                                0 + ',' +
+                                0 + ',' +
                                 0 + ')';
     db.beginTransaction(function(err) {
         if (err) {
