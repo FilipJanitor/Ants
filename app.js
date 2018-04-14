@@ -1,7 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
 const { Validator, ValidationError } = require('express-json-validator-middleware');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const crypto = require('crypto');
 const validator = new Validator({allErrors: true});
 const validate = validator.validate;
 const app = express();
@@ -84,7 +85,7 @@ app.get('/style.css', function(req,res){
 
 // __________________interaction_______________________________________________
 
-app.post('/login', bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, function(req,res){
+app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, function(req,res){
     const data = req.body;
     const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
     db.query(query, (err, rows, fields) => {
@@ -102,15 +103,15 @@ app.post('/login', bodyParser.json(), debugMiddleware, validate({body: loginSche
     });
 });
 
-app.post('/register', debugMiddleware, validate({body: loginSchema}), bodyParser.json(), catchValidationErrors, function(req,res){
+app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}), catchValidationErrors, function(req,res){
     const data = req.body;
     const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
-    const querySelect = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ')';
+    const querySelect = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name);
     const userToken = crypto.randomBytes(64).toString('hex');
     /*userId je autoincrement*/
-    const queryInsert = 'INSERT INTO users( token, name, password, lookingForMatch, score, wins, loses, ties) VALUES('+
-                                userToken + ',' +
-                                db.escape(data.name) + 'sha2(' +
+    const queryInsert = 'INSERT INTO users(token, name, password, lookingForMatch, score, wins, loses, ties) VALUES('+
+                                db.escape(userToken) + ',' +
+                                db.escape(data.name) + ', sha2(' +
                                 db.escape(data.password) + ',256),' +
                                 NOT_LOOKING_FOR_MATCH.toString() + ',' +
                                 0 + ',' +
@@ -124,8 +125,9 @@ app.post('/register', debugMiddleware, validate({body: loginSchema}), bodyParser
                 error: err
             });
         }
-        db.query(querySelect, function (error, results, fields) {
-            if(err){
+        db.query(querySelect, function (error, rows, fields) {
+            if(error){
+                console.log(error);
                 return db.rollback(function() {
                     res.send({result: false, error: 'RegisterError1'});
                 });
@@ -135,14 +137,16 @@ app.post('/register', debugMiddleware, validate({body: loginSchema}), bodyParser
                     res.send({result: false, error: 'NameTaken'});
                 });
             }
-            db.query(queryInsert, function (error, results, fields) {
+            db.query(queryInsert, function (error, rows, fields) {
                 if (error) {
+                    console.log(error);
                     return db.rollback(function() {
                         res.send({result: false, error: 'RegisterError2'});
                     });
                 }
                 db.query(query, (err, rows, fields) => {
                     if(err){
+                        console.log(err);
                         return db.rollback(function() {
                             res.send({result: false, error: 'RegisterError3'});
                         });
@@ -150,6 +154,7 @@ app.post('/register', debugMiddleware, validate({body: loginSchema}), bodyParser
                     if(rows.length == 1){
                         db.commit(function(err) {
                             if (err) {
+                                console.log(err);
                                 return db.rollback(function() {
                                     res.send({result: false, error: 'RegisterError4'});
                                 });

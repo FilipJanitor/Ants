@@ -24,6 +24,7 @@ export const setPassword = function(dispatch, password){
 //sem treba dat skore a podobne
 export const attemptToLogin = function(dispatch, loginName, loginPassword) {
     console.log("atempting login");
+    console.log({name, password});
     axios
     .post("/login", { name: loginName, password: loginPassword })
     .then(res => {
@@ -34,13 +35,14 @@ export const attemptToLogin = function(dispatch, loginName, loginPassword) {
         });
         dispatch(push('/lobby'));
       } else {
-        dispatch({ type: "LOGIN_FAIL" });
+        dispatch({ type: "FAIL" });
       }
     })
-    .catch(() => dispatch({ type: "LOGIN_FAIL" }));
+    .catch(() => dispatch({ type: "FAIL" }));
 }
 
 export const attemptToRegister = function(dispatch, name, password) {
+    console.log({name, password});
     axios
     .post("/register", { name, password })
     .then(res => {
@@ -51,10 +53,10 @@ export const attemptToRegister = function(dispatch, name, password) {
         });
         this.props.dispatch(routeActions.push('/lobby'));
       } else {
-        dispatch({ type: "REGISTER_FAIL" });
+        dispatch({ type: "FAIL" });
       }
     })
-    .catch(() => dispatch({ type: "REGISTER_FAIL" }));
+    .catch(() => dispatch({ type: "FAIL" }));
 };
 
 export const logOut = function() {

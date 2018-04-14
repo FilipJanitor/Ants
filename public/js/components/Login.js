@@ -18,9 +18,9 @@ class Login extends React.Component {
                 <form>
                     <FormGroup
                         controlId="formBasicText"
-                        validationState={getValidationState(this.props.reduxState.failed)}
+                        validationState={getValidationState(this.props.appState.failed)}
                     >
-                    {this.props.reduxState.failed && <ControlLabel>Wrong user or password</ControlLabel>}
+                    {this.props.appState.failed && <ControlLabel>Wrong user or password</ControlLabel>}
                     <FormControl
                         type="text"
                         inputRef={ref => {this.loginNameInput = ref}}
@@ -33,7 +33,7 @@ class Login extends React.Component {
                         placeholder="Enter password"
                         onBlur={() => {return (setPassword(this.props.dispatch, this.loginPasswordInput.value))}}
                     />
-                    <Button bsSize="large" onClick={() => attemptToLogin(this.props.dispatch, this.props.reduxState.name, this.props.reduxState.password) }> Login </Button>
+                    <Button bsSize="large" onClick={() => attemptToLogin(this.props.dispatch, this.props.appState.name, this.props.appState.password) }> Login </Button>
                     <Button bsSize="large" onClick={() => routeToRegister(this.props.dispatch) }> Register </Button>
                     </FormGroup>
                 </form>
@@ -50,7 +50,12 @@ class Login extends React.Component {
 
 export default withRouter(connect((state) => {
     return {
-        reduxState: state
+        appState: state.appState
+        // name: state.name,
+        // password: state.password,
+        // failed: state.failed,
+        // userId: state.userId,
+        // token: state.token,
     };//mapStateToProps
     })(Login)); //toto spoji redux state s propsami komponentu
 //tie nully a purte false mozno mozu ist prec

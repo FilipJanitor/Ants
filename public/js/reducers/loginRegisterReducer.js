@@ -18,7 +18,7 @@ export default function reducer(state = initialState, action){
             return { ...state, password: action.data };
         case "LOGOUT":
             return { ...initialState };
-        case "LOGIN_FAIL":
+        case "FAIL":
             return { ...state, failed: true};
         case "LOGIN":
             return {

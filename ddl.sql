@@ -37,15 +37,16 @@ SET time_zone="+00:00";
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-    userId int(11) NOT NULL,
+    userId int(11) NOT NULL AUTO_INCREMENT,
     name text NOT NULL,
     password text NOT NULL,
     score int(11) NOT NULL,
     wins int(11) NOT NULL,
     loses int(11) NOT NULL,
     ties int(11) NOT NULL,
-    token text NOT NULL
+    token text NOT NULL,
+    lookingForMatch int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE users
-    ADD CONSTRAINT pk_users PRIMARY KEY (userid);
+    ADD CONSTRAINT pk_users PRIMARY KEY (userId);

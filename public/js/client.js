@@ -22,13 +22,11 @@ export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 
 export const initialGlobalState = {
-    appState: {
-      name: '',
-      password: '',
-      failedLogin: false,
-      userId: -1,
-      token: ''
-    },
+    name: '',
+    password: '',
+    failed: false,
+    userId: -1,
+    token: '',
     routing: {
       location: null
     }
