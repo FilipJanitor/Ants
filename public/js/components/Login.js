@@ -4,7 +4,7 @@ import createReactClass from  'create-react-class';
 import React from 'react';
 import { connect } from "react-redux";
 import { routeActions } from 'react-router-redux';
-//import { push } from 'react-router-redux';
+import { push } from 'react-router-redux';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
@@ -51,7 +51,7 @@ class Login extends React.Component {
 
 const routeToRegister = function(dispatch){
     console.log("routing to register");
-    dispatch(routeActions.push('/register'));
+    dispatch(/*routeActions.*/push('/register'));
 }
 
 const setName = function(dispatch, name){
@@ -66,7 +66,6 @@ const setPassword = function(dispatch, password){
 
 const attemptToLogin = function(dispatch, loginName, loginPassword) {
     console.log("atempting login");
-    console.log(loginName + " " + loginPassword);
     axios
     .post("/login", { name: loginName, password: loginPassword })
     .then(res => {
@@ -90,5 +89,5 @@ const logOut = function() {
 //ten token, skore a userid pojdu niekam hore
 //{this.props.user.failedLogin && <p> FAIL </p>}
 export default connect ((state) => {
-    return { reduxState: state.login };//mapStateToProps
+    return { reduxState: state };//mapStateToProps
 })(Login); //toto spoji redux state s propsami komponentu

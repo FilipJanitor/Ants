@@ -21,7 +21,7 @@ export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 export const initialGlobalState = {
 
-}
+};
 
 const store = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()/*INITIAL STATE*/);
 

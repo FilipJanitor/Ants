@@ -3,10 +3,6 @@ import reduceReducers from 'reduce-reducers'; //vytvara flat stav
 import loginReducer from './loginReducer.js';
 import registerReducer from './registerReducer.js';
 
-const reducer = reduceReducers({
-    login: loginReducer,
-    register: registerReducer
-    //found: foundReducer //tento sluzi na zapamatanie URLky v stave a pouzivanie toho ako argumentu
-})
+const reducer = reduceReducers(loginReducer,registerReducer);
 
 export default reducer;

@@ -85,9 +85,8 @@ app.get('/style.css', function(req,res){
 // __________________interaction_______________________________________________
 
 app.post('/login', bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, function(req,res){
-    console.log("inside")
     const data = req.body;
-    const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ')';
+    const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
     db.query(query, (err, rows, fields) => {
         if(err){
             console.log(err);
@@ -97,6 +96,7 @@ app.post('/login', bodyParser.json(), debugMiddleware, validate({body: loginSche
         if(rows.length == 1){
             res.send({result: true, token: rows.token, userId: rows.userId});
         } else {
+            console.log("no such user");
             res.send({result: false, error: 'Invalid credentials'});
         }
     });
@@ -104,14 +104,14 @@ app.post('/login', bodyParser.json(), debugMiddleware, validate({body: loginSche
 
 app.post('/register', debugMiddleware, validate({body: loginSchema}), bodyParser.json(), catchValidationErrors, function(req,res){
     const data = req.body;
-    const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ')';
+    const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
     const querySelect = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ')';
     const userToken = crypto.randomBytes(64).toString('hex');
     /*userId je autoincrement*/
     const queryInsert = 'INSERT INTO users( token, name, password, lookingForMatch, score, wins, loses, ties) VALUES('+
                                 userToken + ',' +
                                 db.escape(data.name) + 'sha2(' +
-                                db.escape(data.password) + ',' +
+                                db.escape(data.password) + ',256),' +
                                 NOT_LOOKING_FOR_MATCH.toString() + ',' +
                                 0 + ',' +
                                 0 + ',' +
