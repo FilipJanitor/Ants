@@ -22,8 +22,17 @@ export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 
 export const initialGlobalState = {
-
-};/*toto bude tazke s tym routingom spojit */
+    appState: {
+      name: '',
+      password: '',
+      failedLogin: false,
+      userId: -1,
+      token: ''
+    },
+    routing: {
+      location: null
+    }
+  };/*toto bude tazke s tym routingom spojit */
 
 //const middleware = routerMiddleware(browserHistory)
 const browserHistory = createBrowserHistory();
@@ -46,7 +55,7 @@ const store = createStore(combinedReducers, enhancer);
 //const history = syncHistoryWithStore(browserHistory, store);
 
 
-ReactDOM.render(
+ReactDOM.render( //tuto dorobit private routy, a default routy
     <Provider store={store}>
         <Router history={browserHistory}>
             <Switch>

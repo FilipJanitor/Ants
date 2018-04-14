@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux'; //vytvara strom, to nechceme
 import reduceReducers from 'reduce-reducers'; //vytvara flat stav
-import loginReducer from './loginReducer.js';
-import registerReducer from './registerReducer.js';
+import loginRegisterReducer from './loginRegisterReducer.js';
 
-const reducer = reduceReducers(loginReducer,registerReducer);
+const reducer = reduceReducers(loginRegisterReducer);
 
 export default reducer;
