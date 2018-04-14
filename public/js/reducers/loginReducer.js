@@ -29,6 +29,10 @@ export default function reducer(state = initialState, action){
                 name: action.data.name,
                 password: action.data.password
             };
+        case "TEST":
+            return{
+                ...state, test:data
+            }
         default:
             return state;
     }

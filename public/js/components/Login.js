@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { routeActions } from 'react-router-redux';
 import { push } from 'react-router-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import axios from 'axios';
@@ -21,6 +21,7 @@ class Login extends React.Component {
     render() {
         return (
             <div className="container">
+            {console.log(this.props.location)}
                 <form>
                     <FormGroup
                         controlId="formBasicText"
@@ -52,6 +53,7 @@ class Login extends React.Component {
 const routeToRegister = function(dispatch){
     console.log("routing to register");
     dispatch(/*routeActions.*/push('/register'));
+    dispatch({type: "test", data: 1});
 }
 
 const setName = function(dispatch, name){
@@ -74,7 +76,7 @@ const attemptToLogin = function(dispatch, loginName, loginPassword) {
           type: "LOGIN",
           data: { name, password, userId: res.data.userId, token: res.data.token }
         });
-        this.props.dispatch(routeActions.push('/lobby'));
+        dispatch(push('/lobby'));
       } else {
         dispatch({ type: "LOGIN_FAIL" });
       }
@@ -88,6 +90,12 @@ const logOut = function() {
 
 //ten token, skore a userid pojdu niekam hore
 //{this.props.user.failedLogin && <p> FAIL </p>}
-export default connect ((state) => {
+//export default withRouter(connect((state) => {
+//    return { reduxState: state };//mapStateToProps
+//})(Login)); //toto spoji redux state s propsami komponentu
+
+export default withRouter(connect((state) => {
     return { reduxState: state };//mapStateToProps
-})(Login); //toto spoji redux state s propsami komponentu
+    },  null, null, {
+        pure: false
+})(Login)); //toto spoji redux state s propsami komponentu

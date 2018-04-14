@@ -42,20 +42,20 @@ const store = createStore(combinedReducers, enhancer);
 
 //const store = createStore(combinedReducers,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()/*INITIAL STATE*/);
 
-const history = syncHistoryWithStore(browserHistory, store);
+//Toto blokuje prebublanie locationu k Routru z browserHistory
+//const history = syncHistoryWithStore(browserHistory, store);
+
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={history}>
-            <div>
-                <Switch>
-                    <Route exact path="/" component={Login} />
-                    <Route path="/register" component={Register} />
-                    <Route path="/lobby" component={Lobby} />
-                    <Route path="/game" component={Game} />
-                    <Route path="/*" component={NotFound} />
-                </Switch>
-            </div>
+        <Router history={browserHistory}>
+            <Switch>
+                <Route path="/register" component={Register} />
+                <Route exact path="/" component={Login} />
+                <Route path="/lobby" component={Lobby} />
+                <Route path="/game" component={Game} />
+                <Route path="/*" component={NotFound} />
+            </Switch>
         </Router>
     </Provider>,
     document.getElementById("GameWindow")

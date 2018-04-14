@@ -1,7 +1,7 @@
 import createReactClass from  'create-react-class';
 import React from 'react'
 import { connect } from "react-redux"
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux'
 
 var Button = createReactClass({
@@ -60,6 +60,8 @@ const attemptToRegister = function(dispatch, name, password) {
     .catch(() => dispatch({ type: "REGISTER_FAIL" }));
 };
 
-export default connect ((state) => {
+export default withRouter(connect ((state) => {
     return { user: state.user };//mapStateToProps
-})(Register); //toto spoji redux state s propsami komponentu
+}, null, null, {
+    pure: false
+  })(Register)); //toto spoji redux state s propsami komponentu
