@@ -18,7 +18,9 @@ var Button = createReactClass({
 //na zaciatku je neinicializovany, ktovie preco
 const Register = ({ user = {failedRegister: false}, dispatch}) => {
     return (
+
         <div>
+            REGISTERREGISTER
             //nejaky signal na ukazanie ze login failol
             {user.failedRegister && <p> FAIL </p>}
             //ukladame, ked pouzivatel dopise
