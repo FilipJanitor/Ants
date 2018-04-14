@@ -1,3 +1,5 @@
+import { initialGlobalState } from '../client.js'
+
 const initialState = {
     name: "",
     password: "",
@@ -20,7 +22,7 @@ export default function reducer(state = initialState, action){
             return { ...state, failedLogin: true};
         case "LOGIN":
             return {
-                ...state, 
+                ...state,
                 failedLogin: flase,
                 userId: action.data.userId,
                 token: action.data.token,

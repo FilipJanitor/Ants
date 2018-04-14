@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { combineReducers, createStore } from 'redux';
+import { createStore } from 'redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/Login.js';
 import Lobby from './components/Lobby.js';
@@ -19,7 +19,11 @@ export const LOOKING_FOR_CORRESPONDENCE_MATCH = 3;
 export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 
-const store = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+export const initialGlobalState = {
+
+}
+
+const store = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()/*INITIAL STATE*/);
 
 ReactDOM.render(
     <Provider store={store}>

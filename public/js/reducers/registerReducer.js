@@ -1,3 +1,5 @@
+import { initialGlobalState } from '../client.js'
+
 const initialState = {
     regName: "",
     regPassword: "",
