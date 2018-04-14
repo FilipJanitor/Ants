@@ -159,6 +159,7 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
                                     res.send({result: false, error: 'RegisterError4'});
                                 });
                             }
+                            console.log("succ");
                             res.send({result: true, token: rows.token, userId: rows.userId});
                         });
                     } else {

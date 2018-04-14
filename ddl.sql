@@ -45,8 +45,7 @@ CREATE TABLE users (
     loses int(11) NOT NULL,
     ties int(11) NOT NULL,
     token text NOT NULL,
-    lookingForMatch int(11) NOT NULL
+    lookingForMatch int(11) NOT NULL,
+    PRIMARY KEY (userId)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE users
-    ADD CONSTRAINT pk_users PRIMARY KEY (userId);
