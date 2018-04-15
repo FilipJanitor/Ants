@@ -85,6 +85,8 @@ app.get('/style.css', function(req,res){
 
 // __________________interaction_______________________________________________
 
+//warning, callback hell
+
 app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, function(req,res){
     const data = req.body;
     const query = 'SELECT score, wins, loses, ties, lookingForMatch, token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';

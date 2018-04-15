@@ -1,43 +1,14 @@
-/*
-Postgres source. DUMP IS IN MAIN
-
-
-DROP DATABASE IF EXISTS main;
-CREATE DATABASE main
-    WITH
-    OWNER = root
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'en_US.UTF-8'
-    LC_CTYPE = 'en_US.UTF-8'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
-
-
-CREATE TABLE users
-(
-	userId SERIAL,
-	name text NOT NULL UNIQUE,
-	password text NOT NULL,
-	score int NOT NULL,
-	wins int NOT NULL,
-	loses int NOT NULL,
-	ties int NOT NULL,
-	token text NOT NULL UNIQUE,
-	CONSTRAINT pk_users PRIMARY KEY (userId)
-);
-
-*/
-
-# Converted with pg2mysql-1.9
-# Converted on Thu, 12 Apr 2018 16:54:43 -0400
-# Lightbox Technologies Inc. http://www.lightbox.ca
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone="+00:00";
 
+DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS tournaments;
+DROP TABLE IF EXISTS users_achievements;
+DROP TABLE IF EXISTS achievements;
 DROP TABLE IF EXISTS users;
+
 CREATE TABLE users (
-    userId int(11) NOT NULL AUTO_INCREMENT,
+    ID int(11) NOT NULL AUTO_INCREMENT,
     name text NOT NULL,
     password text NOT NULL,
     score int(11) NOT NULL,
@@ -46,6 +17,39 @@ CREATE TABLE users (
     ties int(11) NOT NULL,
     token text NOT NULL,
     lookingForMatch int(11) NOT NULL,
-    PRIMARY KEY (userId)
+    rank int(11) NOT NULL,
+    PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE achievements (
+    ID int(11) NOT NULL AUTO_INCREMENT,
+    name text NOT NULL,
+    description text NOT NULL,
+    imageResource text NOT NULL,
+    PRIMARY KEY (ID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE users_achievements (
+    achievementId int(11) NOT NULL,
+    userId int(11) NOT NULL,
+    FOREIGN KEY (achievementId) REFERENCES achievements(ID),
+    FOREIGN KEY (userId) REFERENCES users(ID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE tournaments (
+    ID int(11) NOT NULL AUTO_INCREMENT,
+    userId1 int(11) NOT NULL,
+    userId2 int(11) NOT NULL,
+    rounds int(11) NOT NULL,
+    gameResult int(11) NOT NULL,
+    gameType int(11) NOT NULL,
+    playerOnTurn int(11) NOT NULL,
+    /*stats doplnit*/
+    PRIMARY KEY (ID),
+    FOREIGN KEY (userId1) REFERENCES users(ID),
+    FOREIGN KEY (userId2) REFERENCES users(ID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE cards (
+    imageRecource TEXT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
