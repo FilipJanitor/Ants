@@ -24,7 +24,6 @@ import {
            LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH
        } from '../client.js';
 
-export
 //USE REACT THEY SAID IT  WILL BE FUN THEY SAID
 
 //https://hackernoon.com/react-stateless-functional-components-nine-wins-you-might-have-overlooked-997b0d933dbc

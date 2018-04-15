@@ -87,7 +87,7 @@ app.get('/style.css', function(req,res){
 
 app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, function(req,res){
     const data = req.body;
-    const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
+    const query = 'SELECT score, wins, loses, ties, lookingForMatch, token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
     db.query(query, (err, rows, fields) => {
         if(err){
             console.log(err);
@@ -97,7 +97,16 @@ app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate
         if(rows.length == 1){
             console.log("login successful");
             console.log(rows);
-            res.send({result: true, token: rows[0].token, userId: rows[0].userId});
+            res.send({
+                result: true,
+                token: rows[0].token,
+                userId: rows[0].userId,
+                score: rows[0].score,
+                wins: rows[0].wins,
+                loses: rows[0].loses,
+                ties: rows[0].ties,
+                lookingForMatch: rows[0].lookingForMatch
+            });
         } else {
             console.log("no such user");
             res.send({result: false, error: 'Invalid credentials'});

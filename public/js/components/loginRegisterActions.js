@@ -21,24 +21,35 @@ export const setPassword = function(dispatch, password){
     dispatch({ type: "SET_PASSWORD", data: password });
 }
 
-//sem treba dat skore a podobne
+//LOGIN a FAIL sa daju spojit, staci result dat do state.failed
 export const attemptToLogin = function(dispatch, loginName, loginPassword) {
     console.log("atempting login");
     console.log({loginName, loginPassword});
     axios
     .post("/login", { name: loginName, password: loginPassword })
     .then(res => {
-      if (res.data.result == true) {
-        console.log("success");
-        dispatch({
-          type: "LOGIN",
-          data: { name: loginName, password: loginPassword, userId: res.data.userId, token: res.data.token }
-        });
-        dispatch(push('/lobby'));
-      } else {
-        console.log("Fail");
-        dispatch({ type: "FAIL" });
-      }
+        if (res.data.result == true) {
+            console.log("success");
+            dispatch({
+                type: "LOGIN",
+                data: {
+                    name: loginName,
+                    password: loginPassword,
+                    userId: res.data.userId,
+                    token: res.data.token,
+                    result: true,
+                    score: res.data.score,
+                    wins: res.data.wins,
+                    loses: res.data.loses,
+                    ties: res.data.ties,
+                    lookingForMatch: res.data.lookingForMatch
+                }
+            });
+            dispatch(push('/lobby'));
+        } else {
+            console.log("Fail");
+            dispatch({ type: "FAIL" });
+        }
     })
     .catch((error) => {console.log(error);dispatch({ type: "FAIL" });});
 }
