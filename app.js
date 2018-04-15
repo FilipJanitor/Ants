@@ -129,8 +129,11 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
                                 0 + ',' +
                                 0 + ',' +
                                 0 + ')';
+    console.log("registering");
     db.beginTransaction(function(err) {
         if (err) {
+            console.log("registering1");
+            console.log(err);
             res.send({
                 result: false,
                 error: err
@@ -138,18 +141,21 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
         }
         db.query(querySelect, function (error, rows, fields) {
             if(error){
+                console.log("registering2");
                 console.log(error);
                 return db.rollback(function() {
                     res.send({result: false, error: 'RegisterError1'});
                 });
             }
             if(rows.length != 0){
+                console.log("nametaken");
                 return db.rollback(function() {
                     res.send({result: false, error: 'NameTaken'});
                 });
             }
             db.query(queryInsert, function (error, rows, fields) {
                 if (error) {
+                    console.log("registering3");
                     console.log(error);
                     return db.rollback(function() {
                         res.send({result: false, error: 'RegisterError2'});
@@ -157,6 +163,7 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
                 }
                 db.query(query, (err, rows, fields) => {
                     if(err){
+                        console.log("registering4");
                         console.log(err);
                         return db.rollback(function() {
                             res.send({result: false, error: 'RegisterError3'});
@@ -165,13 +172,14 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
                     if(rows.length == 1){
                         db.commit(function(err) {
                             if (err) {
+                                console.log("registering5");
                                 console.log(err);
                                 return db.rollback(function() {
                                     res.send({result: false, error: 'RegisterError4'});
                                 });
                             }
                             console.log("succ");
-                            res.send({result: true, token: rows.token, userId: rows.userId});
+                            res.send({result: true, token: rows[0].token, userId: rows[0].userId});
                         });
                     } else {
                         return db.rollback(function() {

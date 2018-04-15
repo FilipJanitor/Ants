@@ -21,7 +21,6 @@ export default function reducer(state = initialState, action){
         case "FAIL":
             return { ...state, failed: true};
         case "LOGIN":
-            console.log(action);
             return {
                 ...state,
                 failed: false,

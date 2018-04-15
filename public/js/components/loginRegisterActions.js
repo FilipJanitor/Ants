@@ -57,19 +57,19 @@ export const attemptToLogin = function(dispatch, loginName, loginPassword) {
 export const attemptToRegister = function(dispatch, registerName, registerPassword) {
     console.log({registerName, registerPassword});
     axios
-    .post("/register", { registerName, registerPassword })
+    .post("/register", { name: registerName, password: registerPassword })
     .then(res => {
       if (res.data.result == true) {
         dispatch({
           type: "LOGIN",
           data: { name: registerName, registerPassword, userId: res.data.userId, token: res.data.token }
         });
-        this.props.dispatch(routeActions.push('/lobby'));
+        dispatch(push('/lobby'));
       } else {
         dispatch({ type: "FAIL" });
       }
     })
-    .catch(() => dispatch({ type: "FAIL" }));
+    .catch((error) => {console.log(error);dispatch({ type: "FAIL" });});
 };
 
 export const logOut = function() {
