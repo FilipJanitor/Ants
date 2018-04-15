@@ -13,6 +13,7 @@
 */
 
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
@@ -83,20 +84,20 @@ class Lobby extends React.Component {
                     {ongoingMatches}
                 </div>
                 <div id="initiateGame">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
                                 Initiate normal game
                             </div>
-                            <div class="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
+                            <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
                                 Initiate hardcore game
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
+                        <div className="row">
+                            <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
                                 Initiate correspondence game
                             </div>
-                            <div class="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
+                            <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
                                 Initiate hardcore correspondence game
                             </div>
                         </div>
@@ -123,7 +124,8 @@ Lobby.defaultProps = {
     scores: []
 };
 
-export default connect(state => {
+export default withRouter(connect(state => {
     return {
+        appState: state.appState
     };
-})(Lobby);
+})(Lobby));

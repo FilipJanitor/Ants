@@ -24,32 +24,34 @@ export const setPassword = function(dispatch, password){
 //sem treba dat skore a podobne
 export const attemptToLogin = function(dispatch, loginName, loginPassword) {
     console.log("atempting login");
-    console.log({name, password});
+    console.log({loginName, loginPassword});
     axios
     .post("/login", { name: loginName, password: loginPassword })
     .then(res => {
       if (res.data.result == true) {
+        console.log("success");
         dispatch({
           type: "LOGIN",
-          data: { name, password, userId: res.data.userId, token: res.data.token }
+          data: { name: loginName, password: loginPassword, userId: res.data.userId, token: res.data.token }
         });
         dispatch(push('/lobby'));
       } else {
+        console.log("Fail");
         dispatch({ type: "FAIL" });
       }
     })
-    .catch(() => dispatch({ type: "FAIL" }));
+    .catch((error) => {console.log(error);dispatch({ type: "FAIL" });});
 }
 
-export const attemptToRegister = function(dispatch, name, password) {
-    console.log({name, password});
+export const attemptToRegister = function(dispatch, registerName, registerPassword) {
+    console.log({registerName, registerPassword});
     axios
-    .post("/register", { name, password })
+    .post("/register", { registerName, registerPassword })
     .then(res => {
       if (res.data.result == true) {
         dispatch({
-          type: "REGISTER",
-          data: { name, password, userId: res.data.userId, token: res.data.token }
+          type: "LOGIN",
+          data: { name: registerName, registerPassword, userId: res.data.userId, token: res.data.token }
         });
         this.props.dispatch(routeActions.push('/lobby'));
       } else {

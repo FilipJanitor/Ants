@@ -95,7 +95,9 @@ app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate
             return;
         }
         if(rows.length == 1){
-            res.send({result: true, token: rows.token, userId: rows.userId});
+            console.log("login successful");
+            console.log(rows);
+            res.send({result: true, token: rows[0].token, userId: rows[0].userId});
         } else {
             console.log("no such user");
             res.send({result: false, error: 'Invalid credentials'});
