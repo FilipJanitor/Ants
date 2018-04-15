@@ -43,8 +43,29 @@ class Lobby extends React.Component {
     }
 
     mapToScoreObjects(list) {
-        return list.map(i =>
-            <li key={i.id} dangerouslySetInnerHTML={{ __html: i.tex }} />
+        return (
+            <Table striped bordered condensed hover>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Wins</th>
+                        <th>Ties</th>
+                        <th>Loses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {list.map((i) => {return (
+                        <tr>
+                            <td>i.name</td>
+                            <td>i.score</td>
+                            <td>i.wins</td>
+                            <td>i.ties</td>
+                            <td>i.loses</td>
+                        </tr>
+                     );})}
+                </tbody>
+            </Table>
         );
     }
 
@@ -75,7 +96,7 @@ class Lobby extends React.Component {
         const ongoingMatches = this.mapToMatchObjects(this.props.ongoingMatches);
         const achievements = this.mapToAchievementObjects(this.props.achievements);
         const rank = this.wrapRank(this.props.rank);
-        const scores = this.mapToScoreObjects(this.props.scores);
+        const scores = this.mapToScoreObjects(this.props.scores); //tu bude nejaky limit
         //tieto veci preusporiadat tak, abz sa flexibilne menili
         return (
             <div>

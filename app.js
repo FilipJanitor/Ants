@@ -86,7 +86,8 @@ app.get('/style.css', function(req,res){
 // __________________interaction_______________________________________________
 
 //warning, callback hell
-
+//Ineeddis: https://stackoverflow.com/a/9097804
+//https://stackoverflow.com/a/25496872
 app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, function(req,res){
     const data = req.body;
     const query = 'SELECT score, wins, loses, ties, lookingForMatch, token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
