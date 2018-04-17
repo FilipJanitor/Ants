@@ -11,7 +11,8 @@
 |   |                 |     |
 +---+-----------------+-----+
 */
-
+//make everything lg - span 100 perrcent
+//ajax polling timer na serveri
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -39,33 +40,6 @@ class Lobby extends React.Component {
     mapToMatchObjects(list) {
         return list.map(i =>
             <li key={i.id} dangerouslySetInnerHTML={{ __html: i.tex }} />
-        );
-    }
-
-    mapToScoreObjects(list) {
-        return (
-            <Table striped bordered condensed hover>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Score</th>
-                        <th>Wins</th>
-                        <th>Ties</th>
-                        <th>Loses</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {list.map((i) => {return (
-                        <tr>
-                            <td>i.name</td>
-                            <td>i.score</td>
-                            <td>i.wins</td>
-                            <td>i.ties</td>
-                            <td>i.loses</td>
-                        </tr>
-                     );})}
-                </tbody>
-            </Table>
         );
     }
 
@@ -100,9 +74,7 @@ class Lobby extends React.Component {
         //tieto veci preusporiadat tak, abz sa flexibilne menili
         return (
             <div>
-                <div id="ongoingMatches">
-                    {ongoingMatches}
-                </div>
+                <OngoingMatches userId={this.props.userId} />
                 <div id="initiateGame">
                     <div className="container-fluid">
                         <div className="row">
@@ -123,15 +95,9 @@ class Lobby extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div id="achievements">
-                    {achievements}
-                </div>
-                <div id="rank">
-                    {rank}
-                </div>
-                <div id="scoreboard">
-                    {scores}
-                </div>
+                <Achievements userId={this.props.userId} token={this.props.token} />
+                <Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />
+                <Scoreboard />
             </div>
         );
     }
@@ -140,7 +106,7 @@ class Lobby extends React.Component {
 Lobby.defaultProps = {
     ongoingMatches: [],
     achievements: [],
-    rank: {},//tu bude potreebne info na render
+    //rank: {},//toto mame priamo z prveho dopytu
     scores: []
 };
 
@@ -149,3 +115,90 @@ export default withRouter(connect(state => {
         appState: state.appState
     };
 })(Lobby));
+
+class Scoreboard extends React.component {
+    constructor(props) {
+        super(props);
+        this.state = {scores: [], ajaxSuccess: true};
+    }
+
+    componentDidMount() {
+        axios
+        .post("/scoreboard", { /* raz tu bude aj toto: token*/ })
+        .then(res => {
+            if (res.data.result == true) {
+                this.setState({scores: res.data.scores, alaxSuccess: true});
+            } else {
+                this.setState((prevState) => {
+                    return {scores: prevState.scores, ajaxSuccess: false };
+                });
+            }
+        })
+        .catch((error) => {console.log(error);this.setState((prevState) => {
+                    return {scores: prevState.scores, ajaxSuccess: false };
+                });});
+    }
+
+    render() {
+        if( this.state.ajaxSuccess) {
+            return (
+            <div id="scoreboard">
+                <Table striped bordered condensed hover>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Score</th>
+                            <th>Wins</th>
+                            <th>Ties</th>
+                            <th>Loses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.scores.map((i) => {return (
+                            <tr>
+                                <td>i.name</td>
+                                <td>i.score</td>
+                                <td>i.wins</td>
+                                <td>i.ties</td>
+                                <td>i.loses</td>
+                            </tr>
+                        );})}
+                    </tbody>
+                </Table>
+            </div>
+            );
+        } else {
+            return (
+                <p> AJAX call failed </p>
+            );
+        }
+    }
+}
+
+//<Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />
+
+class Rank extends React.component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() { //col 12
+        return (
+        <div id="rank">
+            <div myClass="container">
+                <div myClass="row">
+                    <div myClass="">
+                        <img />
+                    </div>
+                </div>
+                <div myClass="row">
+                    <div myClass="">
+                    TODO tabulka s myscore
+                    </div>
+                </div>
+            </div>
+        </div>
+        );
+    }
+}
+
