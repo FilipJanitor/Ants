@@ -43,14 +43,6 @@ class Lobby extends React.Component {
         );
     }
 
-    wrapRank(rank) {
-        return(
-            <div>
-                TODO
-            </div>
-        );
-    }
-
     initiateGame(dispatch,what){
 
     }
@@ -66,6 +58,7 @@ class Lobby extends React.Component {
       //https://getbootstrap.com/docs/3.3/css/
 //matches budu vo fixed grid. Achievements budu tak, ze sa budu premiestnovat s velkostou.
 //display block - zaberie cely width
+//propsy zrefaktorovat
     render() {
         const ongoingMatches = this.mapToMatchObjects(this.props.ongoingMatches);
         const achievements = this.mapToAchievementObjects(this.props.achievements);
@@ -96,7 +89,7 @@ class Lobby extends React.Component {
                     </div>
                 </div>
                 <Achievements userId={this.props.userId} token={this.props.token} />
-                <Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />
+                <Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} name={this.props.name}/>
                 <Scoreboard />
             </div>
         );
@@ -156,11 +149,11 @@ class Scoreboard extends React.component {
                     <tbody>
                         {this.state.scores.map((i) => {return (
                             <tr>
-                                <td>i.name</td>
-                                <td>i.score</td>
-                                <td>i.wins</td>
-                                <td>i.ties</td>
-                                <td>i.loses</td>
+                                <td>{i.name}</td>
+                                <td>{i.score}</td>
+                                <td>{i.wins}</td>
+                                <td>{i.ties}</td>
+                                <td>{i.loses}</td>
                             </tr>
                         );})}
                     </tbody>
@@ -182,18 +175,40 @@ class Rank extends React.component {
         super(props);
     }
 
-    render() { //col 12
+    render() { //col 12 vsetko large
         return (
         <div id="rank">
             <div myClass="container">
                 <div myClass="row">
                     <div myClass="">
-                        <img />
+                        <h2> {this.props.name} </h2>
                     </div>
                 </div>
                 <div myClass="row">
                     <div myClass="">
-                    TODO tabulka s myscore
+                        <img src={"/rank"+this.props.rank}/>
+                    </div>
+                </div>
+                <div myClass="row">
+                    <div myClass="">
+                    <Table striped bordered condensed>
+                        <thead>
+                            <tr>
+                                <th>Score</th>
+                                <th>Wins</th>
+                                <th>Ties</th>
+                                <th>Loses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{i.score}</td>
+                                <td>{i.wins}</td>
+                                <td>{i.ties}</td>
+                                <td>{i.loses}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
                     </div>
                 </div>
             </div>
