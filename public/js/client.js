@@ -12,6 +12,7 @@ import Register from './components/Register.js';
 import NotFound from './components/NotFound.js';
 import reducer from './reducers/combinedReducers.js';
 import { createBrowserHistory } from 'history';
+import PrivateRoute from './components/PrivateRoute.js';
 /*browserrouter is just wraper <Router history={genericwrapperhistoryAPI}>  we will do it our way*/
 // ________________________________CONSTANTS___________________________________
 export const NOT_LOOKING_FOR_MATCH = 0;
@@ -22,15 +23,18 @@ export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
 
 export const initialGlobalState = {
-    name: '',
-    password: '',
-    failed: false,
-    userId: -1,
-    token: '',
+    appState: {
+        name: '',
+        password: '',
+        failed: false,
+        userId: -1,
+        token: '',
+        auth: false
+    },
     routing: {
-      location: null
+        location: null
     }
-  };/*toto bude tazke s tym routingom spojit */
+};/*toto bude tazke s tym routingom spojit */
 
 //const middleware = routerMiddleware(browserHistory)
 const browserHistory = createBrowserHistory();
@@ -45,7 +49,7 @@ const enhancer = composeEnhancers(
   applyMiddleware(routerMiddleware(browserHistory)/*...middleware*/)
 );
 
-const store = createStore(combinedReducers, enhancer);
+const store = createStore(combinedReducers, initialGlobalState, enhancer);
 
 //const store = createStore(combinedReducers,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()/*INITIAL STATE*/);
 
@@ -57,10 +61,10 @@ ReactDOM.render( //tuto dorobit private routy, a default routy
     <Provider store={store}>
         <Router history={browserHistory}>
             <Switch>
-                <Route path="/register" component={Register} />
                 <Route exact path="/" component={Login} />
-                <Route path="/lobby" component={Lobby} />
-                <Route path="/game" component={Game} />
+                <Route path="/register" component={Register} />
+                <PrivateRoute path="/lobby" component={Lobby} />
+                <PrivateRoute path="/game" component={Game} />
                 <Route path="/*" component={NotFound} />
             </Switch>
         </Router>
