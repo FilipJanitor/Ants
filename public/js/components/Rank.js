@@ -8,46 +8,85 @@ import axios from 'axios';
 export default class Rank extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            score: 0,
+            wins: 0,
+            loses: 0,
+            ties: 0,
+            rank: 0,
+            ajaxSuccess: true
+        };
+    }
+
+    componentDidMount() {
+        axios
+        .post("/myRank", { userId: this.props.userId, token: this.props.token })
+        .then(res => {
+            if (res.data.result == true) {
+                this.setState({
+                    score: res.data.scores,
+                    wins: res.data.wins,
+                    loses: res.data.loses,
+                    ties: res.data.ties,
+                    rank: res.data.rank,
+                    ajaxSuccess: true
+                });
+            } else {
+                this.setState((prevState) => {
+                    return {...prevState, ajaxSuccess: false };
+                });
+            }
+        })
+        .catch((error) => { console.log(error); this.setState((prevState) => {
+                return {...prevState, ajaxSuccess: false };
+            });
+        });
     }
 
     render() { //col 12 vsetko large
-        return (
-        <div id="rank">
-            <div className="container">
-                <div className="row">
-                    <div className="">
-                        <h2> {this.props.name} </h2>
+        if(this.state.ajaxSuccess){
+            return (
+            <div id="rank">
+                <div className="container">
+                    <div className="row">
+                        <div className="">
+                            <h2> {this.props.name} </h2>
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="">
-                        <img src={"/rank"+this.props.rank}/>
+                    <div className="row">
+                        <div className="">
+                            <img src={"/rank"+this.state.rank}/>
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="">
-                    <Table striped bordered condensed>
-                        <thead>
-                            <tr>
-                                <th>Score</th>
-                                <th>Wins</th>
-                                <th>Ties</th>
-                                <th>Loses</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{this.props.score}</td>
-                                <td>{this.props.wins}</td>
-                                <td>{this.props.ties}</td>
-                                <td>{this.props.loses}</td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                    <div className="row">
+                        <div className="">
+                        <Table striped bordered condensed>
+                            <thead>
+                                <tr>
+                                    <th>Score</th>
+                                    <th>Wins</th>
+                                    <th>Ties</th>
+                                    <th>Loses</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{this.state.score}</td>
+                                    <td>{this.state.wins}</td>
+                                    <td>{this.state.ties}</td>
+                                    <td>{this.state.loses}</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        );
+            );
+        } else {
+            return (
+                <p> AJAX call failed </p>
+            );
+        }
     }
 }

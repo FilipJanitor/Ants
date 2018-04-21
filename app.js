@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const { Validator, ValidationError } = require('express-json-validator-middleware');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
+const sanitize = require("sanitize-filename");
 const validator = new Validator({allErrors: true});
 const validate = validator.validate;
 const app = express();
@@ -67,6 +68,14 @@ const loginSchema = {
     "required": ["name","password"]
 }
 
+const rankSchema = {
+    "type": "object",
+    "properties": {
+        "userId":   {"type": "integer"},
+        "token":    {"type": "string"}
+    },
+    "required": ["userId","token"]
+}
 
 //sample usage
 //app.post('/route',validate({requestProperty: schemaToUse}), bodyParser.json(), catchValidationErrors, function(req,res){res.send()});
@@ -117,7 +126,7 @@ app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate
     });
 });
 
-app.post('/scoreboard', /*debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, */function(req,res){
+app.get('/scoreboard', /*debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, */function(req,res){
     const query = 'SELECT name, score, wins, loses, ties FROM users ORDER BY score DESC LIMIT 10';
     db.query(query, (err, rows, fields) => {
         if(err){
@@ -131,6 +140,40 @@ app.post('/scoreboard', /*debugMiddleware, bodyParser.json(), debugMiddleware, v
             scores: rows
         });
     });
+});
+
+app.post('/myRank', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: rankSchema}),  catchValidationErrors, function(req,res){
+    const data = req.body;
+    const query = 'SELECT score, wins, loses, ties, rank FROM users WHERE ID=' + db.escape(data.userId) +'AND token=' + db.escape(data.token);
+    db.query(query, (err, rows, fields) => {
+        if(err){
+            console.log(err);
+            res.send({result: false, error: 'ScoreboardError'});
+            return;
+        }
+        if(rows.length == 1){
+            console.log("login successful");
+            console.log(rows);
+            res.send({
+                result: true,
+                score: rows[0].score,
+                wins: rows[0].wins,
+                loses: rows[0].loses,
+                ties: rows[0].ties,
+                rank: rows[0].rank
+            });
+        } else {
+            console.log("invalid token");
+            res.send({result: false, error: 'Invalid id or token'});
+        }
+    });
+});
+
+app.get('/rank:id', function(req,res){
+    //poslat obrazok
+    const filename = sanitize('rank' + req.params.id);
+    console.log(filename);
+    res.sendFile(__dirname + '/public/img/' + filename);
 });
 
 app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}), catchValidationErrors, function(req,res){

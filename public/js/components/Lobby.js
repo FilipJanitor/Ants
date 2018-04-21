@@ -20,7 +20,7 @@ import axios from 'axios';
 import Rank from './Rank.js';
 import Scoreboard from './Scoreboard.js';
 import Achievements from './Achievements.js';
-import OngoingMatches from './OngiongMatches.js';
+import OngoingMatches from './OngoingMatches.js';
 
 import {
            NOT_LOOKING_FOR_MATCH,
@@ -90,7 +90,7 @@ class Lobby extends React.Component {
                     </div>
                 </div>
                 <Achievements userId={this.props.appState.userId} token={this.props.appState.token} />
-                <Rank rank={this.props.appState.rank} score={this.props.appState.score} wins={this.props.appState.wins} ties={this.props.appState.ties} loses={this.props.appState.loses} name={this.props.appState.name}/>
+                <Rank userId={this.props.appState.userId} token={this.props.appState.token} name={this.props.appState.name}/>
                 <Scoreboard />
             </div>
         );

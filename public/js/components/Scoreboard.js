@@ -10,8 +10,9 @@ export default class Scoreboard extends React.Component {
 
     componentDidMount() {
         axios
-        .post("/scoreboard", { /* raz tu bude aj toto: token*/ })
+        .get("/scoreboard")
         .then(res => {
+            console.log(res);
             if (res.data.result == true) {
                 this.setState({scores: res.data.scores, ajaxSuccess: true});
             } else {
