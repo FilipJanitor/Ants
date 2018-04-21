@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 //<Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />
-
+// nneds to be ajaxed, no props are going to be sent
 export default class Rank extends React.Component {
     constructor(props) {
         super(props);

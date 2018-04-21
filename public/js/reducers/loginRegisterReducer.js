@@ -28,7 +28,7 @@ export default function reducer(state = initialState, action){
                 userId: action.data.userId,
                 token: action.data.token,
                 name: action.data.name,
-                password: action.data.password
+                password: ""
             };
         case "LOGIN_TO_REGISTER":
             return {

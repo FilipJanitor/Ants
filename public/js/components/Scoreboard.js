@@ -41,7 +41,7 @@ export default class Scoreboard extends React.Component {
                     </thead>
                     <tbody>
                         {this.state.scores.map((i) => {return (
-                            <tr>
+                            <tr key={i.name}>
                                 <td>{i.name}</td>
                                 <td>{i.score}</td>
                                 <td>{i.wins}</td>
