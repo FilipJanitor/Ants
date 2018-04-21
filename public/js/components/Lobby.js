@@ -17,6 +17,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
 import Rank from './Rank.js';
 import Scoreboard from './Scoreboard.js';
 import Achievements from './Achievements.js';
@@ -69,27 +70,49 @@ class Lobby extends React.Component {
         return (
             <div className="constainer-fluid">
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-3 filler">
                         <OngoingMatches userId={this.props.appState.userId} />
                     </div>
                     <div className="col-md-6">
                         <div className="row">
                             <div className="col-sm-12">
-                                <div id="initiateGame">
+                                <div className="container-fluid">
                                     <div className="row">
-                                        <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
-                                            Initiate normal game
-                                        </div>
-                                        <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
-                                            Initiate hardcore game
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
-                                            Initiate correspondence game
-                                        </div>
-                                        <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
-                                            Initiate hardcore correspondence game
+                                        <div className="col-sm-12">
+                                            <div className="well">
+                                                <div className="row">
+                                                    <div className="col-sm-12">
+                                                        <div className="btn-group btn-group-justified">
+                                                            <div className="btn-group">
+                                                                <Button bsSize="large" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
+                                                                    Initiate normal game
+                                                                </Button>
+                                                            </div>
+                                                            <div className="btn-group">
+                                                                <Button bsSize="large" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
+                                                                    Initiate hardcore game
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-sm-12">
+                                                        <div className="btn-group btn-group-justified">
+                                                            <div className="btn-group">
+                                                                <Button bsSize="large" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
+                                                                    Initiate correspondence game
+                                                                </Button>
+                                                            </div>
+                                                            <div className="btn-group">
+                                                                <Button bsSize="large" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
+                                                                    Initiate hardcore correspondence game
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

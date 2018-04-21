@@ -5,9 +5,17 @@ export default class Achievements extends React.Component {
         super(props);
     }
 
-    render() { //col 12 vsetko large
+    render() {
         return (
-        <div id="achievements">AAAAAAAAAA</div>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="well">
+                            TODO achievements
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

@@ -20,17 +20,23 @@ h1, body{
     margin: 0;
     padding: 0;
 }
+input {
+    margin-bottom: 5 px;
+}
+
+#filler {
+    height: 100%;
+}
 
 #GameWindow{
     top: 200;
     position: relative;
     width: 100%;
-    background-color: white;
+   /* background-color: white;*/
     margin: 0;
     padding: 0;
     /*color: ghostwhite;*/
     text-align: center;
-
 }
 
 footer{

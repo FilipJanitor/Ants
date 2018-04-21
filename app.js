@@ -87,6 +87,11 @@ app.get('/client.bundle.js', function(req,res){
     res.sendFile(__dirname + '/public/client.bundle.js');
 });
 
+app.get('/theme.min.css', function(req,res){
+    console.log('send css TODO');
+    res.sendFile(__dirname + '/public/theme.min.css');
+});
+
 app.get('/style.css', function(req,res){
     console.log('send css TODO');
     res.sendFile(__dirname + '/public/style.css');

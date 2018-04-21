@@ -29,10 +29,10 @@ export default class Scoreboard extends React.Component {
     render() {
         if( this.state.ajaxSuccess) {
             return (
-            <div id="scoreboard">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-sm-12">
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="well">
                             <Table striped bordered condensed hover>
                                 <thead>
                                     <tr>
