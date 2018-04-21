@@ -16,6 +16,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Table } from 'react-bootstrap';
+import axios from 'axios';
 
 import {
            NOT_LOOKING_FOR_MATCH,
@@ -60,14 +62,10 @@ class Lobby extends React.Component {
 //display block - zaberie cely width
 //propsy zrefaktorovat
     render() {
-        const ongoingMatches = this.mapToMatchObjects(this.props.ongoingMatches);
-        const achievements = this.mapToAchievementObjects(this.props.achievements);
-        const rank = this.wrapRank(this.props.rank);
-        const scores = this.mapToScoreObjects(this.props.scores); //tu bude nejaky limit
         //tieto veci preusporiadat tak, abz sa flexibilne menili
         return (
             <div>
-                <OngoingMatches userId={this.props.userId} />
+                <OngoingMatches userId={this.props.appState.userId} />
                 <div id="initiateGame">
                     <div className="container-fluid">
                         <div className="row">
@@ -88,8 +86,8 @@ class Lobby extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Achievements userId={this.props.userId} token={this.props.token} />
-                <Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} name={this.props.name}/>
+                <Achievements userId={this.props.appState.userId} token={this.props.appState.token} />
+                <Rank rank={this.props.appState.rank} score={this.props.appState.score} wins={this.props.appState.wins} ties={this.props.appState.ties} loses={this.props.appState.loses} name={this.props.appState.name}/>
                 <Scoreboard />
             </div>
         );
@@ -109,7 +107,7 @@ export default withRouter(connect(state => {
     };
 })(Lobby));
 
-class Scoreboard extends React.component {
+class Scoreboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {scores: [], ajaxSuccess: true};
@@ -170,7 +168,7 @@ class Scoreboard extends React.component {
 
 //<Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />
 
-class Rank extends React.component {
+class Rank extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -178,19 +176,19 @@ class Rank extends React.component {
     render() { //col 12 vsetko large
         return (
         <div id="rank">
-            <div myClass="container">
-                <div myClass="row">
-                    <div myClass="">
+            <div className="container">
+                <div className="row">
+                    <div className="">
                         <h2> {this.props.name} </h2>
                     </div>
                 </div>
-                <div myClass="row">
-                    <div myClass="">
+                <div className="row">
+                    <div className="">
                         <img src={"/rank"+this.props.rank}/>
                     </div>
                 </div>
-                <div myClass="row">
-                    <div myClass="">
+                <div className="row">
+                    <div className="">
                     <Table striped bordered condensed>
                         <thead>
                             <tr>
@@ -202,10 +200,10 @@ class Rank extends React.component {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{i.score}</td>
-                                <td>{i.wins}</td>
-                                <td>{i.ties}</td>
-                                <td>{i.loses}</td>
+                                <td>{this.props.score}</td>
+                                <td>{this.props.wins}</td>
+                                <td>{this.props.ties}</td>
+                                <td>{this.props.loses}</td>
                             </tr>
                         </tbody>
                     </Table>
@@ -217,3 +215,26 @@ class Rank extends React.component {
     }
 }
 
+class OngoingMatches extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() { //col 12 vsetko large
+        return (
+        <div id="ongoingmatches">AAAAAAAAAA</div>
+        );
+    }
+}
+
+class Achievements extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() { //col 12 vsetko large
+        return (
+        <div id="achievements">AAAAAAAAAA</div>
+        );
+    }
+}

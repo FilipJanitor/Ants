@@ -29,14 +29,14 @@ export default function reducer(state = initialState, action){
                 name: action.data.name,
                 password: action.data.password
             };
-        case "LOGIN_TO_ROUTE":
+        case "LOGIN_TO_REGISTER":
             return {
                 ...state,
                 name: "",
                 password: "",
                 failed: false
             }
-        case "LOGIN_TO_ROUTE":
+        case "REGISTER_TO_LOGIN":
             return {
                 ...state,
                 name: "",
@@ -44,6 +44,7 @@ export default function reducer(state = initialState, action){
                 failed: false
             }
         default:
+            console.log("REDUX STATE IS CORRUPTED")
             return state;
     }
 }

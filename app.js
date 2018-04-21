@@ -90,7 +90,7 @@ app.get('/style.css', function(req,res){
 //https://stackoverflow.com/a/25496872
 app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, function(req,res){
     const data = req.body;
-    const query = 'SELECT score, wins, loses, ties, lookingForMatch, token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
+    const query = 'SELECT score, wins, loses, ties, lookingForMatch, token, ID FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
     db.query(query, (err, rows, fields) => {
         if(err){
             console.log(err);
@@ -103,7 +103,7 @@ app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate
             res.send({
                 result: true,
                 token: rows[0].token,
-                userId: rows[0].userId,
+                userId: rows[0].ID,
                 score: rows[0].score,
                 wins: rows[0].wins,
                 loses: rows[0].loses,
@@ -119,15 +119,16 @@ app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate
 
 app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}), catchValidationErrors, function(req,res){
     const data = req.body;
-    const query = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
-    const querySelect = 'SELECT token, userId FROM users WHERE name=' + db.escape(data.name);
+    const query = 'SELECT token, ID FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
+    const querySelect = 'SELECT token, ID FROM users WHERE name=' + db.escape(data.name);
     const userToken = crypto.randomBytes(64).toString('hex');
     /*userId je autoincrement*/
-    const queryInsert = 'INSERT INTO users(token, name, password, lookingForMatch, score, wins, loses, ties) VALUES('+
+    const queryInsert = 'INSERT INTO users(token, name, password, lookingForMatch, score, wins, loses, ties, rank) VALUES('+
                                 db.escape(userToken) + ',' +
                                 db.escape(data.name) + ', sha2(' +
                                 db.escape(data.password) + ',256),' +
                                 NOT_LOOKING_FOR_MATCH.toString() + ',' +
+                                0 + ',' +
                                 0 + ',' +
                                 0 + ',' +
                                 0 + ',' +
@@ -182,7 +183,7 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
                                 });
                             }
                             console.log("succ");
-                            res.send({result: true, token: rows[0].token, userId: rows[0].userId});
+                            res.send({result: true, token: rows[0].token, userId: rows[0].ID});
                         });
                     } else {
                         return db.rollback(function() {
