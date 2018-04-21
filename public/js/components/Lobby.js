@@ -16,8 +16,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Table } from 'react-bootstrap';
 import axios from 'axios';
+import Rank from './Rank.js';
+import Scoreboard from './Scoreboard.js';
+import Achievements from './Achievements.js';
+import OngoingMatches from './OngiongMatches.js';
 
 import {
            NOT_LOOKING_FOR_MATCH,
@@ -107,134 +110,4 @@ export default withRouter(connect(state => {
     };
 })(Lobby));
 
-class Scoreboard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {scores: [], ajaxSuccess: true};
-    }
 
-    componentDidMount() {
-        axios
-        .post("/scoreboard", { /* raz tu bude aj toto: token*/ })
-        .then(res => {
-            if (res.data.result == true) {
-                this.setState({scores: res.data.scores, alaxSuccess: true});
-            } else {
-                this.setState((prevState) => {
-                    return {scores: prevState.scores, ajaxSuccess: false };
-                });
-            }
-        })
-        .catch((error) => {console.log(error);this.setState((prevState) => {
-                    return {scores: prevState.scores, ajaxSuccess: false };
-                });});
-    }
-
-    render() {
-        if( this.state.ajaxSuccess) {
-            return (
-            <div id="scoreboard">
-                <Table striped bordered condensed hover>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Score</th>
-                            <th>Wins</th>
-                            <th>Ties</th>
-                            <th>Loses</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.scores.map((i) => {return (
-                            <tr>
-                                <td>{i.name}</td>
-                                <td>{i.score}</td>
-                                <td>{i.wins}</td>
-                                <td>{i.ties}</td>
-                                <td>{i.loses}</td>
-                            </tr>
-                        );})}
-                    </tbody>
-                </Table>
-            </div>
-            );
-        } else {
-            return (
-                <p> AJAX call failed </p>
-            );
-        }
-    }
-}
-
-//<Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />
-
-class Rank extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() { //col 12 vsetko large
-        return (
-        <div id="rank">
-            <div className="container">
-                <div className="row">
-                    <div className="">
-                        <h2> {this.props.name} </h2>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="">
-                        <img src={"/rank"+this.props.rank}/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="">
-                    <Table striped bordered condensed>
-                        <thead>
-                            <tr>
-                                <th>Score</th>
-                                <th>Wins</th>
-                                <th>Ties</th>
-                                <th>Loses</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{this.props.score}</td>
-                                <td>{this.props.wins}</td>
-                                <td>{this.props.ties}</td>
-                                <td>{this.props.loses}</td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        );
-    }
-}
-
-class OngoingMatches extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() { //col 12 vsetko large
-        return (
-        <div id="ongoingmatches">AAAAAAAAAA</div>
-        );
-    }
-}
-
-class Achievements extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() { //col 12 vsetko large
-        return (
-        <div id="achievements">AAAAAAAAAA</div>
-        );
-    }
-}

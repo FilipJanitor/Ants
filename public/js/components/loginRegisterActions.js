@@ -36,13 +36,7 @@ export const attemptToLogin = function(dispatch, loginName, loginPassword) {
                     name: loginName,
                     password: loginPassword,
                     userId: res.data.userId,
-                    token: res.data.token,
-                    result: true,
-                    score: res.data.score,
-                    wins: res.data.wins,
-                    loses: res.data.loses,
-                    ties: res.data.ties,
-                    lookingForMatch: res.data.lookingForMatch
+                    token: res.data.token
                 }
             });
             dispatch(push('/lobby'));

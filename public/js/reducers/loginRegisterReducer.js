@@ -23,6 +23,7 @@ export default function reducer(state = initialState, action){
         case "LOGIN":
             return {
                 ...state,
+                auth: true,
                 failed: false,
                 userId: action.data.userId,
                 token: action.data.token,

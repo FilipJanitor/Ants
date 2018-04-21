@@ -117,6 +117,22 @@ app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate
     });
 });
 
+app.post('/scoreboard', /*debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}),  catchValidationErrors, */function(req,res){
+    const query = 'SELECT name, score, wins, loses, ties FROM users ORDER BY score DECS LIMIT 10';
+    db.query(query, (err, rows, fields) => {
+        if(err){
+            console.log(err);
+            res.send({result: false, error: 'ScoreboardError'});
+            return;
+        }
+        console.log("scoreboard sent")
+        res.send({
+            result: true,
+            scores: rows
+        });
+    });
+});
+
 app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}), catchValidationErrors, function(req,res){
     const data = req.body;
     const query = 'SELECT token, ID FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
