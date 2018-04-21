@@ -30,28 +30,34 @@ export default class Scoreboard extends React.Component {
         if( this.state.ajaxSuccess) {
             return (
             <div id="scoreboard">
-                <Table striped bordered condensed hover>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Score</th>
-                            <th>Wins</th>
-                            <th>Ties</th>
-                            <th>Loses</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.scores.map((i) => {return (
-                            <tr key={i.name}>
-                                <td>{i.name}</td>
-                                <td>{i.score}</td>
-                                <td>{i.wins}</td>
-                                <td>{i.ties}</td>
-                                <td>{i.loses}</td>
-                            </tr>
-                        );})}
-                    </tbody>
-                </Table>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <Table striped bordered condensed hover>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Score</th>
+                                        <th>Wins</th>
+                                        <th>Ties</th>
+                                        <th>Loses</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.scores.map((i) => {return (
+                                        <tr key={i.name}>
+                                            <td>{i.name}</td>
+                                            <td>{i.score}</td>
+                                            <td>{i.wins}</td>
+                                            <td>{i.ties}</td>
+                                            <td>{i.loses}</td>
+                                        </tr>
+                                    );})}
+                                </tbody>
+                            </Table>
+                        </div>
+                    </div>
+                </div>
             </div>
             );
         } else {

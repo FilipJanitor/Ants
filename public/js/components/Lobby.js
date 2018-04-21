@@ -67,31 +67,53 @@ class Lobby extends React.Component {
     render() {
         //tieto veci preusporiadat tak, abz sa flexibilne menili
         return (
-            <div>
-                <OngoingMatches userId={this.props.appState.userId} />
-                <div id="initiateGame">
-                    <div className="container-fluid">
+            <div className="constainer-fluid">
+                <div className="row">
+                    <div className="col-md-3">
+                        <OngoingMatches userId={this.props.appState.userId} />
+                    </div>
+                    <div className="col-md-6">
                         <div className="row">
-                            <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
-                                Initiate normal game
-                            </div>
-                            <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
-                                Initiate hardcore game
+                            <div className="col-sm-12">
+                                <div id="initiateGame">
+                                    <div className="row">
+                                        <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
+                                            Initiate normal game
+                                        </div>
+                                        <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
+                                            Initiate hardcore game
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
+                                            Initiate correspondence game
+                                        </div>
+                                        <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
+                                            Initiate hardcore correspondence game
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
-                                Initiate correspondence game
+                            <div className="col-sm-12">
+                                <Achievements userId={this.props.appState.userId} token={this.props.appState.token} />
                             </div>
-                            <div className="col-sm-6" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
-                                Initiate hardcore correspondence game
+                        </div>
+                    </div>
+                    <div className="col-md-3">
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <Rank userId={this.props.appState.userId} token={this.props.appState.token} name={this.props.appState.name}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <Scoreboard />
                             </div>
                         </div>
                     </div>
                 </div>
-                <Achievements userId={this.props.appState.userId} token={this.props.appState.token} />
-                <Rank userId={this.props.appState.userId} token={this.props.appState.token} name={this.props.appState.name}/>
-                <Scoreboard />
             </div>
         );
     }

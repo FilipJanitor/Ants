@@ -47,19 +47,19 @@ export default class Rank extends React.Component {
         if(this.state.ajaxSuccess){
             return (
             <div id="rank">
-                <div className="container">
+                <div className="container-fluid">
                     <div className="row">
-                        <div className="">
+                        <div className="col-sm-12">
                             <h2> {this.props.name} </h2>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="">
+                        <div className="col-sm-12">
                             <img src={"/rank"+this.state.rank}/>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="">
+                        <div className="col-sm-12">
                         <Table striped bordered condensed>
                             <thead>
                                 <tr>
