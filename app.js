@@ -144,7 +144,7 @@ app.get('/scoreboard', /*debugMiddleware, bodyParser.json(), debugMiddleware, va
 
 app.post('/myRank', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: rankSchema}),  catchValidationErrors, function(req,res){
     const data = req.body;
-    const query = 'SELECT score, wins, loses, ties, rank FROM users WHERE ID=' + db.escape(data.userId) +'AND token=' + db.escape(data.token);
+    const query = 'SELECT score, wins, loses, ties, rank FROM users WHERE ID=' + db.escape(data.userId) +' AND token=' + db.escape(data.token);
     db.query(query, (err, rows, fields) => {
         if(err){
             console.log(err);
