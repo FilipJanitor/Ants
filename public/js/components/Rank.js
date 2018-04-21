@@ -58,7 +58,7 @@ export default class Rank extends React.Component {
                                     </div>
                                     <div className="row">
                                         <div className="col-sm-12">
-                                            <img src={"/rank"+this.state.rank}/>
+                                            <img src={"/rank"+this.state.rank} className="img-responsive"/>
                                         </div>
                                     </div>
                                     <div className="row">
