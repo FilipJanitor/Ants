@@ -33,27 +33,32 @@ export default class Achievements extends React.Component {
         });
     }
 //more than 12 cols wrap - vnutorny col dynamicky gfenerovaty
-    render() {
+    render() {/*{this.renderAchievements(this.state)}*/
         return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-12">
                         <div className="well">
-                            <div className="row">
+                            <div className="row display-flex">
+
                                 {this.state.achievementsObtained.map((i) => {
                                     return (
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
-                                            <h4>{i.name}</h4>
-                                            <h6>{i.description}</h6>
-                                            <img src="/AO" className="img-responsive" />
+                                            <div className="wall">
+                                                <h4>{i.name}</h4>
+                                                <h6>{i.description}</h6>
+                                                <img src="/AO" className="img-responsive" />
+                                            </div>
                                         </div>
                                     );
                                 })}
                                 {this.state.achievementsLocked.map((i) => {
                                     return (
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
-                                            <h4>{i.name}</h4>
-                                            <img src="/AL" className="img-responsive" />
+                                            <div className="wall">
+                                                <h4>{i.name}</h4>
+                                                <img src="/AL" className="img-responsive" />
+                                            </div>
                                         </div>
                                     );
                                 })}
@@ -64,4 +69,33 @@ export default class Achievements extends React.Component {
             </div>
         );
     }
+/* in case flex breaks
+    renderAchievements(state) {
+        dataArray = [];
+        var i;
+        var counter = 1;
+        for(i = 0; i < state.achievementsObtained; i++){
+            dataArray.push(
+                <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={state.achievementsObtained[i].name}>
+                    <div className="wall">
+                        <h4>{state.achievementsObtained[i].name}</h4>
+                        <h6>{state.achievementsObtained[i].description}</h6>
+                        <img src="/AO" className="img-responsive" />
+                    </div>
+                </div>
+            );
+            counter++
+        }
+        for(i = 0; i < state.achievementsLocked; i++){
+            dataArray.push(
+                <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
+                    <div className="wall">
+                        <h4>{i.name}</h4>
+                        <img src="/AL" className="img-responsive" />
+                    </div>
+                </div>
+            );
+        }
+        return dataArray;
+    } */
 }

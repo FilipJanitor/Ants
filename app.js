@@ -112,7 +112,8 @@ app.get('/rank:id', function(req,res){
 
 app.get('/AL', function(req,res){
     //poslat obrazok
-    res.sendFile(__dirname + '/public/img/AL.png');
+    console.log("image sent");
+    res.sendFile(__dirname + '/public/img/AL.svg');
 });
 
 app.get('/AO', function(req,res){
@@ -236,8 +237,57 @@ app.post('/myMatches', debugMiddleware, bodyParser.json(), debugMiddleware, vali
     });
 });
 
+app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: rankSchema}), catchValidationErrors, function(req,res){
+    const data = req.body;
+    const validateQuery = 'SELECT ID FROM users WHERE ID=' + db.escape(data.userId) +' AND token=' + db.escape(data.token);
+    const queryObtained = 'SELECT a.name, a.description FROM achievements AS a, users_achievements AS ua WHERE a.ID=ua.achievementId AND ua.userId=' + db.escape(data.userId);
+    const queryLocked = 'SELECT a.name FROM achievements AS a WHERE NOT EXISTS (SELECT ach.ID FROM achievements AS ach, users_achievements AS ua WHERE ach.ID=ua.achievementId AND ua.userId=' + db.escape(data.userId) +')';
+
+    //dame bez transakcie zatial
+    db.query(validateQuery, (err, rows, fields) => {
+        if(err){
+            console.log(err);
+            res.send({result: false, error: 'AchievementsError'});
+            return;
+        }
+        if(rows.length == 1){
+            //validation successful
+            db.query(queryObtained, (err, rows, fields) => {
+                if(err){
+                    console.log(err);
+                    res.send({result: false, error: 'AchievementsError'});
+                    return;
+                }
+                db.query(queryLocked,
+                    (function(obtained){
+                        return function(err ,rows, fields){
+                            if(err){
+                                console.log(err);
+                                res.send({result: false, error: 'AchievementsError'});
+                                return;
+                            }
+                            res.send({
+                                result: true,
+                                achievementsLocked: rows,
+                                achievementsObtained: obtained
+                            });
+                        };
+                    })(rows)
+                );
+            });
+        } else {
+            console.log("invalid token");
+            res.send({result: false, error: 'Invalid id or token'});
+        }
+    });
+});
+
 app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}), catchValidationErrors, function(req,res){
     const data = req.body;
+    if(data.name === "" || data.password.length < 6){
+        res.send({result: false, error: 'Too short'});
+        return;
+    }
     const query = 'SELECT token, ID FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
     const querySelect = 'SELECT token, ID FROM users WHERE name=' + db.escape(data.name);
     const userToken = crypto.randomBytes(64).toString('hex');
