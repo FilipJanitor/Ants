@@ -83,32 +83,24 @@ class Lobby extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="btn-group btn-group-justified">
-                                                            <div className="btn-group">
-                                                                <Button bsSize="large" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
+                                                            <a href="#" class="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
                                                                     Initiate normal game
-                                                                </Button>
-                                                            </div>
-                                                            <div className="btn-group">
-                                                                <Button bsSize="large" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
+                                                            </a>
+                                                            <a href="#" class="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
                                                                     Initiate hardcore game
-                                                                </Button>
-                                                            </div>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="btn-group btn-group-justified">
-                                                            <div className="btn-group">
-                                                                <Button bsSize="large" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
+                                                            <a href="#" class="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
                                                                     Initiate correspondence game
-                                                                </Button>
-                                                            </div>
-                                                            <div className="btn-group">
-                                                                <Button bsSize="large" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
+                                                            </a>
+                                                            <a href="#" class="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
                                                                     Initiate hardcore correspondence game
-                                                                </Button>
-                                                            </div>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
