@@ -71,7 +71,7 @@ class Lobby extends React.Component {
             <div className="constainer-fluid">
                 <div className="row">
                     <div className="col-md-3 filler">
-                        <OngoingMatches userId={this.props.appState.userId} />
+                        <OngoingMatches userId={this.props.appState.userId} token={this.props.appState.token} />
                     </div>
                     <div className="col-md-6">
                         <div className="row">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
+import { RANKS } from '../client.js';
 
 
 //<Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />
@@ -24,7 +25,7 @@ export default class Rank extends React.Component {
         .then(res => {
             if (res.data.result == true) {
                 this.setState({
-                    score: res.data.scores,
+                    score: res.data.score,
                     wins: res.data.wins,
                     loses: res.data.loses,
                     ties: res.data.ties,
@@ -58,6 +59,7 @@ export default class Rank extends React.Component {
                                     </div>
                                     <div className="row">
                                         <div className="col-sm-12">
+                                            <h5> {RANKS[this.state.rank]} </h5>
                                             <img src={"/rank"+this.state.rank} className="img-responsive"/>
                                         </div>
                                     </div>

@@ -16,6 +16,11 @@ const LOOKING_FOR_HARDCORE_MATCH = 2;
 const LOOKING_FOR_CORRESPONDENCE_MATCH = 3;
 const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 
+const USER_ON_TURN = 0;
+const OPPONENT_ON_TURN = 1;
+
+const GAME_ONGOING = 0;
+
 
 // ________________________________INIT___________________________________
 const catchValidationErrors = function(err,req,res,next) {
@@ -97,6 +102,24 @@ app.get('/style.css', function(req,res){
     res.sendFile(__dirname + '/public/style.css');
 });
 
+//___________________images____________________________________________________
+app.get('/rank:id', function(req,res){
+    //poslat obrazok
+    const filename = sanitize('rank' + req.params.id);
+    console.log(filename);
+    res.sendFile(__dirname + '/public/img/' + filename + '.png');
+});
+
+app.get('/AL', function(req,res){
+    //poslat obrazok
+    res.sendFile(__dirname + '/public/img/AL.png');
+});
+
+app.get('/AO', function(req,res){
+    //poslat obrazok
+    res.sendFile(__dirname + '/public/img/AO.png');
+});
+
 // __________________interaction_______________________________________________
 
 //warning, callback hell
@@ -157,7 +180,6 @@ app.post('/myRank', debugMiddleware, bodyParser.json(), debugMiddleware, validat
             return;
         }
         if(rows.length == 1){
-            console.log("login successful");
             console.log(rows);
             res.send({
                 result: true,
@@ -174,11 +196,44 @@ app.post('/myRank', debugMiddleware, bodyParser.json(), debugMiddleware, validat
     });
 });
 
-app.get('/rank:id', function(req,res){
-    //poslat obrazok
-    const filename = sanitize('rank' + req.params.id);
-    console.log(filename);
-    res.sendFile(__dirname + '/public/img/' + filename);
+app.post('/myMatches', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: rankSchema}), catchValidationErrors, function(req,res){
+    const data = req.body;
+    const validateQuery = 'SELECT ID FROM users WHERE ID=' + db.escape(data.userId) +' AND token=' + db.escape(data.token);
+    //mozno pridat aj correspondence filter?
+    const query =
+'(SELECT u.name AS name, u.ID AS id, ' + USER_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId1='+ db.escape(data.userId) +' AND t.userId2=u.ID AND t.playerOnTurn = 1 AND t.gameResult='+ GAME_ONGOING + ')' +
+' UNION ' +
+'(SELECT u.name AS name, u.ID AS id, ' + OPPONENT_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId1='+ db.escape(data.userId) +' AND t.userId2=u.ID AND t.playerOnTurn = 2 AND t.gameResult='+ GAME_ONGOING + ')' +
+' UNION ' +
+'(SELECT u.name AS name, u.ID AS id, ' + USER_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.playerOnTurn = 2 AND t.gameResult='+ GAME_ONGOING + ')' +
+' UNION ' +
+'(SELECT u.name AS name, u.ID AS id, ' + OPPONENT_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.playerOnTurn = 1 AND t.gameResult='+ GAME_ONGOING + ')';
+    console.log(query);
+    db.query(validateQuery, (err, rows, fields) => {
+        if(err){
+            console.log(err);
+            res.send({result: false, error: 'MatchboardError'});
+            return;
+        }
+        if(rows.length == 1){
+            //validation successful
+            db.query(query, (err, rows, fields) => {
+                if(err){
+                    console.log(err);
+                    res.send({result: false, error: 'MatchboardError'});
+                    return;
+                }
+                console.log(rows);
+                res.send({
+                    result: true,
+                    matches: rows
+                });
+            });
+        } else {
+            console.log("invalid token");
+            res.send({result: false, error: 'Invalid id or token'});
+        }
+    });
 });
 
 app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, validate({body: loginSchema}), catchValidationErrors, function(req,res){

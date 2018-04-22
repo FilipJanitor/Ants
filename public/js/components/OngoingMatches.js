@@ -1,4 +1,6 @@
 import React from 'react';
+import { Table } from 'react-bootstrap';
+import axios from 'axios';
 
 export default class OngoingMatches extends React.Component {
     constructor(props) {
@@ -30,7 +32,7 @@ export default class OngoingMatches extends React.Component {
         });
     }
 
-    render() { //red - waiting, green going
+    render() { //red - waiting, green going //tabulka ma byt klikatelna
         if( this.state.ajaxSuccess) {
             return (
                 <div className="container-fluid filler">
@@ -45,8 +47,8 @@ export default class OngoingMatches extends React.Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.scores.map((i) => {return (
-                                            <tr key={i.name}>
+                                        {this.state.matches.map((i) => {return (
+                                            <tr key={i.id} onClick={()=>{i.id}}>
                                                 <td>{i.name}</td>
                                                 <td>{i.onTurn}</td>
                                             </tr>
