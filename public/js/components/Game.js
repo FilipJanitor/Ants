@@ -15,6 +15,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Cards from './Cards.js';
 
 class Game extends React.Component {
     constructor(props) {
@@ -26,6 +27,11 @@ class Game extends React.Component {
             <div id="gameWrapper">
                 <div className="gameBackground">
                     <img className="autoFill" src="/background" />
+                </div>
+                <div className="gameHeader">
+                    <Button onClick={()=>{}}> Tie </Button>
+                    {this.props.appState.correspondenceGame &&
+                    <Button onClick={()=>{}}> Back to lobby </Button>}
                 </div>
                 <div className="statsWrapper">
                     <Stats type="left" stats={this.props.appState.playerStats} />
