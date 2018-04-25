@@ -176,3 +176,10 @@ footer{
 }
 
 
+c {
+    transform-style: preserve-3d;
+    will-change:transform;
+    transition:transform .2s;
+    transition-timing-function: ease-in-out;
+}
+

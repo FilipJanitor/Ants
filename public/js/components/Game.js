@@ -34,10 +34,10 @@ class Game extends React.Component {
                     <Button onClick={()=>{}}> Back to lobby </Button>}
                 </div>
                 <div className="statsWrapper">
-                    <Stats type="left" stats={this.props.appState.playerStats} />
-                    <Tower type="left" stats={this.props.appState.playerStats} />
-                    <Tower type="right" stats={this.props.appState.opponentStats} />
-                    <Stats type="right" stats={this.props.appStatle.opponentState} />
+                    <Stats type="Left" stats={this.props.appState.playerStats} />
+                    <Tower type="Left" />
+                    <Tower type="Right" />
+                    <Stats type="Right" stats={this.props.appStatle.opponentState} />
                 </div>
                 <div className="cardsWrapper">
                     <Cards/>
