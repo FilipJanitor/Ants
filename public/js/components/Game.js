@@ -36,8 +36,9 @@ class Game extends React.Component {
                 <div className="statsWrapper">
                     <Stats type="Left" stats={this.props.appState.playerStats} />
                     <Tower type="Left" />
+                    <PlayedCard card={this.props.appState.playedCard} />
                     <Tower type="Right" />
-                    <Stats type="Right" stats={this.props.appStatle.opponentState} />
+                    <Stats type="Right" stats={this.props.appState.opponentState} />
                 </div>
                 <div className="cardsWrapper">
                     <Cards/>
