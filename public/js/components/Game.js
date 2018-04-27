@@ -29,9 +29,11 @@ class Game extends React.Component {
                     <img className="autoFill" src="/background" />
                 </div>
                 <div className="gameHeader">
+                    <Button> {this.props.appstate.name} </Button>
                     <Button onClick={()=>{}}> Tie </Button>
                     {this.props.appState.correspondenceGame &&
                     <Button onClick={()=>{}}> Back to lobby </Button>}
+                    <Button> {this.props.appstate.opponentName} </Button>
                 </div>
                 <div className="statsWrapper">
                     <Stats type="Left" stats={this.props.appState.playerStats} />
