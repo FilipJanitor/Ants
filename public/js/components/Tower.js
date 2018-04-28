@@ -1,7 +1,7 @@
 import React from 'react';
 
 //transformacia sa robi cez css
-class Tower extends React.Component {
+export default class Tower extends React.Component {
     constructor(props){
         super(props);
     }

@@ -84,15 +84,10 @@ footer{
     /*height: 100%;*/
     width: 640px;
     height: 480px;
+    /*set the background to repeat itself*/
 }
 
-.gameBackground{
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    z-index: -1;
-}
+
 /*Should probably inherit block display from parent. This would make them apper under each other*/
 .statsWrapper{
     width: 100%;

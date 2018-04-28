@@ -30,10 +30,7 @@ class Game extends React.Component {
 
     render() { //gamewrapper bude maintainovat aspect ratio. V Cards musi byt mapstatetoprops. PlayedCard musi decidovat, ci je img back
         return (
-            <div id="gameWrapper">
-                <div className="gameBackground">
-                    <img className="autoFill" src="/background" />
-                </div>
+            <div id="gameWrapper" >
                 <div className="gameHeader">
                     <Button> {this.props.appState.name} </Button>
                     <Button onClick={()=>{}}> Tie </Button>

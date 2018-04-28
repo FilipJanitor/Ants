@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 //transformacia sa robi cez css
-class Stats extends React.Component {
+export default class Stats extends React.Component {
     constructor(props){
         super(props);
     }
