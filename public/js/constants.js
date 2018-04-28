@@ -7,6 +7,8 @@ export const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
 export const USER_ON_TURN = 0;
 export const OPPONENT_ON_TURN = 1;
 
+export const INITIATE_GAME = 5;
+
 export const RANKS = Object.freeze ([
     "Cadet",
     "1st class soldier (1 win)",

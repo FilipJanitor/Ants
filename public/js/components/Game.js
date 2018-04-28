@@ -24,9 +24,29 @@ import PlayedCard from './PlayedCard.js';
 class Game extends React.Component {
     constructor(props) {
         super(props);
+        this.socket = null; // tu by bolo dobre ho dat, ale nviem ci sa to spravne dostane do Cards
     }
 
     //v component didmount mame propsy. Tam inicializujeme websoket , musime posileat z neho
+    componentDidMount () {
+        this.socket = 0;
+        this.socket.onopen = function(event) {
+            this.socket.send(JSON.stringify({
+                typeOfRequest: INITIATE_GAME,
+                lookingForGame: this.props.appstate.lookingForGame,
+                name: this.props.appState.name,
+                token: this.props.appState.token
+            })); //initialize game or request a game in progress in case of correspondence
+        }
+        this.socket.onmessage = function(event) {
+            event.data;
+        }
+        this.socket.onclose = function() {
+
+        }
+        this.socket.onerror
+        /* this.socket.close*/
+    }
 
     render() { //gamewrapper bude maintainovat aspect ratio. V Cards musi byt mapstatetoprops. PlayedCard musi decidovat, ci je img back
         return (
@@ -38,7 +58,7 @@ class Game extends React.Component {
                     <Button onClick={()=>{}}> Back to lobby </Button>}
                     {!this.props.appState.correspondenceGame &&
                     <Button onClick={()=>{}}> Back to lobby (lose) </Button>}
-                    { this.props.appState.running ? <Button> {this.props.appstate.opponentName} </Button> : <Button> Looking for opponent! </Button> }
+                    { this.props.appState.running ? <Button> {this.props.appState.opponentName} </Button> : <Button> Looking for opponent! </Button> }
                 </div>
                 <div className="statsWrapper">
                     <Stats type="Left" stats={this.props.appState.playerStats} />
@@ -48,7 +68,7 @@ class Game extends React.Component {
                     <Stats type="Right" stats={this.props.appState.opponentStats} />
                 </div>
                 <div className="cardsWrapper">
-                    <Cards/>
+                    <Cards socket={this.socket}/>
                 </div>
             </div>
         );

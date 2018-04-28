@@ -16,7 +16,7 @@ export default function reducer(state, action){
             return { ...state, lookingForGame: action.type, correspondenceGame: true };
         case LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH:
             return { ...state, lookingForGame: action.type, correspondenceGame: true };
-        default:
+        default: /*Sem este, ked sa ide continuovat hra, ked sa robi tah a podobne */
             console.log("REDUX STATE IS CORRUPTED GAME")
             return state;
     }
