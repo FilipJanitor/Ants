@@ -31,21 +31,32 @@ class Game extends React.Component {
     //v component didmount mame propsy. Tam inicializujeme websoket , musime posileat z neho
     //make some higherorder fctions to put this away from component
     componentDidMount () {
-        this.socket = 0;
-        this.socket.onopen = function(event) {
+        var loc = window.location, new_uri;
+        if(loc.protocol === "https:") {
+            new_uri = "wss://";
+        } else {
+            new_uri = "ws://";
+        }
+        new_uri += loc.host + "/game"
+        this.socket = new WebSocket(new_uri);
+        this.socket.onopen = (event) => {
             this.socket.send(JSON.stringify({
                 typeOfRequest: INITIATE_GAME,
-                lookingForGame: this.props.appstate.lookingForGame,
+                lookingForGame: this.props.appState.lookingForGame,
                 name: this.props.appState.name,
                 token: this.props.appState.token
             })); //initialize game or request a game in progress in case of correspondence
-        }
+        };
         this.socket.onmessage = function(event) {
             //for debug we throw in case of syntax errors
             const contents = JSON.parse(event.data);
-            switch (body.typeOfResponse) {
+            switch (contents.typeOfResponse) {
+                case "ECHO":
+                    console.log("echo");
+                    return;
                 case NEW_GAME_STATE:
                     /*this involves found match*/
+                    /*alter tower size in css here */
                     this.props.dispatch({ type: NEW_GAME_STATE, data: contents.data});
                     return;
                 /* TODO tie proposed, win, loss etc */

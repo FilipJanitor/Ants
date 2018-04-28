@@ -1,4 +1,5 @@
 const express = require('express');
+
 const mysql = require('mysql');
 const { Validator, ValidationError } = require('express-json-validator-middleware');
 const bodyParser = require('body-parser');
@@ -7,6 +8,7 @@ const sanitize = require("sanitize-filename");
 const validator = new Validator({allErrors: true});
 const validate = validator.validate;
 const app = express();
+var expressWs = require('express-ws')(app);
 
 // ________________________________CONSTANTS___________________________________
 
@@ -365,6 +367,11 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
     });
 });
 
+app.ws('/game', function(ws,req){
+    ws.on('message', function(msg){
+        ws.send(JSON.stringify({typeOfResponse :"ECHO"}));
+    });
+});
 
 app.use(function (req, res){
     console.log("default sender");

@@ -84,10 +84,10 @@ class Lobby extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="btn-group btn-group-justified">
-                                                            <a href="#" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
+                                                            <a href="javascript:void(0)" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
                                                                     Initiate normal game
                                                             </a>
-                                                            <a href="#" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
+                                                            <a href="javascript:void(0)" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
                                                                     Initiate hardcore game
                                                             </a>
                                                         </div>
@@ -96,10 +96,10 @@ class Lobby extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="btn-group btn-group-justified">
-                                                            <a href="#" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
+                                                            <a href="javascript:void(0)" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
                                                                     Initiate correspondence game
                                                             </a>
-                                                            <a href="#" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
+                                                            <a href="javascript:void(0)" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
                                                                     Initiate hardcore correspondence game
                                                             </a>
                                                         </div>

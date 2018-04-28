@@ -36,6 +36,7 @@
     "eslint-plugin-react": "^7.7.0",
     "express": "^4.16.3",
     "express-json-validator-middleware": "^1.2.1",
+    "express-ws": "^3.0.0",
     "found": "^0.3.8",
     "jshint": "^2.9.5",
     "jslint": "^0.12.0",
