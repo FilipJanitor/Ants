@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import axios from 'axios';
-import { RANKS } from '../client.js';
+import { RANKS } from '../constants';
 
 
 //<Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />

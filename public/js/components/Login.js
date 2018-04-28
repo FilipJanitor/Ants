@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import { setName, setPassword, attemptToLogin, routeToRegister, getValidationState } from './loginRegisterActions.js';
+import { setName, setPassword, attemptToLogin, routeToRegister, getValidationState } from '../actions/loginRegisterActions.js';
 
 //{user.failedLogin && <Text text=/>}
 //z this.props vytiahne dispatch a user

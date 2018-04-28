@@ -1,5 +1,3 @@
-import { initialGlobalState } from '../client.js'
-
 const initialState = {
     name: "",
     password: "",
@@ -10,7 +8,7 @@ const initialState = {
 //toto je pre redux
 //You either need to provide it as the second argument to createStore(reducer, preloadedState),
 //or have your reducers handle an undefined state argument and return the initial state.
-export default function reducer(state = initialState, action){
+export default function reducer(state /*= initialState*/, action){
     switch (action.type){//wow such objectspread...
         case "SET_NAME":
             return { ...state, name: action.data };
@@ -45,7 +43,8 @@ export default function reducer(state = initialState, action){
                 failed: false
             }
         default:
-            console.log("REDUX STATE IS CORRUPTED")
+            console.log("REDUX STATE IS CORRUPTED");
+            console.log(state);
             return state;
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import { setName, setPassword, attemptToRegister, routeToLogin, getValidationState } from './loginRegisterActions.js';
+import { setName, setPassword, attemptToRegister, routeToLogin, getValidationState } from '../actions/loginRegisterActions.js';
 
 class Register extends React.Component {
     constructor(props){

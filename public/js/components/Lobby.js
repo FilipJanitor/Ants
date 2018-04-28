@@ -22,6 +22,7 @@ import Rank from './Rank.js';
 import Scoreboard from './Scoreboard.js';
 import Achievements from './Achievements.js';
 import OngoingMatches from './OngoingMatches.js';
+import { initiateGame } from '../actions/lobbyActions.js'
 
 import {
            NOT_LOOKING_FOR_MATCH,
@@ -29,7 +30,7 @@ import {
            LOOKING_FOR_HARDCORE_MATCH,
            LOOKING_FOR_CORRESPONDENCE_MATCH,
            LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH
-       } from '../client.js';
+       } from '../constants';
 
 //USE REACT THEY SAID IT  WILL BE FUN THEY SAID
 
@@ -83,10 +84,10 @@ class Lobby extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="btn-group btn-group-justified">
-                                                            <a href="#" class="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
+                                                            <a href="#" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_NORMAL_MATCH)}>
                                                                     Initiate normal game
                                                             </a>
-                                                            <a href="#" class="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
+                                                            <a href="#" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_MATCH)}>
                                                                     Initiate hardcore game
                                                             </a>
                                                         </div>
@@ -95,10 +96,10 @@ class Lobby extends React.Component {
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="btn-group btn-group-justified">
-                                                            <a href="#" class="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
+                                                            <a href="#" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_CORRESPONDENCE_MATCH)}>
                                                                     Initiate correspondence game
                                                             </a>
-                                                            <a href="#" class="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
+                                                            <a href="#" className="btn btn-default btn-lg" onClick={()=>initiateGame(this.props.dispatch, LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH)}>
                                                                     Initiate hardcore correspondence game
                                                             </a>
                                                         </div>
