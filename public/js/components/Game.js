@@ -20,6 +20,7 @@ import { Button } from 'react-bootstrap';
 import Stats from './Stats.js';
 import Tower from './Tower.js';
 import PlayedCard from './PlayedCard.js';
+import { INITIATE_GAME, NEW_GAME_STATE } from '../constants.js';
 
 class Game extends React.Component {
     constructor(props) {
@@ -28,6 +29,7 @@ class Game extends React.Component {
     }
 
     //v component didmount mame propsy. Tam inicializujeme websoket , musime posileat z neho
+    //make some higherorder fctions to put this away from component
     componentDidMount () {
         this.socket = 0;
         this.socket.onopen = function(event) {
@@ -39,12 +41,22 @@ class Game extends React.Component {
             })); //initialize game or request a game in progress in case of correspondence
         }
         this.socket.onmessage = function(event) {
-            event.data;
+            //for debug we throw in case of syntax errors
+            const contents = JSON.parse(event.data);
+            switch (body.typeOfResponse) {
+                case NEW_GAME_STATE:
+                    /*this involves found match*/
+                    this.props.dispatch({ type: NEW_GAME_STATE, data: contents.data});
+                    return;
+                /* TODO tie proposed, win, loss etc */
+            }
         }
         this.socket.onclose = function() {
-
+            return;
         }
-        this.socket.onerror
+        this.socket.onerror = function() {
+            return;
+        }
         /* this.socket.close*/
     }
 

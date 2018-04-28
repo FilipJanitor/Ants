@@ -8,6 +8,7 @@ export const USER_ON_TURN = 0;
 export const OPPONENT_ON_TURN = 1;
 
 export const INITIATE_GAME = 5;
+export const NEW_GAME_STATE = 6;
 
 export const RANKS = Object.freeze ([
     "Cadet",
