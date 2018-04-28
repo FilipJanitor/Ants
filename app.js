@@ -113,16 +113,21 @@ app.get('/rank:id', function(req,res){
 });
 
 app.get('/AL', function(req,res){
-    //poslat obrazok
     console.log("image sent");
     res.sendFile(__dirname + '/public/img/AL.svg');
 });
 
 app.get('/AO', function(req,res){
-    //poslat obrazok
     res.sendFile(__dirname + '/public/img/AO.png');
 });
 
+app.get('/background.jpg', function(req,res){
+    res.sendFile(__dirname + '/public/img/background.jpg');
+});
+
+app.get('/card.png', function(req,res){
+    res.sendFile(__dirname + '/public/img/card.png');
+});
 // __________________interaction_______________________________________________
 
 //warning, callback hell
@@ -372,6 +377,27 @@ app.ws('/game', function(ws,req){
         ws.send(JSON.stringify({typeOfResponse :"ECHO"}));
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.use(function (req, res){
     console.log("default sender");

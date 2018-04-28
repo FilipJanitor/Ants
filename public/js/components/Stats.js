@@ -8,7 +8,7 @@ export default class Stats extends React.Component {
     }
     render() {
         return ( //width 100 pre wrappery
-            <div>
+            <div className="innerStatsWrapper displayHorizontally" >
                 <div className="stat build">
                     <div className="stat row">
                         <img src="/builders" className="img-responsive" />

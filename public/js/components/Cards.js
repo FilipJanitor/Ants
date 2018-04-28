@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const CardBack = () => (
-    <div className="cardBack">
+    <div className="card">
+        <img src="card.png" className="img-responsive" />
     </div>
 );
 

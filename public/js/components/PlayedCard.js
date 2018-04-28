@@ -2,6 +2,6 @@ import React from 'react';
 
 export default class PlayedCard extends React.Component{
     render() {
-        return (<div> Played card </div>);
+        return (<div className="playedCard displayHorizontally"> Played card </div>);
     }
 }
