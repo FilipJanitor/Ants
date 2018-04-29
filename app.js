@@ -17,9 +17,11 @@ const LOOKING_FOR_NORMAL_MATCH = 1;
 const LOOKING_FOR_HARDCORE_MATCH = 2;
 const LOOKING_FOR_CORRESPONDENCE_MATCH = 3;
 const LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH = 4;
-
 const USER_ON_TURN = 0;
 const OPPONENT_ON_TURN = 1;
+
+const INITIATE_GAME = 5;
+const NEW_GAME_STATE = 6;
 
 const GAME_ONGOING = 0;
 
@@ -65,6 +67,9 @@ db.connect((err) => {
     }
 });
 
+let lookingForNormalMatch = [];
+let lookingForHardcoreMatch = []
+
 // __________________schemas___________________________________________________
 const loginSchema = {
     "type": "object",
@@ -90,17 +95,17 @@ const rankSchema = {
 // __________________basics____________________________________________________
 
 app.get('/client.bundle.js', function(req,res){
-    console.log('send js TODO');
+    //console.log('send js TODO');
     res.sendFile(__dirname + '/public/client.bundle.js');
 });
 
 app.get('/theme.min.css', function(req,res){
-    console.log('send css TODO');
+    //console.log('send css TODO');
     res.sendFile(__dirname + '/public/theme.min.css');
 });
 
 app.get('/style.css', function(req,res){
-    console.log('send css TODO');
+    //console.log('send css TODO');
     res.sendFile(__dirname + '/public/style.css');
 });
 
@@ -108,12 +113,12 @@ app.get('/style.css', function(req,res){
 app.get('/rank:id', function(req,res){
     //poslat obrazok
     const filename = sanitize('rank' + req.params.id);
-    console.log(filename);
+    //console.log(filename);
     res.sendFile(__dirname + '/public/img/' + filename + '.png');
 });
 
 app.get('/AL', function(req,res){
-    console.log("image sent");
+    //console.log("image sent");
     res.sendFile(__dirname + '/public/img/AL.svg');
 });
 
@@ -138,13 +143,13 @@ app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate
     const query = 'SELECT score, wins, loses, ties, lookingForMatch, token, ID FROM users WHERE name=' + db.escape(data.name) + ' AND password=sha2(' + db.escape(data.password) + ',256)';
     db.query(query, (err, rows, fields) => {
         if(err){
-            console.log(err);
+            //console.log(err);
             res.send({result: false, error: 'LoginError'});
             return;
         }
         if(rows.length == 1){
-            console.log("login successful");
-            console.log(rows);
+            //console.log("login successful");
+            //console.log(rows);
             res.send({
                 result: true,
                 token: rows[0].token,
@@ -156,7 +161,7 @@ app.post('/login', debugMiddleware, bodyParser.json(), debugMiddleware, validate
                 lookingForMatch: rows[0].lookingForMatch
             });
         } else {
-            console.log("no such user");
+            //console.log("no such user");
             res.send({result: false, error: 'Invalid credentials'});
         }
     });
@@ -166,11 +171,11 @@ app.get('/scoreboard', /*debugMiddleware, bodyParser.json(), debugMiddleware, va
     const query = 'SELECT name, score, wins, loses, ties FROM users ORDER BY score DESC LIMIT 10';
     db.query(query, (err, rows, fields) => {
         if(err){
-            console.log(err);
+            //console.log(err);
             res.send({result: false, error: 'ScoreboardError'});
             return;
         }
-        console.log("scoreboard sent")
+        //console.log("scoreboard sent")
         res.send({
             result: true,
             scores: rows
@@ -183,12 +188,12 @@ app.post('/myRank', debugMiddleware, bodyParser.json(), debugMiddleware, validat
     const query = 'SELECT score, wins, loses, ties, rank FROM users WHERE ID=' + db.escape(data.userId) +' AND token=' + db.escape(data.token);
     db.query(query, (err, rows, fields) => {
         if(err){
-            console.log(err);
+            //console.log(err);
             res.send({result: false, error: 'ScoreboardError'});
             return;
         }
         if(rows.length == 1){
-            console.log(rows);
+            //console.log(rows);
             res.send({
                 result: true,
                 score: rows[0].score,
@@ -198,7 +203,7 @@ app.post('/myRank', debugMiddleware, bodyParser.json(), debugMiddleware, validat
                 rank: rows[0].rank
             });
         } else {
-            console.log("invalid token");
+            //console.log("invalid token");
             res.send({result: false, error: 'Invalid id or token'});
         }
     });
@@ -219,7 +224,7 @@ app.post('/myMatches', debugMiddleware, bodyParser.json(), debugMiddleware, vali
     console.log(query);
     db.query(validateQuery, (err, rows, fields) => {
         if(err){
-            console.log(err);
+            //console.log(err);
             res.send({result: false, error: 'MatchboardError'});
             return;
         }
@@ -227,18 +232,18 @@ app.post('/myMatches', debugMiddleware, bodyParser.json(), debugMiddleware, vali
             //validation successful
             db.query(query, (err, rows, fields) => {
                 if(err){
-                    console.log(err);
+                    //console.log(err);
                     res.send({result: false, error: 'MatchboardError'});
                     return;
                 }
-                console.log(rows);
+                //console.log(rows);
                 res.send({
                     result: true,
                     matches: rows
                 });
             });
         } else {
-            console.log("invalid token");
+            //console.log("invalid token");
             res.send({result: false, error: 'Invalid id or token'});
         }
     });
@@ -253,7 +258,7 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
     //dame bez transakcie zatial
     db.query(validateQuery, (err, rows, fields) => {
         if(err){
-            console.log(err);
+            //console.log(err);
             res.send({result: false, error: 'AchievementsError'});
             return;
         }
@@ -261,7 +266,7 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
             //validation successful
             db.query(queryObtained, (err, rows, fields) => {
                 if(err){
-                    console.log(err);
+                    //console.log(err);
                     res.send({result: false, error: 'AchievementsError'});
                     return;
                 }
@@ -269,7 +274,7 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
                     (function(obtained){
                         return function(err ,rows, fields){
                             if(err){
-                                console.log(err);
+                               // console.log(err);
                                 res.send({result: false, error: 'AchievementsError'});
                                 return;
                             }
@@ -283,7 +288,7 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
                 );
             });
         } else {
-            console.log("invalid token");
+            //console.log("invalid token");
             res.send({result: false, error: 'Invalid id or token'});
         }
     });
@@ -312,8 +317,8 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
     console.log("registering");
     db.beginTransaction(function(err) {
         if (err) {
-            console.log("registering1");
-            console.log(err);
+            //console.log("registering1");
+            //console.log(err);
             res.send({
                 result: false,
                 error: err
@@ -321,30 +326,30 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
         }
         db.query(querySelect, function (error, rows, fields) {
             if(error){
-                console.log("registering2");
-                console.log(error);
+                //console.log("registering2");
+                //console.log(error);
                 return db.rollback(function() {
                     res.send({result: false, error: 'RegisterError1'});
                 });
             }
             if(rows.length != 0){
-                console.log("nametaken");
+                //console.log("nametaken");
                 return db.rollback(function() {
                     res.send({result: false, error: 'NameTaken'});
                 });
             }
             db.query(queryInsert, function (error, rows, fields) {
                 if (error) {
-                    console.log("registering3");
-                    console.log(error);
+                    //console.log("registering3");
+                    //console.log(error);
                     return db.rollback(function() {
                         res.send({result: false, error: 'RegisterError2'});
                     });
                 }
                 db.query(query, (err, rows, fields) => {
                     if(err){
-                        console.log("registering4");
-                        console.log(err);
+                        //console.log("registering4");
+                        //console.log(err);
                         return db.rollback(function() {
                             res.send({result: false, error: 'RegisterError3'});
                         });
@@ -352,13 +357,13 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
                     if(rows.length == 1){
                         db.commit(function(err) {
                             if (err) {
-                                console.log("registering5");
-                                console.log(err);
+                                //console.log("registering5");
+                                //console.log(err);
                                 return db.rollback(function() {
                                     res.send({result: false, error: 'RegisterError4'});
                                 });
                             }
-                            console.log("succ");
+                            //console.log("succ");
                             res.send({result: true, token: rows[0].token, userId: rows[0].ID});
                         });
                     } else {
@@ -372,9 +377,29 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
     });
 });
 
+const getUserIdFromToken = (token) => {
+
+};
+
 app.ws('/game', function(ws,req){
     ws.on('message', function(msg){
-        ws.send(JSON.stringify({typeOfResponse :"ECHO"}));
+        const token = getUserIdFromToken(msg.token);
+        switch (msg.typeOfRequest){
+            case INITIATE_GAME:
+                if(msg.lookingForGame === LOOKING_FOR_NORMAL_MATCH ){
+
+                } else if(msg.lookingForGame === LOOKING_FOR_HARDCORE_MATCH ){
+
+                } else if(msg.lookingForGame === LOOKING_FOR_CORRESPONDENCE_MATCH ){
+
+                } else if(msg.lookingForGame === LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH ){
+
+                } else {
+
+                }
+        }
+        //ukladame ws objekt, aby sme mohli posielat superovi
+        ws.send(JSON.stringify({typeOfResponse :"OPENED"}));
     });
 });
 

@@ -54,6 +54,9 @@ class Game extends React.Component {
                 case "ECHO":
                     console.log("echo");
                     return;
+                case "OPENED":
+                    console.log("opened");
+                    return;
                 case NEW_GAME_STATE:
                     /*this involves found match*/
                     /*alter tower size in css here */

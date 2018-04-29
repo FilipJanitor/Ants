@@ -10,6 +10,8 @@ export const OPPONENT_ON_TURN = 1;
 export const INITIATE_GAME = 5;
 export const NEW_GAME_STATE = 6;
 
+export const GAME_ONGOING = 0;
+
 export const RANKS = Object.freeze ([
     "Cadet",
     "1st class soldier (1 win)",
