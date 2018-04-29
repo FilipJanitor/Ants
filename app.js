@@ -468,7 +468,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                 tournaments[ userId ] = tournament;
 
                                 ws.send(JSON.stringify({
-                                    typeOfRespons: NEW_GAME_STATE,
+                                    typeOfResponse: NEW_GAME_STATE,
                                     data: {
                                         opponentName: opponent.name,
                                         playerStats: tournament.player1stats,
@@ -479,7 +479,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                     }
                                 }));
                                 opponent.socket.send(JSON.stringify({
-                                    typeOfRespons: NEW_GAME_STATE,
+                                    typeOfResponse: NEW_GAME_STATE,
                                     data: {
                                         opponentName: msg.name,
                                         playerStats: tournament.player2stats,

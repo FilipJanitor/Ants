@@ -24,7 +24,7 @@ export default function reducer(state, action){
                 opponentStats: action.data.opponentStats,
                 onTurn: action.data.onTurn,
                 playedCard: action.data.playedCard,
-                cards: actions.data.cards
+                cards: action.data.cards
             };
         default: /*Sem este, ked sa ide continuovat hra, ked sa robi tah a podobne */
             console.log("REDUX STATE IS CORRUPTED GAME")

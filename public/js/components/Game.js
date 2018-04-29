@@ -48,18 +48,15 @@ class Game extends React.Component {
             })); //initialize game or request a game in progress in case of correspondence
         };
         this.socket.onmessage = (event) => {
-            //for debug we throw in case of syntax errors
+            //for debug we throw in case of syntax
+            console.log("msg recv");
             const contents = JSON.parse(event.data);
+            console.log(contents);
             switch (contents.typeOfResponse) {
-                case "ECHO":
-                    console.log("echo");
-                    return;
-                case "OPENED":
-                    console.log("opened");
-                    return;
                 case NEW_GAME_STATE:
                     /*this involves found match*/
                     /*alter tower size in css here */
+                    console.log("DISPATCHING");
                     this.props.dispatch({ type: NEW_GAME_STATE, data: contents.data});
                     return;
                 /* TODO tie proposed, win, loss etc */
