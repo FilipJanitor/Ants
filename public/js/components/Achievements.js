@@ -47,7 +47,7 @@ export default class Achievements extends React.Component {
                                             <div className="wall">
                                                 <h4>{i.name}</h4>
                                                 <h6>{i.description}</h6>
-                                                <img src="/AO" className="img-responsive" />
+                                                <img src="/AO" className="spanner"/*"img-responsive"*/  />
                                             </div>
                                         </div>
                                     );
@@ -57,7 +57,7 @@ export default class Achievements extends React.Component {
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
                                             <div className="wall">
                                                 <h4>{i.name}</h4>
-                                                <img src="/AL" className="img-responsive" />
+                                                <img src="/AL" className="spanner"/*"img-responsive"*/ />
                                             </div>
                                         </div>
                                     );

@@ -24,8 +24,13 @@ input {
     margin-bottom: 5 px;
 }
 
-#filler {
+/*toto bolo s # neviempreco */
+.filler {
     height: 100%;
+}
+
+.spanner {
+    width: 100%;
 }
 
 #GameWindow{

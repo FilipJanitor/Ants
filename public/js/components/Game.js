@@ -47,7 +47,7 @@ class Game extends React.Component {
                 token: this.props.appState.token
             })); //initialize game or request a game in progress in case of correspondence
         };
-        this.socket.onmessage = function(event) {
+        this.socket.onmessage = (event) => {
             //for debug we throw in case of syntax errors
             const contents = JSON.parse(event.data);
             switch (contents.typeOfResponse) {
@@ -65,10 +65,15 @@ class Game extends React.Component {
                 /* TODO tie proposed, win, loss etc */
             }
         }
-        this.socket.onclose = function() {
+        this.socket.onclose = (event) => {
+            /* event will eventually contain data about win, loss, tie, or some error that caused the match to be aborted.
+               This will need to be checked. Currently, only the error is default */
+            this.props.dispatch(push("/lobby")); // something abruptly ended
             return;
         }
-        this.socket.onerror = function() {
+        this.socket.onerror = (event) => {
+            console.log("websocket error");
+            console.log(event.data);
             return;
         }
         /* this.socket.close*/
