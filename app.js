@@ -23,6 +23,7 @@ const OPPONENT_ON_TURN = 1;
 
 const INITIATE_GAME = 5;
 const NEW_GAME_STATE = 6;
+const NEXT_TURN = 7;
 
 const GAME_ONGOING = 0;
 
@@ -444,31 +445,60 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                             tournaments[ userId ] = tournament;
                             //console.log(tournament);
                             ws.send(JSON.stringify({
-                                /*typeOfResponse: NEW_GAME_STATE,
+                                typeOfResponse: NEW_GAME_STATE,
                                 data: {
                                     opponentName: opponent.name,
-                                    playerStats: tournament.player1stats,
-                                    opponentStats: tournament.player2stats,
+                                    playerStats: tournament.playerStats[0],
+                                    opponentStats: tournament.playerStats[1],
                                     onTurn: true,
                                     playedCard: -1,
-                                    cards: tournament.player1cards
-                                }*/
-                                typeOfResponse: 99
+                                    cards: tournament.playerCards[0]
+                                }
+                                //typeOfResponse: 99
                             }));
                             opponent.socket.send(JSON.stringify({
-                                /*typeOfResponse: NEW_GAME_STATE,
+                                typeOfResponse: NEW_GAME_STATE,
                                 data: {
                                     opponentName: msg.name,
-                                    playerStats: tournament.player2stats,
-                                    opponentStats: tournament.player1stats,
+                                    playerStats: tournament.playerStats[1],
+                                    opponentStats: tournament.playerStats[0],
                                     onTurn: false,
                                     playedCard: -1,
-                                    cards: tournament.player2cards
-                                }*/
-                                typeOfResponse: 100
+                                    cards: tournament.playerCards[1]
+                                }
+                                // typeOfResponse: 100
                             }));
                             return;
                         }
+                    case NEXT_TURN:
+                        if(loggedUsersToTournament[userId] === undefined){
+                            ws.close(1003,"No tournament running"); // this should not happen
+                            return;
+                        }
+                        let tournament = tournaments[loggedUsersToTournament[userId]];
+                        if (tournament.players[tournament.onTurn].id !== userId){
+                            ws.close(1003,"Player not on turn");
+                            return;
+                        }
+                        if (typeof(msg.cardIndex) !== "number" || msg.cardIndex >= 8 || msg.cardIndex < 0) {
+                            ws.close(1003,"Invalid card index");
+                            return;
+                        }
+                        //ak chce foldnut
+                        if (msg.folds) {
+                            tournament.foldCard(msg.cardIndex);
+                            tournament.nextTurn();
+                        } else {
+                            //kontrola, ci moze hrat kartu
+                            if (!tournament.checkCanPlayCard(/*index of card in client array*/msg.cardIndex)){
+                                ws.close(1003,"Player requesting invalid card");
+                                return;
+                            }
+                            /*award achievements too*/
+                            tournament.playCard(msg.cardIndex);
+                            tournament.nextTurn();
+                        }
+                        //send new state (onturn generovat pomocou andu)
                     case 0:
                         return;
                 }

@@ -252,27 +252,16 @@ const applyEffects = function() {
 };
 class Tournament {
     constructor(player1, player2, type) {
-        this.player1cards = [];
-        this.player2cards = [];
+        //este by sa to dalo zlepsit tak, ze by hrac mal v sebe vsetko, aj staty, aj karty
+        this.playerCards = [[],[]];
         for(let i = 0; i < 8; i++){
-            this.player1cards.push(generateNewCard());
-            this.player2cards.push(generateNewCard());
+            this.playerCards[0].push(generateNewCard());
+            this.playerCards[1].push(generateNewCard());
         }
-        this.player1 = player1;
-        this.player2 = player2;
-        this.onTurn = 1;
+        this.players = [ player1, player2 ];
+        this.onTurn = 0;
         this.playedCard = -1;
-        this.player1stats = {
-            builders: 2,
-            bricks: 5,
-            warriors: 2,
-            weapons: 5,
-            mages: 2,
-            crystals: 5,
-            wall: 10,
-            castle: 35
-        };
-        this.player2stats = {
+        this.playerStats [ {
             builders: 2,
             bricks: 5,
             warriors: 2,
@@ -282,8 +271,45 @@ class Tournament {
             wall: 10,
             castle: 35
         },
+        {
+            builders: 2,
+            bricks: 5,
+            warriors: 2,
+            weapons: 5,
+            mages: 2,
+            crystals: 5,
+            wall: 10,
+            castle: 35
+        } ],
         this.firstTurn = true;
         this.type = type
+    }
+
+    foldCard(cardIndex) {
+        this.playerCards[this.onTurn][cardIndex] = generateNewCard();
+    }
+
+    checkCanPlayCard(cardIndex) {
+    //check requirements
+        //hocico < undefined je false
+        const tur = this.onTurn;
+        const car = this.playerCards[tur][cardIndex];
+        return (! ( this.playerStats[tur].bricks < car.requirements.bricks ||
+            this.playerStats[tur].weapons < car.requirements.weapons ||
+            this.playerStats[tur].crystals < car.requirements.crystals));
+        //better do it this way instead of feature jumble
+    }
+    playCard(cardIndex) {
+        //save writing
+        const tur = this.onTurn;
+        //requirements are matched
+        this.playedCard = this.playerCards[this.onTurn][cardIndex];
+        this.playerCards[this.onTurn][cardIndex] = generateNewCard();
+        // apply effects
+
+
+        //set playedCard too
+        /*achievementy */
     }
 }
 
