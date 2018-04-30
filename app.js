@@ -38,9 +38,9 @@ const catchValidationErrors = function(err,req,res,next) {
 }
 
 const debugMiddleware = function(req,res,next) {
-    console.log("____________________");
-    console.log(req.body);
-    console.log("____________________");
+    // console.log("____________________");
+    // console.log(req.body);
+    // console.log("____________________");
     next();
 }
 
@@ -72,7 +72,7 @@ db.connect((err) => {
 });
 
 let lookingForMatch = {[LOOKING_FOR_NORMAL_MATCH]: [], [LOOKING_FOR_HARDCORE_MATCH]: []};
-console.out("lookingfroMatch " + lookingForMatch);
+console.log("lookingforMatch " + lookingForMatch);
 let loggedUsersToTournament = {};
 let tournaments = {};
 
@@ -227,7 +227,7 @@ app.post('/myMatches', debugMiddleware, bodyParser.json(), debugMiddleware, vali
 '(SELECT u.name AS name, u.ID AS id, ' + USER_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.playerOnTurn = 2 AND t.gameResult='+ GAME_ONGOING + ')' +
 ' UNION ' +
 '(SELECT u.name AS name, u.ID AS id, ' + OPPONENT_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.playerOnTurn = 1 AND t.gameResult='+ GAME_ONGOING + ')';
-    console.log(query);
+    //console.log(query);
     db.query(validateQuery, (err, rows, fields) => {
         if(err){
             //console.log(err);
@@ -320,7 +320,7 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
                                 0 + ',' +
                                 0 + ',' +
                                 0 + ')';
-    console.log("registering");
+    //console.log("registering");
     db.beginTransaction(function(err) {
         if (err) {
             //console.log("registering1");
@@ -396,7 +396,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
         db.query(query, (err, rows, fields) => {
             if(err || rows.length !== 1){
                 //console.log(err);
-                ws.close("LoginError");
+                ws.close(1003,"LoginError");
                 return;
             } else {
                 const userId = rows[0].ID;
@@ -405,7 +405,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                     //noncorrespondence matches are inmemory
                         let tournament = {};
                         if(loggedUsersToTournament[userId] !== undefined){
-                            ws.close("already matched"); // this should not happen
+                            ws.close(1003,"already matched"); // this should not happen
                             return;
                         }
                         if (lookingForMatch[msg.lookingForGame].length === 0) {
@@ -435,15 +435,16 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                     socket: ws
                                 }, opponent, NORMAL);
                             } else {
-                                ws.close("InvalidMatch");
+                                ws.close(1003,"InvalidMatch");
                             return;
                             }
                             //tournament name will be id of the initializer (there is only one user running)
                             loggedUsersToTournament[ userId ] = userId;
                             loggedUsersToTournament[ opponent.id ] = userId;
                             tournaments[ userId ] = tournament;
+                            //console.log(tournament);
                             ws.send(JSON.stringify({
-                                typeOfResponse: NEW_GAME_STATE,
+                                /*typeOfResponse: NEW_GAME_STATE,
                                 data: {
                                     opponentName: opponent.name,
                                     playerStats: tournament.player1stats,
@@ -451,10 +452,11 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                     onTurn: true,
                                     playedCard: -1,
                                     cards: tournament.player1cards
-                                }
+                                }*/
+                                typeOfResponse: 99
                             }));
                             opponent.socket.send(JSON.stringify({
-                                typeOfResponse: NEW_GAME_STATE,
+                                /*typeOfResponse: NEW_GAME_STATE,
                                 data: {
                                     opponentName: msg.name,
                                     playerStats: tournament.player2stats,
@@ -462,7 +464,8 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                     onTurn: false,
                                     playedCard: -1,
                                     cards: tournament.player2cards
-                                }
+                                }*/
+                                typeOfResponse: 100
                             }));
                             return;
                         }

@@ -12,7 +12,7 @@ export default class Scoreboard extends React.Component {
         axios
         .get("/scoreboard")
         .then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.data.result == true) {
                 this.setState({scores: res.data.scores, ajaxSuccess: true});
             } else {

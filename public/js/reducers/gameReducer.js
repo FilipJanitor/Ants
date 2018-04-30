@@ -27,7 +27,7 @@ export default function reducer(state, action){
                 cards: action.data.cards
             };
         default: /*Sem este, ked sa ide continuovat hra, ked sa robi tah a podobne */
-            console.log("REDUX STATE IS CORRUPTED GAME")
+            // console.log("REDUX STATE IS CORRUPTED GAME")
             return state;
     }
 }

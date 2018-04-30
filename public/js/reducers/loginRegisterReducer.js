@@ -43,8 +43,8 @@ export default function reducer(state /*= initialState*/, action){
                 failed: false
             }
         default:
-            console.log("REDUX STATE IS CORRUPTED");
-            console.log(state);
+            // console.log("REDUX STATE IS CORRUPTED");
+            // console.log(state);
             return state;
     }
 }

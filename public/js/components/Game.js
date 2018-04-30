@@ -59,12 +59,19 @@ class Game extends React.Component {
                     console.log("DISPATCHING");
                     this.props.dispatch({ type: NEW_GAME_STATE, data: contents.data});
                     return;
+                case 99:
+                    console.log("got 99");
+                    return;
+                case 100:
+                    console.log("got 100");
+                    return;
                 /* TODO tie proposed, win, loss etc */
             }
         }
         this.socket.onclose = (event) => {
             /* event will eventually contain data about win, loss, tie, or some error that caused the match to be aborted.
                This will need to be checked. Currently, only the error is default */
+            console.log("connectionInterrupted");
             this.props.dispatch(push("/lobby")); // something abruptly ended
             return;
         }
