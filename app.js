@@ -71,8 +71,8 @@ db.connect((err) => {
     }
 });
 
-let lookingForNormalMatch = [];
-let lookingForHardcoreMatch = [];
+let lookingForMatch = {[LOOKING_FOR_NORMAL_MATCH]: [], [LOOKING_FOR_HARDCORE_MATCH]: []};
+console.out("lookingfroMatch " + lookingForMatch);
 let loggedUsersToTournament = {};
 let tournaments = {};
 
@@ -403,114 +403,67 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                 switch (msg.typeOfRequest){
                     case INITIATE_GAME:
                     //noncorrespondence matches are inmemory
-                    //this can be refactored if we store waiters in object
-                        if(msg.lookingForGame === LOOKING_FOR_NORMAL_MATCH){
-                            if(loggedUsersToTournament[userId] !== undefined){
-                                ws.close("already matched"); // this should not happen
-                                return;
-                            }
-                            if (lookingForNormalMatch.length === 0) {
-                                // there is no one to match us
-                                lookingForNormalMatch.push({
-                                    name: msg.name,
-                                    id: userId, //res is from database
-                                    //ukladame ws objekt, aby sme mohli posielat superovi
-                                    socket: ws
-                                });
-                                return;
-                            } else {
-                                const opponent = lookingForNormalMatch.shift();
-                                //construct tournament, notify everyone
-                                let tournament = new Tournament({
-                                    name: msg.name,
-                                    id: userId, //res is from database
-                                    //ukladame ws objekt, aby sme mohli posielat superovi
-                                    socket: ws
-                                }, opponent, NORMAL);
-                                //tournament name will be id of the initializer (there is only one user running)
-                                loggedUsersToTournament[ userId ] = userId;
-                                loggedUsersToTournament[ opponent.id ] = userId;
-                                tournaments[ userId ] = tournament;
-
-                                ws.send(JSON.stringify({
-                                    typeOfResponse: NEW_GAME_STATE,
-                                    data: {
-                                        opponentName: opponent.name,
-                                        playerStats: tournament.player1stats,
-                                        opponentStats: tournament.player2stats,
-                                        onTurn: true,
-                                        playedCard: -1,
-                                        cards: tournament.player1cards
-                                    }
-                                }));
-                                opponent.socket.send(JSON.stringify({
-                                    typeOfResponse: NEW_GAME_STATE,
-                                    data: {
-                                        opponentName: msg.name,
-                                        playerStats: tournament.player2stats,
-                                        opponentStats: tournament.player1stats,
-                                        onTurn: false,
-                                        playedCard: -1,
-                                        cards: tournament.player2cards
-                                    }
-                                }));
-                                return;
-                            }
-                        } else if(msg.lookingForGame === LOOKING_FOR_HARDCORE_MATCH ){
-                            if(loggedUsersToTournament[userId] !== undefined){
-                                ws.close("already matched"); // this should not happen
-                                return;
-                            }
-                            if (lookingForHardcoreMatch.length === 0) {
-                                // there is no one to match us
-                                lookingForHardcoreMatch.push({
-                                    name: msg.name,
-                                    id: userId, //res is from database
-                                    //ukladame ws objekt, aby sme mohli posielat superovi
-                                    socket: ws
-                                });
-                                return;
-                            } else {
-                                const opponent = lookingForHardcoreMatch.shift();
-                                //construct tournament, notify everyone
-                                let tournament = new Tournament({
+                        let tournament = {};
+                        if(loggedUsersToTournament[userId] !== undefined){
+                            ws.close("already matched"); // this should not happen
+                            return;
+                        }
+                        if (lookingForMatch[msg.lookingForGame].length === 0) {
+                            // there is no one to match us
+                            lookingForMatch[msg.lookingForGame].push({
+                                name: msg.name,
+                                id: userId, //res is from database
+                                //ukladame ws objekt, aby sme mohli posielat superovi
+                                socket: ws
+                            });
+                            return;
+                        } else {
+                            const opponent = lookingForMatch[msg.lookingForGame].shift();
+                            //construct tournament, notify everyone
+                            if(msg.lookingForGame === LOOKING_FOR_HARDCORE_MATCH ){
+                                tournament = new Tournament({
                                     name: msg.name,
                                     id: userId, //res is from database
                                     //ukladame ws objekt, aby sme mohli posielat superovi
                                     socket: ws
                                 }, opponent, HARDCORE);
-                                //tournament name will be id of the initializer (there is only one user running)
-                                loggedUsersToTournament[ userId ] = userId;
-                                loggedUsersToTournament[ opponent.id ] = userId;
-                                tournaments[ userId ] = tournament;
-                                ws.send(JSON.stringify({
-                                    typeOfResponse: NEW_GAME_STATE,
-                                    data: {
-                                        opponentName: opponent.name,
-                                        playerStats: tournament.player1stats,
-                                        opponentStats: tournament.player2stats,
-                                        onTurn: true,
-                                        playedCard: -1,
-                                        cards: tournament.player1cards
-                                    }
-                                }));
-                                opponent.socket.send(JSON.stringify({
-                                    typeOfResponse: NEW_GAME_STATE,
-                                    data: {
-                                        opponentName: msg.name,
-                                        playerStats: tournament.player2stats,
-                                        opponentStats: tournament.player1stats,
-                                        onTurn: false,
-                                        playedCard: -1,
-                                        cards: tournament.player2cards
-                                    }
-                                }));
-                                return;
+                            } else if(msg.lookingForGame === LOOKING_FOR_NORMAL_MATCH){
+                                tournament = new Tournament({
+                                    name: msg.name,
+                                    id: userId, //res is from database
+                                    //ukladame ws objekt, aby sme mohli posielat superovi
+                                    socket: ws
+                                }, opponent, NORMAL);
+                            } else {
+                                ws.close("InvalidMatch");
+                            return;
                             }
-                        } else /*if(msg.lookingForGame === LOOKING_FOR_CORRESPONDENCE_MATCH ){
-                        } else if(msg.lookingForGame === LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH ){
-                        } else */{
-                            ws.close("InvalidMatch");
+                            //tournament name will be id of the initializer (there is only one user running)
+                            loggedUsersToTournament[ userId ] = userId;
+                            loggedUsersToTournament[ opponent.id ] = userId;
+                            tournaments[ userId ] = tournament;
+                            ws.send(JSON.stringify({
+                                typeOfResponse: NEW_GAME_STATE,
+                                data: {
+                                    opponentName: opponent.name,
+                                    playerStats: tournament.player1stats,
+                                    opponentStats: tournament.player2stats,
+                                    onTurn: true,
+                                    playedCard: -1,
+                                    cards: tournament.player1cards
+                                }
+                            }));
+                            opponent.socket.send(JSON.stringify({
+                                typeOfResponse: NEW_GAME_STATE,
+                                data: {
+                                    opponentName: msg.name,
+                                    playerStats: tournament.player2stats,
+                                    opponentStats: tournament.player1stats,
+                                    onTurn: false,
+                                    playedCard: -1,
+                                    cards: tournament.player2cards
+                                }
+                            }));
                             return;
                         }
                     case 0:
