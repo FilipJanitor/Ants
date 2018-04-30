@@ -9,7 +9,7 @@ const validator = new Validator({allErrors: true});
 const validate = validator.validate;
 const app = express();
 var expressWs = require('express-ws')(app);
-const { generateNewCard } = require('./cards.js');
+const { generateNewCard, Tournament } = require('./cardsTournaments.js');
 
 // ________________________________CONSTANTS___________________________________
 
@@ -403,7 +403,8 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                 switch (msg.typeOfRequest){
                     case INITIATE_GAME:
                     //noncorrespondence matches are inmemory
-                        if(msg.lookingForGame === LOOKING_FOR_NORMAL_MATCH ){
+                    //this can be refactored if we store waiters in object
+                        if(msg.lookingForGame === LOOKING_FOR_NORMAL_MATCH){
                             if(loggedUsersToTournament[userId] !== undefined){
                                 ws.close("already matched"); // this should not happen
                                 return;
@@ -420,48 +421,12 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                             } else {
                                 const opponent = lookingForNormalMatch.shift();
                                 //construct tournament, notify everyone
-                                //this wil be class eventually
-                                let player1cards = [];
-                                let player2cards = [];
-                                for(let i = 0; i < 8; i++){
-                                    player1cards.push(generateNewCard());
-                                    player2cards.push(generateNewCard());
-                                }
-                                let tournament = {
-                                    player1: {
-                                        name: msg.name,
-                                        id: userId, //res is from database
-                                        //ukladame ws objekt, aby sme mohli posielat superovi
-                                        socket: ws
-                                    },
-                                    player2: opponent,
-                                    onTurn: 1,
-                                    player1cards: player1cards,
-                                    player2cards: player2cards,
-                                    playedCard: -1, /* toto nejak lepsie */
-                                    player1stats: {
-                                        builders: 2,
-                                        bricks: 5,
-                                        warriors: 2,
-                                        weapons: 5,
-                                        mages: 2,
-                                        crystals: 5,
-                                        wall: 10,
-                                        castle: 35
-                                    },
-                                    player2stats: {
-                                        builders: 2,
-                                        bricks: 5,
-                                        warriors: 2,
-                                        weapons: 5,
-                                        mages: 2,
-                                        crystals: 5,
-                                        wall: 10,
-                                        castle: 35
-                                    },
-                                    firstTurn: true,
-                                    type: NORMAL
-                                }
+                                let tournament = new Tournament({
+                                    name: msg.name,
+                                    id: userId, //res is from database
+                                    //ukladame ws objekt, aby sme mohli posielat superovi
+                                    socket: ws
+                                }, opponent, NORMAL);
                                 //tournament name will be id of the initializer (there is only one user running)
                                 loggedUsersToTournament[ userId ] = userId;
                                 loggedUsersToTournament[ opponent.id ] = userId;
@@ -492,7 +457,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                 return;
                             }
                         } else if(msg.lookingForGame === LOOKING_FOR_HARDCORE_MATCH ){
-                            if(loggedUsersToTournament[msg.token] !== undefined){
+                            if(loggedUsersToTournament[userId] !== undefined){
                                 ws.close("already matched"); // this should not happen
                                 return;
                             }
@@ -500,21 +465,51 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                 // there is no one to match us
                                 lookingForHardcoreMatch.push({
                                     name: msg.name,
-                                    id: rows[0].ID, //res is from database
+                                    id: userId, //res is from database
                                     //ukladame ws objekt, aby sme mohli posielat superovi
                                     socket: ws
                                 });
                                 return;
                             } else {
-                                //we use it as a queue
-                                shift();
+                                const opponent = lookingForHardcoreMatch.shift();
                                 //construct tournament, notify everyone
+                                let tournament = new Tournament({
+                                    name: msg.name,
+                                    id: userId, //res is from database
+                                    //ukladame ws objekt, aby sme mohli posielat superovi
+                                    socket: ws
+                                }, opponent, HARDCORE);
+                                //tournament name will be id of the initializer (there is only one user running)
+                                loggedUsersToTournament[ userId ] = userId;
+                                loggedUsersToTournament[ opponent.id ] = userId;
+                                tournaments[ userId ] = tournament;
+                                ws.send(JSON.stringify({
+                                    typeOfResponse: NEW_GAME_STATE,
+                                    data: {
+                                        opponentName: opponent.name,
+                                        playerStats: tournament.player1stats,
+                                        opponentStats: tournament.player2stats,
+                                        onTurn: true,
+                                        playedCard: -1,
+                                        cards: tournament.player1cards
+                                    }
+                                }));
+                                opponent.socket.send(JSON.stringify({
+                                    typeOfResponse: NEW_GAME_STATE,
+                                    data: {
+                                        opponentName: msg.name,
+                                        playerStats: tournament.player2stats,
+                                        opponentStats: tournament.player1stats,
+                                        onTurn: false,
+                                        playedCard: -1,
+                                        cards: tournament.player2cards
+                                    }
+                                }));
+                                return;
                             }
-                        } else if(msg.lookingForGame === LOOKING_FOR_CORRESPONDENCE_MATCH ){
-
+                        } else /*if(msg.lookingForGame === LOOKING_FOR_CORRESPONDENCE_MATCH ){
                         } else if(msg.lookingForGame === LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH ){
-
-                        } else {
+                        } else */{
                             ws.close("InvalidMatch");
                             return;
                         }

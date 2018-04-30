@@ -1,14 +1,4 @@
 //requirements, img, name, description, effects
-/*
-
-{
-        id:0,
-        name: "",
-        description: "",
-        img: "IMG",
-        effects: {}
-    }
-    */
 
 const generator = [0,0,0,0,1,1,1,2,2,3,3,3,3,4,4,4,4,5,5,5,6,7,7,8,8,9,9,
     10,10,10,10,11,11,11,12,12,12,12,13,13,14,14,15,15,15,16,16,17,17,17,
@@ -260,8 +250,46 @@ const checkRequirements = function() {
 const applyEffects = function() {
 
 };
+class Tournament {
+    constructor(player1, player2, type) {
+        this.player1cards = [];
+        this.player2cards = [];
+        for(let i = 0; i < 8; i++){
+            this.player1cards.push(generateNewCard());
+            this.player2cards.push(generateNewCard());
+        }
+        this.player1 = player1;
+        this.player2 = player2;
+        this.onTurn = 1;
+        this.playedCard = -1;
+        this.player1stats = {
+            builders: 2,
+            bricks: 5,
+            warriors: 2,
+            weapons: 5,
+            mages: 2,
+            crystals: 5,
+            wall: 10,
+            castle: 35
+        };
+        this.player2stats = {
+            builders: 2,
+            bricks: 5,
+            warriors: 2,
+            weapons: 5,
+            mages: 2,
+            crystals: 5,
+            wall: 10,
+            castle: 35
+        },
+        this.firstTurn = true;
+        this.type = type
+    }
+}
+
 module.exports = {
     generateNewCard: generateNewCard,
     checkRequirements: checkRequirements,
-    applyEffects: applyEffects
+    applyEffects: applyEffects,
+    Tournament: Tournament
 }
