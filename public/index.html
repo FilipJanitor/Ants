@@ -21,6 +21,10 @@
       document.getElementById("GameWindow").style.height = (window.innerHeight - 160 - 100).toString() + "px";
       window.addEventListener("resize", () => {
         document.getElementById("GameWindow").style.height = (window.innerHeight - 160 - 100).toString() + "px";
+        let wrap = document.getElementById("GameWrapper");
+        if(wrap){ //je v DOMe
+          wrap.style.width = wrap.style.height * 1.7;
+        }
       });
       </script>
 	  <script src="/client.bundle.js"></script>

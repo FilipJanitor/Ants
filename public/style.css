@@ -89,9 +89,10 @@ footer{
     background-image: url("background.jpg");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: cover;
     /*height: 100%;*/
-    width: 640px;
-    height: 480px;
+    height: 100%;
+    display: inline-block;
     /*set the background to repeat itself*/
 }
 
