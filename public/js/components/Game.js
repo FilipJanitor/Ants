@@ -72,7 +72,8 @@ class Game extends React.Component {
             /* event will eventually contain data about win, loss, tie, or some error that caused the match to be aborted.
                This will need to be checked. Currently, only the error is default */
             console.log("connectionInterrupted");
-            this.props.dispatch(push("/lobby")); // something abruptly ended
+            console.log(event);
+            //this.props.dispatch(push("/lobby")); // something abruptly ended
             return;
         }
         this.socket.onerror = (event) => {

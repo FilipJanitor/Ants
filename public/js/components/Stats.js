@@ -11,41 +11,41 @@ export default class Stats extends React.Component {
             <div className="innerStatsWrapper displayHorizontally" >
                 <div className="stat build">
                     <div className="stat row">
-                        <img src="/builders" className="img-responsive" />
+                        <img src="/IMGbuilders" className="img-responsive" />
                         {this.props.stats.builders}
                     </div>
                     <div className="stat row">
-                        <img src="/bricks" className="img-responsive" />
+                        <img src="/IMGbricks" className="img-responsive" />
                         {this.props.stats.bricks}
                     </div>
                 </div>
                 <div className="stat war">
                     <div className="stat row">
-                        <img src="/warriors" className="img-responsive" />
+                        <img src="/IMGwarriors" className="img-responsive" />
                         {this.props.stats.wariors}
                     </div>
                     <div className="stat row">
-                        <img src="/weapons" className="img-responsive" />
+                        <img src="/IMGweapons" className="img-responsive" />
                         {this.props.stats.weapons}
                     </div>
                 </div>
                 <div className="stat mage">
                     <div className="stat row">
-                        <img src="/mages" className="img-responsive" />
+                        <img src="/IMGmages" className="img-responsive" />
                         {this.props.stats.mages}
                     </div>
                     <div className="stat row">
-                        <img src="/crystals" className="img-responsive" />
+                        <img src="/IMGcrystals" className="img-responsive" />
                         {this.props.stats.crystals}
                     </div>
                 </div>
                 <div className="stat cast">
                     <div className="stat row">
-                        <img src="/walls" className="img-responsive" />
+                        <img src="/IMGwalls" className="img-responsive" />
                         {this.props.stats.walls}
                     </div>
                     <div className="stat row">
-                        <img src="/castles" className="img-responsive" />
+                        <img src="/IMGcastles" className="img-responsive" />
                         {this.props.stats.castles}
                     </div>
                 </div>

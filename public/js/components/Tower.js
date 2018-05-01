@@ -7,12 +7,12 @@ export default class Tower extends React.Component {
     }
     render() {
         const castle = (
-            <div className="castle displayHorizontally">
+            <div key={"castle"+this.props.type}lassName="castle displayHorizontally">
                 <img src={"tower"+this.props.type} id={"tower"+this.props.type} />
             </div>
         );
         const wall = (
-            <div className="tower displayHorizontally">
+            <div key={"wall"+this.props.type} className="tower displayHorizontally">
                 <img src={"tower"+this.props.type} id={"tower"+this.props.type} />
             </div>
         )

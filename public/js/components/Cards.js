@@ -7,6 +7,20 @@ export const CardBack = () => (
     </div>
 );
 
+const playable = function(reqs, stats) {
+    return (! ( stats.bricks < reqs.bricks ||
+        stats.weapons < reqs.weapons ||
+        stats.crystals < reqs.crystals));
+};
+
+const foldCard = function(index, dispatch, ws) {
+
+};
+
+const playCard = function(index, dispatch, ws) {
+
+};
+
 class Cards extends React.Component {
     constructor(props){
         super(props);
@@ -19,7 +33,7 @@ class Cards extends React.Component {
                     if(playable(card.requirements, this.props.appState.playerStats)){
                         return ( /*ten vonkajsi sa nemeni, ten vnutorny sa bude otacat */
                             <div className="card">
-                                <div id={"card"+i} onClick={playCard(i)} onContextMenu={foldCard(i)}>
+                                <div id={"card"+i} onClick={() => {playCard(i, this.props.dispatch, this.props.socket)}} onContextMenu={() => {foldCard(i, this.props.dispatch, this.props.socket)}}>
                                     <img src={card.img} className="img-responsive" />
                                     <p>{card.name}</p>
                                     <p>{card.description}</p>

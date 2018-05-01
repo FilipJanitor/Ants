@@ -138,6 +138,14 @@ app.get('/background.jpg', function(req,res){
 app.get('/card.png', function(req,res){
     res.sendFile(__dirname + '/public/img/card.png');
 });
+
+app.get('/IMG:id', function(req,res){
+    //poslat obrazok
+    const filename = sanitize('IMG' + req.params.id);
+    //console.log(filename);
+    res.sendFile(__dirname + '/public/img/' + filename + '.png');
+});
+
 // __________________interaction_______________________________________________
 
 //warning, callback hell

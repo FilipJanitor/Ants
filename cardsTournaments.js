@@ -275,7 +275,7 @@ class Tournament {
         this.players = [ player1, player2 ];
         this.onTurn = 0;
         this.playedCard = -1;
-        this.playerStats [ {
+        this.playerStats = [ {
             builders: 2,
             bricks: 5,
             warriors: 2,
