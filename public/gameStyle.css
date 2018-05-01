@@ -136,6 +136,8 @@ html, body {
 }
 
 #p1ground, #p2ground {
+	background: url("IMGground") center bottom no-repeat;
+	background-size: 100%;
 	bottom: 30%;
 	height: 70%;
 	left: 11%;
