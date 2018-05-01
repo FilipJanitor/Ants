@@ -33,10 +33,10 @@ class Game extends React.Component {
     //make some higherorder fctions to put this away from component
     componentDidMount () {
         //initial size
-        let wrap = document.getElementById("gameWrapper");
+        /*let wrap = document.getElementById("gameWrapper");
         if(wrap){ //je v DOMe
             wrap.style.width = (Math.floor(wrap.offsetHeight) * 1.7).toString() + "px";
-        }
+        }*/
         var loc = window.location, new_uri;
         if(loc.protocol === "https:") {
             new_uri = "wss://";

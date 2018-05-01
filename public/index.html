@@ -21,7 +21,7 @@
       document.getElementById("GameWindow").style.height = (window.innerHeight - 160 - 100).toString() + "px";
       window.addEventListener("resize", () => {
         if(document.getElementById("header").style.display === "none") {
-          document.getElementById("GameWindow").style.height = window.innerHeight;
+          document.getElementById("GameWindow").style.height = window.innerHeight.toString() + "px";
           document.getElementById("GameWindow").style.top = "0";
           return;
         }
