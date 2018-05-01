@@ -46,8 +46,8 @@ class Cards extends React.Component {
                     }
                     if(playable(card.requirements, this.props.appState.playerStats)){
                         return ( /*ten vonkajsi sa nemeni, ten vnutorny sa bude otacat */
-                            <div key={"card"+i} className={"card"+cardType} id={"card"+i} onClick={() => {playCard(i, this.props.dispatch, this.props.socket)}} onContextMenu={() => {foldCard(i, this.props.dispatch, this.props.socket)}} style={{ backgroundImage: "url("+ card.img + ");"}}>
-                                <div><span>{reqNumber}</span> <b>{card.name}</b>
+                            <div key={"card"+i} className={"card"+cardType} id={"card"+i} onClick={() => {playCard(i, this.props.dispatch, this.props.socket)}} onContextMenu={() => {foldCard(i, this.props.dispatch, this.props.socket)}}>
+                                <div  style={{ backgroundImage: 'url("'+ card.img + '")'}} ><span>{reqNumber}</span> <b>{card.name}</b>
                                     <table>
                                         <tbody>
                                             <tr>
@@ -61,8 +61,8 @@ class Cards extends React.Component {
                     } else {
                         //render gray card unclikcable
                         return (
-                            <div key={"card"+i} id={"card"+i} className={"card"+cardType+" grayCard" } style={{ backgroundImage: "url("+ card.img + ");"}}>
-                                <div><span>{reqNumber}</span> <b>{card.name}</b>
+                            <div key={"card"+i} id={"card"+i} className={"card"+cardType+" grayCard" } >
+                                <div style={{ backgroundImage: 'url("'+ card.img + '")'}}><span>{reqNumber}</span> <b>{card.name}</b>
                                     <table>
                                         <tbody>
                                             <tr>
