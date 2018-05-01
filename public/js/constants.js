@@ -47,12 +47,7 @@ export const initialGlobalState = {
         playerStats: {
 
         },
-        playedCard: {
-            img: "back",
-            name: "",
-            description: "",
-            requirements: {}
-        },
+        playedCard: -1,
         opponentStats: {
 
         },

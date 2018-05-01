@@ -1,21 +1,14 @@
 import React from 'react';
 
 //transformacia sa robi cez css
+// vnutri este <div id=flag></div>
 export default class Tower extends React.Component {
-    constructor(props){
-        super(props);
-    }
     render() {
-        const castle = (
-            <div key={"castle"+this.props.type} className="castle displayHorizontally">
-                <img src={"tower"+this.props.type} id={"tower"+this.props.type} />
+        return (
+            <div id={this.props.type+"ground"} >
+                <div id={this.props.type+"castle"} style={{height: ( 10+ (Math.max(this.props.stat,-10) / 2.2))+ "%"}}>
+                </div>
             </div>
         );
-        const wall = (
-            <div key={"wall"+this.props.type} className="tower displayHorizontally">
-                <img src={"tower"+this.props.type} id={"tower"+this.props.type} />
-            </div>
-        )
-        return [castle,wall];
     }
 }

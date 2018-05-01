@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 export const CardBack = () => (
-    <div className="card">
-        <img src="card.png" className="img-responsive" />
+    <div className="card back">
+        <div> </div>
     </div>
 );
 
@@ -26,27 +26,51 @@ class Cards extends React.Component {
         super(props);
     }
     render() {
-        if(this.props.appState.onTurn){
+        if(this.props.appState.onTurn && this.props.appState.running){
             return (
-                <div>
+                <div className="cards" >
                 { this.props.appState.cards.map((card,i) => {
+                    let cardType = "";
+                    let reqNumber = 0;
+                    if(card.requirements.bricks !== undefined ) {
+                        cardType = " bricks";
+                        reqNumber = card.requirements.bricks;
+                    }
+                    if(card.requirements.weapons !== undefined ) {
+                        cardType = " weapons";
+                        reqNumber = card.requirements.weapons;
+                    }
+                    if(card.requirements.crystals !== undefined ) {
+                        cardType = " crystals";
+                        reqNumber = card.requirements.crystals;
+                    }
                     if(playable(card.requirements, this.props.appState.playerStats)){
                         return ( /*ten vonkajsi sa nemeni, ten vnutorny sa bude otacat */
-                            <div className="card">
-                                <div id={"card"+i} onClick={() => {playCard(i, this.props.dispatch, this.props.socket)}} onContextMenu={() => {foldCard(i, this.props.dispatch, this.props.socket)}}>
-                                    <img src={card.img} className="img-responsive" />
-                                    <p>{card.name}</p>
-                                    <p>{card.description}</p>
+                            <div key={"card"+i} className={"card"+cardType} id={"card"+i} onClick={() => {playCard(i, this.props.dispatch, this.props.socket)}} onContextMenu={() => {foldCard(i, this.props.dispatch, this.props.socket)}} style={{ backgroundImage: "url("+ card.img + ");"}}>
+                                <div><span>{reqNumber}</span> <b>{card.name}</b>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td> {card.description} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         );
                     } else {
                         //render gray card unclikcable
                         return (
-                            <div id={"card"+i} className="card grayCard" >
-                                <img src={card.img} className="img-responsive" />
-                                <p>{card.name}</p>
-                                <p>{card.description}</p>
+                            <div key={"card"+i} id={"card"+i} className={"card"+cardType+" grayCard" } style={{ backgroundImage: "url("+ card.img + ");"}}>
+                                <div><span>{reqNumber}</span> <b>{card.name}</b>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td> {card.description} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         );
                     }
@@ -55,7 +79,7 @@ class Cards extends React.Component {
             );
         } else {
             return (
-                <div>
+                <div className="cards" >
                     <CardBack/>
                     <CardBack/>
                     <CardBack/>

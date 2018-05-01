@@ -1,0 +1,399 @@
+/* * {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+html, body {
+	background: #000;
+	font-family: sans-serif;
+	height: 100%;
+	min-height: 100%;
+	min-width: 100%;
+	overflow: hidden;
+}
+
+
+
+
+@-ms-viewport {
+	height: device-height;
+	width: device-width
+}
+
+#page {
+	background: url(s/bg.jpg) center center no-repeat;
+	background-size: cover;
+	font-size: 4vh;
+	height: 100%;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+
+#game {
+	display: none;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}*/
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+#p1, #p2 {
+	background: #000;
+	color: #888;
+	float: left;
+	padding: .6%;
+	position: absolute;
+	top: 0;
+	width: 15%;
+	min-width: 100px;
+	border:1px solid #000;
+	z-index:2;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+#p2 {
+	right: 0;
+	padding-right: 0.8%;
+	text-align: right;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+#p1.sel, #p2.sel {
+	color: #fff;
+	border-color:#08f;
+	box-shadow:0 0 10px #08f;
+}
+
+#p1info, #p2info {
+	color: #fff;
+	list-style: none;
+	position: absolute;
+	top: 9%;
+	width: 9%;
+	box-shadow:0 0 1px #000;
+}
+
+#p2info {
+	right: 0;
+}
+
+#p1info li, #p2info li {
+	background-image: url(IMGstate);
+	background-repeat: no-repeat;
+	background-size: 28%;
+	height: 5%;
+	padding-left: 45%;
+	white-space:nowrap;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.builders {
+	background: #800;
+	background-position: 8% -1%;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.bricks {
+	background: #800;
+	background-position: 8% 10%;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.warriors {
+	background: #080;
+	background-position: 8% 22%;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.weapons {
+	background: #080;
+	background-position: 8% 35%;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.mages {
+	background: #008;
+	background-position: 8% 46%;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.crystals {
+	background: #008;
+	background-position: 8% 59%;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.castle {
+	background: #888;
+	background-position: 8% 71%;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.wall {
+	background: #888;
+	background-position: 8% 80%;
+}
+
+#p1ground, #p2ground {
+	bottom: 30%;
+	height: 70%;
+	left: 11%;
+	position: absolute;
+	width: 20%;
+}
+#p2ground {
+	left: auto;
+	right: 11%;
+}
+@-webkit-keyframes victory {
+	to { background-position: 200% bottom; }
+}
+@keyframes victory {
+	to { background-position: 200% bottom; }
+}
+
+
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+#p1castle, #p2castle {
+	background: url("IMGcastle") no-repeat;
+	background-position:center top;
+	background-size: 70% auto;
+	bottom:7%;
+	position:absolute;
+	width: 100%;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+#game.anim #p1castle, #game.anim #p2castle {
+	transition:height 1s;
+}
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+#p2castle {
+	background-image: url("IMGcastle");
+	left: auto;
+}
+
+@-webkit-keyframes flag {
+	to { background-position: 133% top; }
+}
+@keyframes flag {
+	to { background-position: 133% top; }
+}
+
+
+#p1wall, #p2wall {
+	background: url("IMGdef") no-repeat;
+	background-size: 100% auto;
+	bottom: 33%;
+	height: 20%;
+	left: 33%;
+	position: absolute;
+	width: 1%;
+}
+#game.anim #p1wall, #game.anim #p2wall {
+	transition:height 1s;
+}
+
+#p2wall {
+	left: auto;
+	right: 33%;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.cards {
+	bottom: 0;
+	height: 32%;
+	position: absolute;
+	width: 100%;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card {
+	-moz-border-radius: 9% / 6%;
+	-webkit-border-radius: 9% / 6%;
+	border-radius: 9% / 6%;
+	cursor: pointer;
+	float: left;
+	height: 100%;
+	margin: 0.25%;
+	position: relative;
+	width: 12%;
+	z-index: 1;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card > div {
+	-moz-border-radius: 6% / 3%;
+	-webkit-border-radius: 6% / 3%;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 80%;
+	border-radius: 6% / 3%;
+	position: absolute;
+	top: 5%;
+	left: 7%;
+	bottom: 5%;
+	right: 7%;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card > div > span {
+	background-position: 8%;
+	background-repeat: no-repeat;
+	background-size: 20%;
+	display: block;
+	font-size: 120%;
+	font-weight: bold;
+	padding: 2% 5%;
+	text-align: right;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.bricks div span {
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAOAgMAAACJEX5BAAAADFBMVEUAAACxyNdseoOQo6+gOUU4AAAAAXRSTlMAQObYZgAAAEBJREFUCNdjYGAIAGLWECARGgpkhIY6ABmhB4BEXAPD1dBXDQxf41Y1MPx9BST+rwITKxgY7IEMBn4gg4EZyAAAoBQVc5NykrQAAAAASUVORK5CYII=');
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.crystals div span {
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAASBAMAAABLIvhaAAAAFVBMVEUAAABou9eniNf///+Ib69mU4PGov9W6/Y8AAAAAXRSTlMAQObYZgAAAFxJREFUCNdjAAFGMInCFGAQYAQRcCFGqHCyApAAs9iMlUAUCCQbJymAGUBBYyMlEENQIM3Y2ExJQRCkQsnFxTU0AKyACcSEmqXiAhQUgAoDBWHCUEGExQjnYHcvAN6FChsXYDyNAAAAAElFTkSuQmCC');
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.weapons div span {
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANBAMAAABvB5JxAAAAFVBMVEUAAACxyNf///9IUVeQo69seoMkKCsgUc23AAAAAXRSTlMAQObYZgAAACdJREFUCNdjAAMmCKUI4Qjg5QhCOUEQGWcwyWhgAKKEGRJAFJjNAABOxQJ3oUxi/QAAAABJRU5ErkJggg==');
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card > div b {
+	display: block;
+	text-align: center;
+	font-weight: bold;
+	line-height: .9em;
+	color: #f00;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card div table {
+	position: absolute;
+	bottom: 0;
+	width: 90%;
+	margin: 3%;
+	height:30%;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card div table td {
+	text-align: center;
+	font-weight: normal;
+	font-style: normal;
+	line-height: .9em;
+	padding-top: 5%;
+	font-size: 75%;
+	width: 100%;
+	vertical-align:middle;
+}
+
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card div table tr td:last-child {
+	white-space:nowrap;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.back {
+	background-color: #ff7200;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.back > div {
+	background-color: #ffc696;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.bricks {
+	background-color: #ff4848;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.bricks > div {
+	background-color: #ffdcd2;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.weapons {
+	background-color: #00af00;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.weapons > div {
+	background-color: #c0ffc0;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.crystals {
+	background-color: #0080ff;
+}
+
+/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+.card.crystals > div {
+	background-color: #d2eeff;
+}
+/*
+
+.card.gray {
+	background-color: #888;
+}
+
+.card.gray > div {
+	background-color: #ccc;
+	color: #888;
+}
+
+.card.gray {
+	-webkit-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+	filter: gray;
+	-webkit-filter: grayscale(1);
+	filter: grayscale(100%);
+	cursor: not-allowed;
+}
+
+
+
+.card.gray > div b {
+	color: #888;
+}*/
+
+#cdp {
+	height:33%;
+	position: absolute;
+	text-align: center;
+	top:0;
+	width: 100%;
+}
+
+#cd, #cp {
+	display:block;
+	margin: 0.25%;
+	position: absolute;
+	top:0;
+	width: 100%;
+	width: 12%;
+	z-index: 2;
+}
+#cd {
+	left:37%;
+}
+#cd > div, .card.back > div {
+	background-image:url("IMGback");
+	background-size:contain;
+	background-position:center center;
+}
+#cp {
+	right:37%;
+	height:100%;
+}
+

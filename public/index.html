@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head >
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ants</title>
-    <!-- Bootstrap containers work well for resizing. -->
-   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" /> -->
-   <link rel="stylesheet" type="text/css" href="theme.min.css">
-	  <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="theme.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="gameStyle.css">
+
   </head>
   <body>
     <header id="header">
@@ -20,10 +20,16 @@
     <script>
       document.getElementById("GameWindow").style.height = (window.innerHeight - 160 - 100).toString() + "px";
       window.addEventListener("resize", () => {
+        if(document.getElementById("header").style.display === "none") {
+          document.getElementById("GameWindow").style.height = window.innerHeight;
+          document.getElementById("GameWindow").style.top = "0";
+          return;
+        }
         document.getElementById("GameWindow").style.height = (window.innerHeight - 160 - 100).toString() + "px";
+      document.getElementById("GameWindow").style.top = "200px";
         let wrap = document.getElementById("gameWrapper");
         if(wrap){ //je v DOMe
-          wrap.style.width = (Math.floor(wrap.offsetHeight) * 1.7).toString() + "px";
+          //wrap.style.width = (Math.floor(wrap.offsetHeight) * 1.7).toString() + "px";
         }
       });
       </script>

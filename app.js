@@ -114,6 +114,11 @@ app.get('/style.css', function(req,res){
     res.sendFile(__dirname + '/public/style.css');
 });
 
+app.get('/gameStyle.css', function(req,res){
+    //console.log('send css TODO');
+    res.sendFile(__dirname + '/public/gameStyle.css');
+});
+
 //___________________images____________________________________________________
 app.get('/rank:id', function(req,res){
     //poslat obrazok

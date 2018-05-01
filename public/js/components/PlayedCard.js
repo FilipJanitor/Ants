@@ -3,14 +3,46 @@ import { CardBack } from './Cards.js';
 
 export default class PlayedCard extends React.Component{
     render() {
-        if( this.props.card === -1 ){
-            return ( <CardBack /> );
+        let card = this.props.card;
+
+        if( card === -1 ){
+            return (
+                <div id="cdp">
+                    <div className="card back" id="cd">
+                        <div> </div>
+                    </div>
+                </div>
+            );
         } else {
-            return ( <div className="card">
-                <img src={this.props.card.img} className="img-responsive" />
-                <p>{this.props.card.name}</p>
-                <p>{this.props.card.description}</p>
-        </div> );
+            let cardType = "";
+            let reqNumber = 0;
+            if(card.requirements.bricks !== undefined ) {
+                cardType = " bricks";
+                reqNumber = card.requirements.bricks;
+            }
+            if(card.requirements.weapons !== undefined ) {
+                cardType = " weapons";
+                reqNumber = card.requirements.weapons;
+            }
+            if(card.requirements.crystals !== undefined ) {
+                cardType = " crystals";
+                reqNumber = card.requirements.crystals;
+            }
+            return (
+                <div id="cdp">
+                    <div className={"card"+cardType} id="cp" style={{backgroundImage: "url("+ card.img + ");"}}>
+                        <div><span>{reqNumber}</span> <b>{card.name}</b>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td> {card.description} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            );
         }
     }
 }

@@ -44,7 +44,7 @@ export default class Achievements extends React.Component {
                                 {this.state.achievementsObtained.map((i) => {
                                     return (
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
-                                            <div className="wall">
+                                            <div className="well">
                                                 <h4>{i.name}</h4>
                                                 <h6>{i.description}</h6>
                                                 <img src="/AO" className="spanner"/*"img-responsive"*/  />
@@ -55,7 +55,7 @@ export default class Achievements extends React.Component {
                                 {this.state.achievementsLocked.map((i) => {
                                     return (
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
-                                            <div className="wall">
+                                            <div className="well">
                                                 <h4>{i.name}</h4>
                                                 <img src="/AL" className="spanner"/*"img-responsive"*/ />
                                             </div>

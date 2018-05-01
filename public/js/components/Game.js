@@ -19,6 +19,7 @@ import Cards from './Cards.js';
 import { Button } from 'react-bootstrap';
 import Stats from './Stats.js';
 import Tower from './Tower.js';
+import Wall from './Wall.js';
 import PlayedCard from './PlayedCard.js';
 import { INITIATE_GAME, NEW_GAME_STATE } from '../constants.js';
 
@@ -88,29 +89,30 @@ class Game extends React.Component {
         }
         /* this.socket.close*/
     }
-
-    render() { //gamewrapper bude maintainovat aspect ratio. V Cards musi byt mapstatetoprops. PlayedCard musi decidovat, ci je img back
-        return (
-            <div id="gameWrapper" >
-                <div className="gameHeader">
-                    <Button> {this.props.appState.name} </Button>
+/*
                     <Button onClick={()=>{}}> Tie </Button>
                     {this.props.appState.correspondenceGame &&
                     <Button onClick={()=>{}}> Back to lobby </Button>}
                     {!this.props.appState.correspondenceGame &&
                     <Button onClick={()=>{}}> Back to lobby (lose) </Button>}
-                    { this.props.appState.running ? <Button> {this.props.appState.opponentName} </Button> : <Button> Looking for opponent! </Button> }
-                </div>
-                <div className="statsWrapper">
-                    <Stats type="Left" stats={this.props.appState.playerStats} />
-                    <Tower type="Left" />
+*/
+    render() { //gamewrapper bude maintainovat aspect ratio. V Cards musi byt mapstatetoprops. PlayedCard musi decidovat, ci je img back
+        return (
+            <div id="gameWrapper" >
+                <div className="spanner" style={{position: "float"}}>
+                    <div id="p1" className="sel" > {this.props.appState.name} </div>
                     <PlayedCard card={this.props.appState.playedCard} />
-                    <Tower type="Right" />
-                    <Stats type="Right" stats={this.props.appState.opponentStats} />
+                    <div id="p2" className="sel" > {this.props.appState.running ? this.props.appState.opponentName : "Looking for opponent!"} </div>
                 </div>
-                <div className="cardsWrapper">
-                    <Cards socket={this.socket}/>
-                </div>
+                <Stats type="p1" stats={this.props.appState.playerStats} />
+                <Tower type="p1" stat={this.props.appState.playerStats.castle} />
+                <Wall type="p1" stat={this.props.appState.playerStats.wall} />
+
+                <Wall type="p2" stat={this.props.appState.playerStats.wall} />
+                <Tower type="p2" stat={this.props.appState.playerStats.castle} />
+                <Stats type="p2" stats={this.props.appState.opponentStats} />
+
+                <Cards socket={this.socket}/>
             </div>
         );
     }

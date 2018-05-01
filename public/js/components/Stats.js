@@ -8,48 +8,16 @@ export default class Stats extends React.Component {
     }
     render() {
         return ( //width 100 pre wrappery
-            <div className="innerStatsWrapper displayHorizontally" >
-                <div className="stat build">
-                    <div className="stat row">
-                        <img src="/IMGbuilders" className="spanner" />
-                        {this.props.stats.builders}
-                    </div>
-                    <div className="stat row">
-                        <img src="/IMGbricks" className="spanner" />
-                        {this.props.stats.bricks}
-                    </div>
-                </div>
-                <div className="stat war">
-                    <div className="stat row">
-                        <img src="/IMGwarriors" className="spanner" />
-                        {this.props.stats.wariors}
-                    </div>
-                    <div className="stat row">
-                        <img src="/IMGweapons" className="spanner" />
-                        {this.props.stats.weapons}
-                    </div>
-                </div>
-                <div className="stat mage">
-                    <div className="stat row">
-                        <img src="/IMGmages" className="spanner" />
-                        {this.props.stats.mages}
-                    </div>
-                    <div className="stat row">
-                        <img src="/IMGcrystals" className="spanner" />
-                        {this.props.stats.crystals}
-                    </div>
-                </div>
-                <div className="stat cast">
-                    <div className="stat row">
-                        <img src="/IMGwalls" className="spanner" />
-                        {this.props.stats.walls}
-                    </div>
-                    <div className="stat row">
-                        <img src="/IMGcastles" className="spanner" />
-                        {this.props.stats.castles}
-                    </div>
-                </div>
-            </div>
+            <ul id={this.props.type+"info"} >
+                <li className="builders" > {this.props.stats.builders} </li>
+                <li className="bricks" > {this.props.stats.bricks} </li>
+                <li className="warriors" > {this.props.stats.warriors} </li>
+                <li className="weapons" > {this.props.stats.weapons} </li>
+                <li className="mages" > {this.props.stats.mages} </li>
+                <li className="crystals" > {this.props.stats.crystals} </li>
+                <li className="castle" > {this.props.stats.castle} </li>
+                <li className="wall" > {this.props.stats.wall} </li>
+            </ul>
         );
     }
 }
