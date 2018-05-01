@@ -4,7 +4,8 @@ import {
     LOOKING_FOR_HARDCORE_MATCH,
     LOOKING_FOR_CORRESPONDENCE_MATCH,
     LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH,
-    NEW_GAME_STATE
+    NEW_GAME_STATE,
+    NEXT_TURN
 } from '../constants';
 
 export default function reducer(state, action){
@@ -26,6 +27,10 @@ export default function reducer(state, action){
                 playedCard: action.data.playedCard,
                 cards: action.data.cards,
                 running: true
+            };
+        case NEXT_TURN:
+            return { ...state,
+                onTurn: false
             };
         default: /*Sem este, ked sa ide continuovat hra, ked sa robi tah a podobne */
             // console.log("REDUX STATE IS CORRUPTED GAME")

@@ -30,8 +30,8 @@ export default class PlayedCard extends React.Component{
             }
             return (
                 <div id="cdp">
-                    <div className={"card"+cardType} id="cp" style={{backgroundImage: "url("+ card.img + ");"}}>
-                        <div><span>{reqNumber}</span> <b>{card.name}</b>
+                    <div className={"card"+cardType} id="cp">
+                        <div  style={{backgroundImage: 'url("'+ card.img + '")'}} ><span>{reqNumber}</span> <b>{card.name}</b>
                             <table>
                                 <tbody>
                                     <tr>

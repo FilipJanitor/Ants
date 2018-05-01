@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { NEXT_TURN } from '../constants.js';
 
 export const CardBack = () => (
     <div className="card back">
@@ -13,11 +14,25 @@ const playable = function(reqs, stats) {
         stats.crystals < reqs.crystals));
 };
 
-const foldCard = function(index, dispatch, ws) {
-
+const foldCard = function(index, dispatch, ws, name, token) {
+    //anim
+    dispatch({type: NEXT_TURN});
+    ws.send(JSON.stringify({
+        typeOfRequest: NEXT_TURN,
+        folds: true, cardIndex: index,
+        name: name,
+        token: token
+    }));
 };
 
-const playCard = function(index, dispatch, ws) {
+const playCard = function(index, dispatch, ws, name, token) {
+    dispatch({type: NEXT_TURN});
+    ws.send(JSON.stringify({
+        typeOfRequest: NEXT_TURN,
+        folds: false, cardIndex: index,
+        name: name,
+        token: token
+    }));
 
 };
 
@@ -46,7 +61,7 @@ class Cards extends React.Component {
                     }
                     if(playable(card.requirements, this.props.appState.playerStats)){
                         return ( /*ten vonkajsi sa nemeni, ten vnutorny sa bude otacat */
-                            <div key={"card"+i} className={"card"+cardType} id={"card"+i} onClick={() => {playCard(i, this.props.dispatch, this.props.socket)}} onContextMenu={() => {foldCard(i, this.props.dispatch, this.props.socket)}}>
+                            <div key={"card"+i} className={"card"+cardType} id={"card"+i} onClick={() => {playCard(i, this.props.dispatch, this.props.socket, this.props.appState.name, this.props.appState.token)}} onContextMenu={() => {foldCard(i, this.props.dispatch, this.props.socket, this.props.appState.name, this.props.appState.token)}}>
                                 <div  style={{ backgroundImage: 'url("'+ card.img + '")'}} ><span>{reqNumber}</span> <b>{card.name}</b>
                                     <table>
                                         <tbody>
