@@ -498,6 +498,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                             tournament.playCard(msg.cardIndex);
                             tournament.nextTurn();
                         }
+                        //check win
                         //send new state (onturn generovat pomocou andu)
                     case 0:
                         return;
