@@ -21,9 +21,9 @@
       document.getElementById("GameWindow").style.height = (window.innerHeight - 160 - 100).toString() + "px";
       window.addEventListener("resize", () => {
         document.getElementById("GameWindow").style.height = (window.innerHeight - 160 - 100).toString() + "px";
-        let wrap = document.getElementById("GameWrapper");
+        let wrap = document.getElementById("gameWrapper");
         if(wrap){ //je v DOMe
-          wrap.style.width = wrap.style.height * 1.7;
+          wrap.style.width = (Math.floor(wrap.offsetHeight) * 1.7).toString() + "px";
         }
       });
       </script>
