@@ -399,10 +399,10 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                 return;
             } else {
                 const userId = rows[0].ID;
+                let tournament = {};
                 switch (msg.typeOfRequest){
                     case INITIATE_GAME:
                     //noncorrespondence matches are inmemory
-                        let tournament = {};
                         if(loggedUsersToTournament[userId] !== undefined){
                             ws.close(1003,"already matched"); // this should not happen
                             return;
@@ -473,7 +473,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                             ws.close(1003,"No tournament running"); // this should not happen
                             return;
                         }
-                        let tournament = tournaments[loggedUsersToTournament[userId]];
+                        tournament = tournaments[loggedUsersToTournament[userId]];
                         if (tournament.players[tournament.onTurn].id !== userId){
                             ws.close(1003,"Player not on turn");
                             return;
