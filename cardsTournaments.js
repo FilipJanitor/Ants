@@ -1,5 +1,8 @@
 //requirements, img, name, description, effects
 
+const NORMAL = 0;
+const HARDCORE = 1;
+
 const generator = [0,0,0,0,1,1,1,2,2,3,3,3,3,4,4,4,4,5,5,5,6,7,7,8,8,9,9,
     10,10,10,10,11,11,11,12,12,12,12,13,13,14,14,15,15,15,16,16,17,17,17,
     18,18,18,19,19,19,20,20,20,21,21,21,22,22,22,23,23,24,24,25,25,26,26,
@@ -293,7 +296,9 @@ class Tournament {
             castle: 35
         } ],
         this.firstTurn = true;
-        this.type = type
+        this.type = type,
+        this.tieProposed = false,
+        this.finished = false
     }
 
     foldCard(cardIndex) {
@@ -401,10 +406,25 @@ class Tournament {
         /*achievementy */
     }
 
+    checkGameState() {
+        const tur = this.onTurn;
+        const opp = (this.onTurn + 1) % 2;
+        //kedze nie je karta, ktora by hracovi znizila hrad, alebo oponentovi zvysila, ak niekto vyhra, je to hrac na tahu
+        //our hardcore match will be different. Original wins if player castle is >= 100 AND opponent castle <= 0. We are interested in difference only.
+        if(this.type === HARDCORE && (this.playerStats[tur].castle - this.playerStats[opp].castle) >= 100 ) {
+            return true;
+        }
+        if(this.type === NORMAL && (this.playerStats[tur].castle >= 100 || this.playerStats[opp].castle <= 0)){
+            return true;
+        }
+        return false;
+    }
+
     nextTurn() {
         if(this.firstTurn) {
             //musi byt onTurn 0
             this.onTurn = 1;
+            this.firstTurn = false;
             return;
         } else {
             this.onTurn = (this.onTurn + 1) % 2;
@@ -418,7 +438,7 @@ class Tournament {
 
 module.exports = {
     generateNewCard: generateNewCard,
-    checkRequirements: checkRequirements,
-    applyEffects: applyEffects,
-    Tournament: Tournament
+    Tournament: Tournament,
+    NORMAL: NORMAL,
+    HARDCORE: HARDCORE
 }

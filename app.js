@@ -9,7 +9,7 @@ const validator = new Validator({allErrors: true});
 const validate = validator.validate;
 const app = express();
 var expressWs = require('express-ws')(app);
-const { generateNewCard, Tournament } = require('./cardsTournaments.js');
+const { generateNewCard, Tournament, HARDCORE, NORMAL } = require('./cardsTournaments.js');
 
 // ________________________________CONSTANTS___________________________________
 
@@ -27,8 +27,6 @@ const NEXT_TURN = 7;
 
 const GAME_ONGOING = 0;
 
-const NORMAL = 0;
-const HARDCORE = 1;
 
 
 // ________________________________INIT___________________________________
@@ -487,7 +485,6 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                         //ak chce foldnut
                         if (msg.folds) {
                             tournament.foldCard(msg.cardIndex);
-                            tournament.nextTurn();
                         } else {
                             //kontrola, ci moze hrat kartu
                             if (!tournament.checkCanPlayCard(/*index of card in client array*/msg.cardIndex)){
@@ -496,10 +493,43 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                             }
                             /*award achievements too*/
                             tournament.playCard(msg.cardIndex);
-                            tournament.nextTurn();
                         }
                         //check win
-                        //send new state (onturn generovat pomocou andu)
+                        if(tournament.checkGameState()){
+                             //currentplayer won
+                             //db and stuff
+                        } else {
+                            //hra sa dalej
+                            tournament.nextTurn();
+                            const curPl = (tournament.onTurn + 1)%2;
+
+                            ws.send(JSON.stringify({
+                                typeOfResponse: NEW_GAME_STATE,
+                                data: {
+                                    opponentName: tournament.players[tournament.onTurn].name,
+                                    playerStats: tournament.playerStats[curPl],
+                                    opponentStats: tournament.playerStats[tournament.onTurn],
+                                    onTurn: false,
+                                    playedCard: tournament.playedCard,
+                                    cards: tournament.playerCards[curPl]
+                                }
+                                //typeOfResponse: 99
+                            }));
+                            //opponent is on turn now
+                            tournament.players[tournament.onTurn].socket.send(JSON.stringify({
+                                typeOfResponse: NEW_GAME_STATE,
+                                data: {
+                                    opponentName: msg.name,
+                                    playerStats: tournament.playerStats[tournament.onTurn],
+                                    opponentStats: tournament.playerStats[curPl],
+                                    onTurn: true,
+                                    playedCard: tournament.playedCard,
+                                    cards: tournament.playerCards[tournament.onTurn]
+                                }
+                                // typeOfResponse: 100
+                            }));
+                            //send new state (onturn generovat pomocou andu)
+                        }
                     case 0:
                         return;
                 }
