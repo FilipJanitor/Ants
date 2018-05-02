@@ -68,7 +68,7 @@ console.log("PORT "+ process.env.PORT);
 const server = app.listen(process.env.PORT, function(){
     console.log("Server listening...");
 });
-
+/*
 db.connect((err) => {
     if(err){
         console.log("Connecting with database failed. Aborting!");
@@ -77,7 +77,7 @@ db.connect((err) => {
     } else {
         console.log("Connection to database estabilished.");
     }
-});
+});*/
 
 let lookingForMatch = {[LOOKING_FOR_NORMAL_MATCH]: [], [LOOKING_FOR_HARDCORE_MATCH]: []};
 console.log("lookingforMatch " + lookingForMatch);
