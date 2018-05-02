@@ -1,49 +1,3 @@
-/* * {
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	margin: 0;
-	padding: 0;
-	border: none;
-}
-
-html, body {
-	background: #000;
-	font-family: sans-serif;
-	height: 100%;
-	min-height: 100%;
-	min-width: 100%;
-	overflow: hidden;
-}
-
-
-
-
-@-ms-viewport {
-	height: device-height;
-	width: device-width
-}
-
-#page {
-	background: url(s/bg.jpg) center center no-repeat;
-	background-size: cover;
-	font-size: 4vh;
-	height: 100%;
-	margin: 0 auto;
-	overflow: hidden;
-	position: relative;
-	width: 100%;
-}
-
-
-#game {
-	display: none;
-	height: 100%;
-	overflow: hidden;
-	position: relative;
-	width: 100%;
-}*/
-
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 #p1, #p2 {
 	background: #000;
@@ -146,6 +100,7 @@ html, body {
 	left: 11%;
 	position: absolute;
 	width: 20%;
+	z-index: 2;
 }
 #p2ground {
 	left: auto;
@@ -168,9 +123,10 @@ html, body {
 	bottom:7%;
 	position:absolute;
 	width: 100%;
+	z-index: 1;
 }
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
-#gameWrapper.anim #p1castle, #gameWrapper.anim #p2castle {
+#gameWrapper.anim #p1castle, #gameWrapper.anim #p2castle, #gameWrapper.anim #p1wall, #gameWrapper.anim #p2wall {
 	transition:height 1s;
 }
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
@@ -195,9 +151,6 @@ html, body {
 	left: 33%;
 	position: absolute;
 	width: 1%;
-}
-#gameWrapper.anim #p1wall, #gameWrapper.anim #p2wall {
-	transition:height 1s;
 }
 
 #p2wall {
@@ -371,6 +324,11 @@ html, body {
 .card.gray > div b {
 	color: #888;
 }*/
+.grayCard{
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    cursor: not-allowed;
+}
 
 #cdp {
 	height:33%;

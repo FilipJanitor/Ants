@@ -76,7 +76,7 @@ class Cards extends React.Component {
                     } else {
                         //render gray card unclikcable
                         return (
-                            <div key={"card"+i} id={"card"+i} className={"card"+cardType+" grayCard" } >
+                            <div key={"card"+i} id={"card"+i} className={"card"+cardType+" grayCard" } onContextMenu={(e) => {e.preventDefault(); foldCard(i, this.props.dispatch, this.props.socket, this.props.appState.name, this.props.appState.token)}}>
                                 <div style={{ backgroundImage: 'url("'+ card.img + '")'}}><span>{reqNumber}</span> <b>{card.name}</b>
                                     <table>
                                         <tbody>

@@ -161,11 +161,6 @@ footer{
     padding: 0;
 }
 */
-.grayCard{
-    filter: grayscale(100%);
-    -webkit-filter: grayscale(100%);
-    cursor: not-allowed;
-}
 /*
 .cardBack{
     width: 12%;
