@@ -51,9 +51,9 @@ const debugMiddleware = function(req,res,next) {
     console.log("Invalid arguments provided. Aborting!");
     process.exit(-1);
 }*/
-console.log("CONNNN" + process.env.DATABASE_URL);
+console.log("CONNNN" + process.env.CLEARDB_DATABASE_URL);
 const db = mysql.createConnection({
-    connectionString: process.env.DATABASE_URL
+    connectionString: process.env.CLEARDB_DATABASE_URL
 });
 
 const server = app.listen(process.env.PORT || 8080, '0.0.0.0', function(){
