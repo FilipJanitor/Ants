@@ -7,10 +7,8 @@ export default class PlayedCard extends React.Component{
 
         if( card === -1 ){
             return (
-                <div id="cdp">
-                    <div className="card back" id="cd">
-                        <div> </div>
-                    </div>
+                <div className="card back" id="cp">
+                    <div> </div>
                 </div>
             );
         } else {
@@ -29,17 +27,15 @@ export default class PlayedCard extends React.Component{
                 reqNumber = card.requirements.crystals;
             }
             return (
-                <div id="cdp">
-                    <div className={"card"+cardType} id="cp">
-                        <div  style={{backgroundImage: 'url("'+ card.img + '")'}} ><span>{reqNumber}</span> <b>{card.name}</b>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td> {card.description} </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div className={"card"+cardType} id="cp">
+                    <div  style={{backgroundImage: 'url("'+ card.img + '")'}} ><span>{reqNumber}</span> <b>{card.name}</b>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td> {card.description} </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             );

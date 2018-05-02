@@ -299,10 +299,12 @@ class Tournament {
         this.type = type,
         this.tieProposed = false,
         this.finished = false
+        this.winner = undefined;
     }
 
     foldCard(cardIndex) {
         this.playerCards[this.onTurn][cardIndex] = generateNewCard();
+        this.playedCard = -1;
     }
 
     checkCanPlayCard(cardIndex) {
@@ -433,6 +435,11 @@ class Tournament {
             this.playerStats[this.onTurn].crystals += this.playerStats[this.onTurn].mages;
             return;
         }
+    }
+
+    win() {
+        this.finished = true;
+        this.winner = this.players[this.onTurn].id;
     }
 }
 

@@ -55,6 +55,10 @@ class Lobby extends React.Component {
     }
 
     componentDidMount() {
+
+        document.getElementById("header").style.display = "block";
+        document.getElementById("footer").style.display = "block";
+        document.getElementById("GameWindow").style.height = (window.innerHeight - 160 - 100).toString() + "px";
         //axios.get(`http://www.reddit.com/r/${this.props.subreddit}.json`)
         //  .then(res => {
         //    const posts = res.data.data.children.map(obj => obj.data);
@@ -92,7 +96,7 @@ class Lobby extends React.Component {
                                                             </a>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> {/*
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="btn-group btn-group-justified">
@@ -104,7 +108,7 @@ class Lobby extends React.Component {
                                                             </a>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>

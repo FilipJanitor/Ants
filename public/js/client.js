@@ -26,12 +26,11 @@ const combinedReducers = combineReducers({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(routerMiddleware(browserHistory)/*...middleware*/)
+    applyMiddleware(routerMiddleware(browserHistory)/*...middleware*/)
 );
-console.log("STORE H");
+
 const store = createStore(combinedReducers, initialGlobalState, enhancer);
-console.log("STORE");
-console.log(store.getState());
+
 //const store = createStore(combinedReducers,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()/*INITIAL STATE*/);
 
 //Toto blokuje prebublanie locationu k Routru z browserHistory

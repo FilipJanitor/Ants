@@ -21,7 +21,7 @@ import Stats from './Stats.js';
 import Tower from './Tower.js';
 import Wall from './Wall.js';
 import PlayedCard from './PlayedCard.js';
-import { INITIATE_GAME, NEW_GAME_STATE } from '../constants.js';
+import { INITIATE_GAME, NEW_GAME_STATE, YOU_LOST, YOU_WON, DISCARD } from '../constants.js';
 
 class Game extends React.Component {
     constructor(props) {
@@ -62,24 +62,25 @@ class Game extends React.Component {
                 case NEW_GAME_STATE:
                     /*this involves found match*/
                     /*alter tower size in css here */
-                    console.log("DISPATCHING");
                     this.props.dispatch({ type: NEW_GAME_STATE, data: contents.data});
                     return;
-                case 99:
-                    console.log("got 99");
+                case YOU_LOST:
+                    this.props.dispatch({ type: YOU_LOST});
                     return;
-                case 100:
-                    console.log("got 100");
+                case YOU_WON:
+                    this.props.dispatch({ type: YOU_WON});
                     return;
                 /* TODO tie proposed, win, loss etc */
             }
         }
         this.socket.onclose = (event) => {
+            this.props.dispatch({ type: DISCARD });
+
             /* event will eventually contain data about win, loss, tie, or some error that caused the match to be aborted.
                This will need to be checked. Currently, only the error is default */
             console.log("connectionInterrupted");
             console.log(event);
-            //this.props.dispatch(push("/lobby")); // something abruptly ended
+            this.props.dispatch(push("/lobby")); // something abruptly ended
             return;
         }
         this.socket.onerror = (event) => {
@@ -97,11 +98,23 @@ class Game extends React.Component {
                     <Button onClick={()=>{}}> Back to lobby (lose) </Button>}
 */
     render() { //gamewrapper bude maintainovat aspect ratio. V Cards musi byt mapstatetoprops. PlayedCard musi decidovat, ci je img back
+        if(this.props.appState.ended) {
+            return (
+                <div>
+                    {this.props.appState.won ? <h1> You won </h1>  : <h1> you lost </h1>}
+                </div>
+            )
+        }
         return (
             <div id="gameWrapper" className="anim" >
                 <div className="spanner" style={{position: "float"}}>
                     <div id="p1" className="sel" > {this.props.appState.name} </div>
-                    <PlayedCard card={this.props.appState.playedCard} />
+                    <div id="cdp">
+                        <PlayedCard card={this.props.appState.playedCard} />
+                        <div id="cd">
+                            <div> buttons </div>
+                        </div>
+                    </div>
                     <div id="p2" className="sel" > {this.props.appState.running ? this.props.appState.opponentName : "Looking for opponent!"} </div>
                 </div>
                 <Stats type="p1" stats={this.props.appState.playerStats} />

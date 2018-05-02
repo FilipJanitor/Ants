@@ -24,10 +24,12 @@ const OPPONENT_ON_TURN = 1;
 const INITIATE_GAME = 5;
 const NEW_GAME_STATE = 6;
 const NEXT_TURN = 7;
+const YOU_WON = 8;
+const YOU_LOST = 9;
 
 const GAME_ONGOING = 0;
 
-
+/*console.log(process.env); heroku*/
 
 // ________________________________INIT___________________________________
 const catchValidationErrors = function(err,req,res,next) {
@@ -511,6 +513,14 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                         if(tournament.checkGameState()){
                              //currentplayer won
                              //db and stuff
+                            tournament.win();
+                            tournament.players[tournament.onTurn].socket.send(JSON.stringify({
+                                typeOfResponse: YOU_WON
+                            }));
+                            tournament.players[(tournament.onTurn + 1)%2].socket.send(JSON.stringify({
+                                typeOfResponse: YOU_LOST
+                            }));
+                            //unregister states
                         } else {
                             //hra sa dalej
                             tournament.nextTurn();
@@ -526,9 +536,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                     playedCard: tournament.playedCard,
                                     cards: tournament.playerCards[curPl]
                                 }
-                                //typeOfResponse: 99
                             }));
-                            //opponent is on turn now
                             tournament.players[tournament.onTurn].socket.send(JSON.stringify({
                                 typeOfResponse: NEW_GAME_STATE,
                                 data: {
@@ -539,9 +547,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                     playedCard: tournament.playedCard,
                                     cards: tournament.playerCards[tournament.onTurn]
                                 }
-                                // typeOfResponse: 100
                             }));
-                            //send new state (onturn generovat pomocou andu)
                         }
                     case 0:
                         return;
@@ -552,8 +558,6 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
         return;
         ws.send(JSON.stringify({typeOfResponse :"OPENED"}));
     });
-
-    //onclose remove from matchmaking, logged users etc...
 });
 
 

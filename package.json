@@ -52,5 +52,9 @@
     "sanitize-filename": "^1.6.1",
     "webpack": "^4.4.1",
     "webpack-cli": "^2.0.13"
+  },
+  "engines": {
+    "node": "8.11.x",
+    "npm": "5.6.x"
   }
 }

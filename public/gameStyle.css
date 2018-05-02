@@ -100,7 +100,6 @@
 	left: 11%;
 	position: absolute;
 	width: 20%;
-	z-index: 2;
 }
 #p2ground {
 	left: auto;
@@ -123,7 +122,6 @@
 	bottom:7%;
 	position:absolute;
 	width: 100%;
-	z-index: 1;
 }
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 #gameWrapper.anim #p1castle, #gameWrapper.anim #p2castle, #gameWrapper.anim #p1wall, #gameWrapper.anim #p2wall {
@@ -238,6 +236,7 @@
 	width: 90%;
 	margin: 3%;
 	height:30%;
+	background: transparent;
 }
 
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
@@ -359,4 +358,3 @@
 	right:37%;
 	height:100%;
 }
-
