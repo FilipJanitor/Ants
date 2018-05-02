@@ -53,12 +53,8 @@ const debugMiddleware = function(req,res,next) {
 }*/
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    insecureAuth: true,
-    database: 'main',
-    port: 3306
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
 });
 
 const server = app.listen(process.env.PORT || 8080, '0.0.0.0', function(){
