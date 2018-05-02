@@ -7,7 +7,8 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,40 @@
   },
   "homepage": "https://github.com/FilipJanitor/Ants#readme",
   "dependencies": {
+    "ajv": "^6.4.0",
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "body-parser": "^1.18.2",
+    "create-react-class": "^15.6.3",
+    "crypto-js": "^3.1.9-1",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0",
+    "express": "^4.16.3",
+    "express-json-validator-middleware": "^1.2.1",
+    "express-ws": "^3.0.0",
+    "found": "^0.3.8",
+    "jshint": "^2.9.5",
+    "jslint": "^0.12.0",
     "mysql": "^2.15.0",
     "react": "^16.3.0",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.0",
-    "webpack": "^4.4.1"
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "reduce-reducers": "^0.1.2",
+    "sanitize-filename": "^1.6.1",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
+  },
+  "engines": {
+    "node": "8.11.x",
+    "npm": "5.6.x"
   }
 }
