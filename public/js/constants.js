@@ -45,11 +45,25 @@ export const initialGlobalState = {
         opponentName: "",
         running: false,
         playerStats: {
-
+            builders: 2,
+            bricks: 5,
+            warriors: 2,
+            weapons: 5,
+            mages: 2,
+            crystals: 5,
+            wall: 10,
+            castle: 35
         },
         playedCard: -1,
         opponentStats: {
-
+            builders: 2,
+            bricks: 5,
+            warriors: 2,
+            weapons: 5,
+            mages: 2,
+            crystals: 5,
+            wall: 10,
+            castle: 35
         },
         onTurn: false, //kym cakame na oponenta, nic sa nebude diat
         cards: [
