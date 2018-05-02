@@ -12,7 +12,7 @@ var expressWs = require('express-ws')(app);
 const { generateNewCard, Tournament, HARDCORE, NORMAL } = require('./cardsTournaments.js');
 
 // ________________________________CONSTANTS___________________________________
-
+console.log("STARTING TESTING")
 const NOT_LOOKING_FOR_MATCH = 0;
 const LOOKING_FOR_NORMAL_MATCH = 1;
 const LOOKING_FOR_HARDCORE_MATCH = 2;
