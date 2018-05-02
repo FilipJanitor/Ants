@@ -447,54 +447,21 @@ class Tournament {
     }
 
     win(db) {
-        /*
-            ID int(11) NOT NULL AUTO_INCREMENT,
-    userId1 int(11) NOT NULL,
-    userId2 int(11) NOT NULL,
-    gameResult int(11) NOT NULL,
-    gameType int(11) NOT NULL,
-        */
-        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + db.escape(this.players[0].id) + "," + db.escape(this.players[1].id) + ", 0, " + db.escape(this.type) +")";
-        const queryUpdate1 = "UPDATE users SET ties = ties + 1, score = score + 1 WHERE id=" + db.escape(this.players[0].id) + " OR id=" + db.escape(this.players[1].id);
+        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + db.escape(this.players[0].id) + "," + db.escape(this.players[1].id) + ","+ this.players[this.onTurn].id +", " + db.escape(this.type) +")";
+        const queryUpdateWin = "UPDATE users SET wins = wins + 1, score = score + 2 WHERE id=" + this.players[this.onTurn].id;
+        const queryUpdateLose = "UPDATE users SET loses = loses + 1 WHERE id=" + db.escape(this.players[(this.onTurn + 1) % 2].id);
+        db.query(queryInsert, (error) => {
+            if(error){ console.log("insertFailed"); console.log(error); }
+        });
+        db.query(queryUpdateWin, (error) => {
+            if(error){ console.log("updateWinFailed"); console.log(error); }
+        });
+        db.query(queryUpdateLose, (error) => {
+            if(error){ console.log("updateLoseFailed"); console.log(error); }
+        });
+
         this.finished = true;
         this.winner = this.players[this.onTurn].id;
-        //uloz do db
-        /*
-        db.beginTransaction((err) => {
-            if (err) {console.log("tournament not saved" + err);return;}
-            db.query(querySelect, (error, rows, fields) => {
-                if(error){ return db.rollback(); }
-                db.query(queryInsert, (error, rows, fields) => {
-                    if(error){ return db.rollback(); }
-                    db.query(query, (err, rows, fields) => {
-                        if(err){
-                            //console.log("registering4");
-                            //console.log(err);
-                            return db.rollback(function() {
-                                res.send({result: false, error: 'RegisterError3'});
-                            });
-                        }
-                        if(rows.length == 1){
-                            db.commit(function(err) {
-                                if (err) {
-                                    //console.log("registering5");
-                                    //console.log(err);
-                                    return db.rollback(function() {
-                                        res.send({result: false, error: 'RegisterError4'});
-                                    });
-                                }
-                                //console.log("succ");
-                                res.send({result: true, token: rows[0].token, userId: rows[0].ID});
-                            });
-                        } else {
-                            return db.rollback(function() {
-                                res.send({result: false, error: 'RegisterError5'});
-                            });
-                        }
-                    });
-                });
-            });
-        });*/
     }
 
     tie(db) {
