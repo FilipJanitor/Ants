@@ -12,6 +12,7 @@
 */
 
 //da sa to zlozit z viacero komponentov. Tak
+import { push } from 'react-router-redux';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -21,7 +22,7 @@ import Stats from './Stats.js';
 import Tower from './Tower.js';
 import Wall from './Wall.js';
 import PlayedCard from './PlayedCard.js';
-import { INITIATE_GAME, NEW_GAME_STATE, YOU_LOST, YOU_WON, DISCARD } from '../constants.js';
+import { INITIATE_GAME, NEW_GAME_STATE, YOU_LOST, YOU_WON, DISCARD, TIE } from '../constants.js';
 
 class Game extends React.Component {
     constructor(props) {
@@ -66,21 +67,30 @@ class Game extends React.Component {
                     return;
                 case YOU_LOST:
                     this.props.dispatch({ type: YOU_LOST});
+                    this.socket.close()
                     return;
                 case YOU_WON:
                     this.props.dispatch({ type: YOU_WON});
+                    this.socket.close();
+                    return;
+                case TIE:
+                    this.props.dispatch({ type: TIE});
+                    this.socket.close(1000);
                     return;
                 /* TODO tie proposed, win, loss etc */
             }
         }
         this.socket.onclose = (event) => {
+            console.log(event);
+            if(event.code === 1000){
+                return;
+            }
+            this.props.dispatch(push("/lobby"));
             this.props.dispatch({ type: DISCARD });
-
             /* event will eventually contain data about win, loss, tie, or some error that caused the match to be aborted.
                This will need to be checked. Currently, only the error is default */
             console.log("connectionInterrupted");
-            console.log(event);
-            this.props.dispatch(push("/lobby")); // something abruptly ended
+            console.log(event); // something abruptly ended
             return;
         }
         this.socket.onerror = (event) => {
@@ -100,10 +110,25 @@ class Game extends React.Component {
     render() { //gamewrapper bude maintainovat aspect ratio. V Cards musi byt mapstatetoprops. PlayedCard musi decidovat, ci je img back
         if(this.props.appState.ended) {
             return (
-                <div>
-                    {this.props.appState.won ? <h1> You won </h1>  : <h1> you lost </h1>}
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="well">
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <h1> { this.props.appState.tie ? "Game ended with a tie" : (this.props.appState.won ? "You won"  : "You lost" ) } </h1>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <Button onClick={()=>{this.props.dispatch({ type: DISCARD });this.props.dispatch(push("/lobby"));}}> Back to lobby </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            )
+            );
         }
         return (
             <div id="gameWrapper" className="anim" >
@@ -111,9 +136,9 @@ class Game extends React.Component {
                     <div id="p1" className="sel" > {this.props.appState.name} </div>
                     <div id="cdp">
                         <PlayedCard card={this.props.appState.playedCard} />
-                        <div id="cd">
+                        {/* <div id="cd">
                             <div> buttons </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div id="p2" className="sel" > {this.props.appState.running ? this.props.appState.opponentName : "Looking for opponent!"} </div>
                 </div>

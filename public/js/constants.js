@@ -15,6 +15,7 @@ export const YOU_LOST = 9;
 
 export const GAME_ONGOING = 0;
 export const DISCARD = 20;
+export const TIE = 40;
 
 export const RANKS = Object.freeze ([
     "Cadet",
@@ -49,6 +50,7 @@ export const initialGlobalState = {
         running: false,
         ended: false,
         won: false,
+        tie: false,
         playerStats: {
             builders: 2,
             bricks: 5,

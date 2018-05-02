@@ -27,7 +27,12 @@ const NEXT_TURN = 7;
 const YOU_WON = 8;
 const YOU_LOST = 9;
 
+const GIVE_UP = 30;
 const GAME_ONGOING = 0;
+
+const TIE = 40;
+const WIN = 10;
+const CONTINUE = 11;
 
 /*console.log(process.env); heroku*/
 
@@ -39,9 +44,6 @@ const catchValidationErrors = function(err,req,res,next) {
 }
 
 const debugMiddleware = function(req,res,next) {
-    // console.log("____________________");
-    // console.log(req.body);
-    // console.log("____________________");
     next();
 }
 
@@ -440,14 +442,14 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                     id: userId, //res is from database
                                     //ukladame ws objekt, aby sme mohli posielat superovi
                                     socket: ws
-                                }, opponent, HARDCORE);
+                                }, opponent, HARDCORE, userId);
                             } else if(msg.lookingForGame === LOOKING_FOR_NORMAL_MATCH){
                                 tournament = new Tournament({
                                     name: msg.name,
                                     id: userId, //res is from database
                                     //ukladame ws objekt, aby sme mohli posielat superovi
                                     socket: ws
-                                }, opponent, NORMAL);
+                                }, opponent, NORMAL, userId);
                             } else {
                                 ws.close(1003,"InvalidMatch");
                             return;
@@ -489,6 +491,9 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                             return;
                         }
                         tournament = tournaments[loggedUsersToTournament[userId]];
+                        if(tournament === undefined) {
+
+                        }
                         if (tournament.players[tournament.onTurn].id !== userId){
                             ws.close(1003,"Player not on turn");
                             return;
@@ -510,9 +515,11 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                             tournament.playCard(msg.cardIndex);
                         }
                         //check win
-                        if(tournament.checkGameState()){
+                        const gameResult = tournament.checkGameState();
+                        console.log("gameresult = " + gameResult);
+                        console.log("rounds "+ tournament.rounds);
+                        if(gameResult === WIN){
                              //currentplayer won
-                             //db and stuff
                             tournament.win();
                             tournament.players[tournament.onTurn].socket.send(JSON.stringify({
                                 typeOfResponse: YOU_WON
@@ -520,8 +527,12 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                             tournament.players[(tournament.onTurn + 1)%2].socket.send(JSON.stringify({
                                 typeOfResponse: YOU_LOST
                             }));
-                            //unregister states
-                        } else {
+                            //unregister tournament
+                            loggedUsersToTournament[ tournament.players[0].id ] = undefined;
+                            loggedUsersToTournament[ tournament.players[1].id ] = undefined;
+                            tournaments[ tournament.tournamentId ] = undefined;
+                            return;
+                        } else if (gameResult === CONTINUE ){
                             //hra sa dalej
                             tournament.nextTurn();
                             const curPl = (tournament.onTurn + 1)%2;
@@ -548,15 +559,23 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                     cards: tournament.playerCards[tournament.onTurn]
                                 }
                             }));
+                        } else {
+                            tournament.tie();
+                            tournament.players[tournament.onTurn].socket.send(JSON.stringify({
+                                typeOfResponse: TIE
+                            }));
+                            tournament.players[(tournament.onTurn + 1)%2].socket.send(JSON.stringify({
+                                typeOfResponse: TIE
+                            }));
+                            //unregister tournament
+                            loggedUsersToTournament[ tournament.players[0].id ] = undefined;
+                            loggedUsersToTournament[ tournament.players[1].id ] = undefined;
+                            tournaments[ tournament.tournamentId ] = undefined;
+                            return;
                         }
-                    case 0:
-                        return;
                 }
-                //these things are inmemory, so only after closing things are written to DB
             }
         });
-        return;
-        ws.send(JSON.stringify({typeOfResponse :"OPENED"}));
     });
 });
 

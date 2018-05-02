@@ -2,6 +2,9 @@
 
 const NORMAL = 0;
 const HARDCORE = 1;
+const TIE = 40;
+const WIN = 10;
+const CONTINUE = 11;
 
 const generator = [0,0,0,0,1,1,1,2,2,3,3,3,3,4,4,4,4,5,5,5,6,7,7,8,8,9,9,
     10,10,10,10,11,11,11,12,12,12,12,13,13,14,14,15,15,15,16,16,17,17,17,
@@ -265,13 +268,15 @@ const generateNewCard = function() {
     return cards[generator[id]];
 };
 class Tournament {
-    constructor(player1, player2, type) {
+    constructor(player1, player2, type, id) {
         //este by sa to dalo zlepsit tak, ze by hrac mal v sebe vsetko, aj staty, aj karty
         this.playerCards = [[],[]];
         for(let i = 0; i < 8; i++){
             this.playerCards[0].push(generateNewCard());
             this.playerCards[1].push(generateNewCard());
         }
+        this.tournamentId = id;
+        this.rounds = 0;
         this.players = [ player1, player2 ];
         this.onTurn = 0;
         this.playedCard = -1;
@@ -409,20 +414,24 @@ class Tournament {
     }
 
     checkGameState() {
+        if(this.rounds >= 1000){
+            return TIE;
+        }
         const tur = this.onTurn;
         const opp = (this.onTurn + 1) % 2;
         //kedze nie je karta, ktora by hracovi znizila hrad, alebo oponentovi zvysila, ak niekto vyhra, je to hrac na tahu
         //our hardcore match will be different. Original wins if player castle is >= 100 AND opponent castle <= 0. We are interested in difference only.
         if(this.type === HARDCORE && (this.playerStats[tur].castle - this.playerStats[opp].castle) >= 100 ) {
-            return true;
+            return WIN;
         }
         if(this.type === NORMAL && (this.playerStats[tur].castle >= 100 || this.playerStats[opp].castle <= 0)){
-            return true;
+            return WIN;
         }
-        return false;
+        return CONTINUE;
     }
 
     nextTurn() {
+        this.rounds += 1;
         if(this.firstTurn) {
             //musi byt onTurn 0
             this.onTurn = 1;
@@ -437,9 +446,50 @@ class Tournament {
         }
     }
 
-    win() {
+    win(db) {
+        const queryInsert = "INSERT_"
         this.finished = true;
         this.winner = this.players[this.onTurn].id;
+        //uloz do db
+        /*
+        db.beginTransaction((err) => {
+            if (err) {console.log("tournament not saved" + err);return;}
+            db.query(querySelect, (error, rows, fields) => {
+                if(error){ return db.rollback(); }
+                db.query(queryInsert, (error, rows, fields) => {
+                    if(error){ return db.rollback(); }
+                    db.query(query, (err, rows, fields) => {
+                        if(err){
+                            //console.log("registering4");
+                            //console.log(err);
+                            return db.rollback(function() {
+                                res.send({result: false, error: 'RegisterError3'});
+                            });
+                        }
+                        if(rows.length == 1){
+                            db.commit(function(err) {
+                                if (err) {
+                                    //console.log("registering5");
+                                    //console.log(err);
+                                    return db.rollback(function() {
+                                        res.send({result: false, error: 'RegisterError4'});
+                                    });
+                                }
+                                //console.log("succ");
+                                res.send({result: true, token: rows[0].token, userId: rows[0].ID});
+                            });
+                        } else {
+                            return db.rollback(function() {
+                                res.send({result: false, error: 'RegisterError5'});
+                            });
+                        }
+                    });
+                });
+            });
+        });*/
+    }
+
+    tie(db) {
     }
 }
 

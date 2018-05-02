@@ -8,6 +8,8 @@ import {
     NEXT_TURN,
     YOU_WON,
     YOU_LOST,
+    TIE,
+    DISCARD,
     initialGlobalState
 } from '../constants';
 
@@ -37,7 +39,7 @@ export default function reducer(state, action){
                 onTurn: false
             };
         case YOU_WON:
-            copyOFInitial = JSON.parse(JSON.stringify(initialGlobalState));
+            copyOFInitial = JSON.parse(JSON.stringify(initialGlobalState.appState));
             return { ...state,
                 opponentName: copyOFInitial.opponentName,
                 playerStats: copyOFInitial.playerStats,
@@ -47,10 +49,11 @@ export default function reducer(state, action){
                 cards: copyOFInitial.cards,
                 running: copyOFInitial.running,
                 ended: true,
-                won: true
+                won: true,
+                tie: false
             };
         case YOU_LOST:
-            copyOFInitial = JSON.parse(JSON.stringify(initialGlobalState));
+            copyOFInitial = JSON.parse(JSON.stringify(initialGlobalState.appState));
             return { ...state,
                 opponentName: copyOFInitial.opponentName,
                 playerStats: copyOFInitial.playerStats,
@@ -60,10 +63,12 @@ export default function reducer(state, action){
                 cards: copyOFInitial.cards,
                 running: copyOFInitial.running,
                 ended: true,
-                won: false
+                won: false,
+                tie: false
             };
         case DISCARD:
-            copyOFInitial = JSON.parse(JSON.stringify(initialGlobalState));
+            copyOFInitial = JSON.parse(JSON.stringify(initialGlobalState.appState));
+            console.log(copyOFInitial);
             return { ...state,
                 opponentName: copyOFInitial.opponentName,
                 playerStats: copyOFInitial.playerStats,
@@ -73,7 +78,24 @@ export default function reducer(state, action){
                 cards: copyOFInitial.cards,
                 running: copyOFInitial.running,
                 ended: copyOFInitial.ended,
-                won: copyOFInitial.won
+                won: copyOFInitial.won,
+                tie: false
+            };
+        case TIE:
+            copyOFInitial = JSON.parse(JSON.stringify(initialGlobalState.appState));
+            return { ...state,
+                opponentName: copyOFInitial.opponentName,
+                playerStats: copyOFInitial.playerStats,
+                opponentStats: copyOFInitial.opponentStats,
+                onTurn: copyOFInitial.onTurn,
+                playedCard: copyOFInitial.playedCard,
+                cards: copyOFInitial.cards,
+                running: copyOFInitial.running,
+                ended: copyOFInitial.ended,
+                won: copyOFInitial.won,
+                ended: true,
+                won: false,
+                tie: true
             };
         default:
             return state;
