@@ -348,65 +348,77 @@ app.post('/register', debugMiddleware, bodyParser.json(), debugMiddleware, valid
                                 0 + ',' +
                                 0 + ')';
     //console.log("registering");
-    db.beginTransaction(function(err) {
+
+    db.getConnection((err,connection) => {
         if (err) {
-            //console.log("registering1");
-            //console.log(err);
+            console.log("registering1");
+            console.log(err);
             res.send({
                 result: false,
                 error: err
             });
         }
-        db.query(querySelect, function (error, rows, fields) {
-            if(error){
-                //console.log("registering2");
-                //console.log(error);
-                return db.rollback(function() {
-                    res.send({result: false, error: 'RegisterError1'});
+        connection.beginTransaction(function(err) {
+            if (err) {
+                console.log("registering1");
+                console.log(err);
+                res.send({
+                    result: false,
+                    error: err
                 });
             }
-            if(rows.length != 0){
-                //console.log("nametaken");
-                return db.rollback(function() {
-                    res.send({result: false, error: 'NameTaken'});
-                });
-            }
-            db.query(queryInsert, function (error, rows, fields) {
-                if (error) {
-                    //console.log("registering3");
-                    //console.log(error);
-                    return db.rollback(function() {
-                        res.send({result: false, error: 'RegisterError2'});
+            connection.query(querySelect, function (error, rows, fields) {
+                if(error){
+                    console.log("registering2");
+                    console.log(error);
+                    return connection.rollback(function() {
+                        res.send({result: false, error: 'RegisterError1'});
                     });
                 }
-                db.query(query, (err, rows, fields) => {
-                    if(err){
-                        //console.log("registering4");
-                        //console.log(err);
-                        return db.rollback(function() {
-                            res.send({result: false, error: 'RegisterError3'});
+                if(rows.length != 0){
+                    console.log("nametaken");
+                    return connection.rollback(function() {
+                        res.send({result: false, error: 'NameTaken'});
+                    });
+                }
+                connection.query(queryInsert, function (error, rows, fields) {
+                    if (error) {
+                        console.log("registering3");
+                        console.log(error);
+                        return connection.rollback(function() {
+                            res.send({result: false, error: 'RegisterError2'});
                         });
                     }
-                    if(rows.length == 1){
-                        db.commit(function(err) {
-                            if (err) {
-                                //console.log("registering5");
-                                //console.log(err);
-                                return db.rollback(function() {
-                                    res.send({result: false, error: 'RegisterError4'});
-                                });
-                            }
-                            //console.log("succ");
-                            res.send({result: true, token: rows[0].token, userId: rows[0].ID});
-                        });
-                    } else {
-                        return db.rollback(function() {
-                            res.send({result: false, error: 'RegisterError5'});
-                        });
-                    }
+                    connection.query(query, (err, rows, fields) => {
+                        if(err){
+                            console.log("registering4");
+                            console.log(err);
+                            return connection.rollback(function() {
+                                res.send({result: false, error: 'RegisterError3'});
+                            });
+                        }
+                        if(rows.length == 1){
+                            connection.commit(function(err) {
+                                if (err) {
+                                    console.log("registering5");
+                                    console.log(err);
+                                    return connection.rollback(function() {
+                                        res.send({result: false, error: 'RegisterError4'});
+                                    });
+                                }
+                                console.log("succ");
+                                res.send({result: true, token: rows[0].token, userId: rows[0].ID});
+                            });
+                        } else {
+                            return connection.rollback(function() {
+                                res.send({result: false, error: 'RegisterError5'});
+                            });
+                        }
+                    });
                 });
             });
         });
+        connection.release();
     });
 });
 
