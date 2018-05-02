@@ -47,20 +47,21 @@ const debugMiddleware = function(req,res,next) {
     next();
 }
 
-if(process.argv.length != 3){
+/*if(process.argv.length != 3){
     console.log("Invalid arguments provided. Aborting!");
     process.exit(-1);
-}
+}*/
 
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: process.argv[2],
+    password: '',
+    insecureAuth: true,
     database: 'main',
     port: 3306
 });
 
-const server = app.listen(8080, '0.0.0.0', function(){
+const server = app.listen(process.env.PORT || 8080, '0.0.0.0', function(){
     console.log("Server listening...");
 });
 
