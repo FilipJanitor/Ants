@@ -56,6 +56,7 @@ html, body {
 	min-width: 100px;
 	border:1px solid #000;
 	z-index:2;
+	text-align: left;
 }
 
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
@@ -90,7 +91,7 @@ html, body {
 #p1info li, #p2info li {
 	background-image: url(IMGstate);
 	background-repeat: no-repeat;
-	background-size: 28%;/*37%;*/
+	background-size: 30%;/*37%;*/
 	height: 5%;
 	padding-left: 45%;
 	white-space:nowrap;
@@ -169,7 +170,7 @@ html, body {
 	width: 100%;
 }
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
-#game.anim #p1castle, #game.anim #p2castle {
+#gameWrapper.anim #p1castle, #gameWrapper.anim #p2castle {
 	transition:height 1s;
 }
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
@@ -195,7 +196,7 @@ html, body {
 	position: absolute;
 	width: 1%;
 }
-#game.anim #p1wall, #game.anim #p2wall {
+#gameWrapper.anim #p1wall, #gameWrapper.anim #p2wall {
 	transition:height 1s;
 }
 

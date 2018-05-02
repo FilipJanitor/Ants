@@ -399,7 +399,7 @@ class Tournament {
             if( this.playerStats[opp].wall >= currentCard.effects.attack ) {
                 this.playerStats[opp].wall -= currentCard.effects.attack;
             } else {
-                this.playerStats[opp].castle = currentCard.effects.attack - this.playerStats[opp].wall;
+                this.playerStats[opp].castle -= currentCard.effects.attack - this.playerStats[opp].wall;
                 this.playerStats[opp].wall = 0;
             }
         }

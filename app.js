@@ -56,7 +56,7 @@ const db = mysql.createConnection({
     port: 3306
 });
 
-const server = app.listen(8080, function(){
+const server = app.listen(8080, '0.0.0.0', function(){
     console.log("Server listening...");
 });
 

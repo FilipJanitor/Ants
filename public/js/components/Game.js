@@ -98,7 +98,7 @@ class Game extends React.Component {
 */
     render() { //gamewrapper bude maintainovat aspect ratio. V Cards musi byt mapstatetoprops. PlayedCard musi decidovat, ci je img back
         return (
-            <div id="gameWrapper" >
+            <div id="gameWrapper" className="anim" >
                 <div className="spanner" style={{position: "float"}}>
                     <div id="p1" className="sel" > {this.props.appState.name} </div>
                     <PlayedCard card={this.props.appState.playedCard} />
@@ -108,8 +108,8 @@ class Game extends React.Component {
                 <Tower type="p1" stat={this.props.appState.playerStats.castle} />
                 <Wall type="p1" stat={this.props.appState.playerStats.wall} />
 
-                <Wall type="p2" stat={this.props.appState.playerStats.wall} />
-                <Tower type="p2" stat={this.props.appState.playerStats.castle} />
+                <Wall type="p2" stat={this.props.appState.opponentStats.wall} />
+                <Tower type="p2" stat={this.props.appState.opponentStats.castle} />
                 <Stats type="p2" stats={this.props.appState.opponentStats} />
 
                 <Cards socket={this.socket}/>
