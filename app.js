@@ -403,7 +403,7 @@ const getUserIdFromToken = (token) => {
 
 };
 
-app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked sa najde match */
+app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa najde match */
     ws.on('message', function(message){
         const msg = JSON.parse(message);
         console.log("UUUU");
@@ -520,7 +520,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                         console.log("rounds "+ tournament.rounds);
                         if(gameResult === WIN){
                              //currentplayer won
-                            tournament.win();
+                            tournament.win(db);
                             tournament.players[tournament.onTurn].socket.send(JSON.stringify({
                                 typeOfResponse: YOU_WON
                             }));
@@ -560,7 +560,7 @@ app.ws('/game', function(ws,req){ /*Nemusime odpovedat hned, odpovie sa, az ked 
                                 }
                             }));
                         } else {
-                            tournament.tie();
+                            tournament.tie(db);
                             tournament.players[tournament.onTurn].socket.send(JSON.stringify({
                                 typeOfResponse: TIE
                             }));

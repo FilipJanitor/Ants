@@ -447,7 +447,15 @@ class Tournament {
     }
 
     win(db) {
-        const queryInsert = "INSERT_"
+        /*
+            ID int(11) NOT NULL AUTO_INCREMENT,
+    userId1 int(11) NOT NULL,
+    userId2 int(11) NOT NULL,
+    gameResult int(11) NOT NULL,
+    gameType int(11) NOT NULL,
+        */
+        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + db.escape(this.players[0].id) + "," + db.escape(this.players[1].id) + ", 0, " + db.escape(this.type) +")";
+        const queryUpdate1 = "UPDATE users SET ties = ties + 1, score = score + 1 WHERE id=" + db.escape(this.players[0].id) + " OR id=" + db.escape(this.players[1].id);
         this.finished = true;
         this.winner = this.players[this.onTurn].id;
         //uloz do db
@@ -490,6 +498,23 @@ class Tournament {
     }
 
     tie(db) {
+        this.finished = true;
+        this.winner = -1;
+        /*
+            ID int(11) NOT NULL AUTO_INCREMENT,
+    userId1 int(11) NOT NULL,
+    userId2 int(11) NOT NULL,
+    gameResult int(11) NOT NULL,
+    gameType int(11) NOT NULL,
+        */
+        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + db.escape(this.players[0].id) + "," + db.escape(this.players[1].id) + ", 0, " + db.escape(this.type) +")";
+        const queryUpdate = "UPDATE users SET ties = ties + 1, score = score + 1 WHERE id=" + db.escape(this.players[0].id) + " OR id=" + db.escape(this.players[1].id);
+        db.query(queryInsert, (error) => {
+            if(error){ console.log("insertFailed"); console.log(error); }
+        });
+        db.query(queryUpdate, (error) => {
+            if(error){ console.log("updateFailed"); console.log(error); }
+        });
     }
 }
 
