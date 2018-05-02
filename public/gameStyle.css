@@ -24,7 +24,7 @@
 #p1.sel, #p2.sel {
 	color: #fff;
 	border-color:#08f;
-	box-shadow:0 0 10px #08f;
+	/*box-shadow:0 0 10px #08f;*/
 }
 
 #p1info, #p2info {
@@ -73,12 +73,12 @@
 }
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 .mages {
-	background: #008;
+	background: #1c39db; /*#008;*/
 	background-position: 8% 46%;
 }
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 .crystals {
-	background: #008;
+	background: #1c39db; /*#008;*/
 	background-position: 8% 59%;
 }
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
@@ -100,6 +100,9 @@
 	left: 11%;
 	position: absolute;
 	width: 20%;
+
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
 }
 #p2ground {
 	left: auto;
@@ -289,7 +292,7 @@
 
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 .card.crystals {
-	background-color: #0080ff;
+	background-color: #1c39db;
 }
 
 /*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
