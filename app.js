@@ -236,14 +236,20 @@ app.post('/myMatches', debugMiddleware, bodyParser.json(), debugMiddleware, vali
     const validateQuery = 'SELECT ID FROM users WHERE ID=' + db.escape(data.userId) +' AND token=' + db.escape(data.token);
     //mozno pridat aj correspondence filter?
     const query =
-'(SELECT u.name AS name, u.ID AS id, ' + USER_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId1='+ db.escape(data.userId) +' AND t.userId2=u.ID AND t.playerOnTurn = 1 AND t.gameResult='+ GAME_ONGOING + ')' +
-' UNION ' +
-'(SELECT u.name AS name, u.ID AS id, ' + OPPONENT_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId1='+ db.escape(data.userId) +' AND t.userId2=u.ID AND t.playerOnTurn = 2 AND t.gameResult='+ GAME_ONGOING + ')' +
-' UNION ' +
-'(SELECT u.name AS name, u.ID AS id, ' + USER_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.playerOnTurn = 2 AND t.gameResult='+ GAME_ONGOING + ')' +
-' UNION ' +
-'(SELECT u.name AS name, u.ID AS id, ' + OPPONENT_ON_TURN + ' AS onTurn FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.playerOnTurn = 1 AND t.gameResult='+ GAME_ONGOING + ')';
-    //console.log(query);
+    'SELECT id,opponent,result FROM ('+
+    '(SELECT t.id AS id, u.name AS opponent, "tie" AS result FROM tournaments AS t, users AS u WHERE t.userId1='+ db.escape(data.userId) +' AND t.userId2=u.ID AND t.gameResult=0 )'+
+    ' UNION ' +
+    '(SELECT t.id AS id, u.name AS opponent, "tie" AS result FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.gameResult=0 )'+
+    ' UNION ' +
+    '(SELECT t.id AS id, u.name AS opponent, "win" AS result FROM tournaments AS t, users AS u WHERE t.userId1='+ db.escape(data.userId) +' AND t.userId2=u.ID AND t.gameResult=t.userId1 )'+
+    ' UNION ' +
+    '(SELECT t.id AS id, u.name AS opponent, "win" AS result FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.gameResult=t.userId2 )'+
+    ' UNION ' +
+    '(SELECT t.id AS id, u.name AS opponent, "loss" AS result FROM tournaments AS t, users AS u WHERE t.userId1='+ db.escape(data.userId) +' AND t.userId2=u.ID AND t.gameResult=t.userId2 )'+
+    ' UNION ' +
+    '(SELECT t.id AS id, u.name AS opponent, "loss" AS result FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.gameResult=t.userId1 )'+
+    ') res ORDER BY id DESC';    //console.log(query);
+    console.log(query);
     db.query(validateQuery, (err, rows, fields) => {
         if(err){
             //console.log(err);
@@ -254,7 +260,7 @@ app.post('/myMatches', debugMiddleware, bodyParser.json(), debugMiddleware, vali
             //validation successful
             db.query(query, (err, rows, fields) => {
                 if(err){
-                    //console.log(err);
+                    console.log(err);
                     res.send({result: false, error: 'MatchboardError'});
                     return;
                 }

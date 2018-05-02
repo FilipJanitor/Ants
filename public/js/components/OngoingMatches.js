@@ -43,14 +43,14 @@ export default class OngoingMatches extends React.Component {
                                     <thead>
                                         <tr>
                                             <th>Opponent</th>
-                                            <th>Turn</th>
+                                            <th>Result</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.matches.map((i) => {return (
                                             <tr key={i.id} onClick={()=>{i.id}}>
-                                                <td>{i.name}</td>
-                                                <td>{i.onTurn}</td>
+                                                <td>{i.opponent}</td>
+                                                <td>{i.result}</td>
                                             </tr>
                                         );})}
                                     </tbody>
