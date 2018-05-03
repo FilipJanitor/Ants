@@ -63,8 +63,8 @@ const db = mysql.createConnection({
     password: process.env.CLEARDB_PASS,
     database: process.env.CLEARDB_DB
 });
-
-const server = app.listen(process.env.PORT || 8080, '0.0.0.0', function(){
+console.log("PORT "+ process.env.PORT);
+const server = app.listen(process.env.PORT, function(){
     console.log("Server listening...");
 });
 
