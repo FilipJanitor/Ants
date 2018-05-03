@@ -57,7 +57,8 @@ console.log("CONNNN " + {
     password: process.env.CLEARDB_PASS,
     database: process.env.CLEARDB_DB
 });
-const db = mysql.createConnection({
+const db = mysql.createPool({
+    connectionLimit : 100,
     host: process.env.CLEARDB_HOST,
     user: process.env.CLEARDB_USER,
     password: process.env.CLEARDB_PASS,
