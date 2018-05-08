@@ -490,14 +490,14 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
                                     id: userId, //res is from database
                                     //ukladame ws objekt, aby sme mohli posielat superovi
                                     socket: ws
-                                }, opponent, HARDCORE, userId);
+                                }, opponent, HARDCORE, userId, db);
                             } else if(msg.lookingForGame === LOOKING_FOR_NORMAL_MATCH){
                                 tournament = new Tournament({
                                     name: msg.name,
                                     id: userId, //res is from database
                                     //ukladame ws objekt, aby sme mohli posielat superovi
                                     socket: ws
-                                }, opponent, NORMAL, userId);
+                                }, opponent, NORMAL, userId, db);
                             } else {
                                 ws.close(1003,"InvalidMatch");
                             return;
@@ -568,7 +568,7 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
                         console.log("rounds "+ tournament.rounds);
                         if(gameResult === WIN){
                              //currentplayer won
-                            tournament.win(db);
+                            tournament.win();
                             tournament.players[tournament.onTurn].socket.send(JSON.stringify({
                                 typeOfResponse: YOU_WON
                             }));
@@ -608,7 +608,7 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
                                 }
                             }));
                         } else {
-                            tournament.tie(db);
+                            tournament.tie();
                             tournament.players[tournament.onTurn].socket.send(JSON.stringify({
                                 typeOfResponse: TIE
                             }));

@@ -268,7 +268,7 @@ const generateNewCard = function() {
     return cards[generator[id]];
 };
 class Tournament {
-    constructor(player1, player2, type, id) {
+    constructor(player1, player2, type, id, db) {
         //este by sa to dalo zlepsit tak, ze by hrac mal v sebe vsetko, aj staty, aj karty
         this.playerCards = [[],[]];
         for(let i = 0; i < 8; i++){
@@ -305,6 +305,14 @@ class Tournament {
         this.tieProposed = false,
         this.finished = false
         this.winner = undefined;
+        this.db = db;
+    }
+
+    applyAchievement(user, achievementNumber) {
+        const query = "INSERT INTO users_achievements(userId,achievementId) VALUES("+this.db.escape(user)+","+this.db.escape(achievementNumber)+")";
+        this.db.query(queryInsert, (error) => {
+            if(error){ console.log("insertFailed"); console.log(error); }
+        });
     }
 
     foldCard(cardIndex) {
@@ -446,17 +454,17 @@ class Tournament {
         }
     }
 
-    win(db) {
-        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + db.escape(this.players[0].id) + "," + db.escape(this.players[1].id) + ","+ this.players[this.onTurn].id +", " + db.escape(this.type) +")";
+    win() {
+        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + this.db.escape(this.players[0].id) + "," + this.db.escape(this.players[1].id) + ","+ this.players[this.onTurn].id +", " + this.db.escape(this.type) +")";
         const queryUpdateWin = "UPDATE users SET wins = wins + 1, score = score + 2 WHERE id=" + this.players[this.onTurn].id;
-        const queryUpdateLose = "UPDATE users SET loses = loses + 1 WHERE id=" + db.escape(this.players[(this.onTurn + 1) % 2].id);
-        db.query(queryInsert, (error) => {
+        const queryUpdateLose = "UPDATE users SET loses = loses + 1 WHERE id=" + this.db.escape(this.players[(this.onTurn + 1) % 2].id);
+        this.db.query(queryInsert, (error) => {
             if(error){ console.log("insertFailed"); console.log(error); }
         });
-        db.query(queryUpdateWin, (error) => {
+        this.db.query(queryUpdateWin, (error) => {
             if(error){ console.log("updateWinFailed"); console.log(error); }
         });
-        db.query(queryUpdateLose, (error) => {
+        this.db.query(queryUpdateLose, (error) => {
             if(error){ console.log("updateLoseFailed"); console.log(error); }
         });
 
@@ -464,7 +472,7 @@ class Tournament {
         this.winner = this.players[this.onTurn].id;
     }
 
-    tie(db) {
+    tie() {
         this.finished = true;
         this.winner = -1;
         /*
@@ -474,12 +482,12 @@ class Tournament {
     gameResult int(11) NOT NULL,
     gameType int(11) NOT NULL,
         */
-        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + db.escape(this.players[0].id) + "," + db.escape(this.players[1].id) + ", 0, " + db.escape(this.type) +")";
-        const queryUpdate = "UPDATE users SET ties = ties + 1, score = score + 1 WHERE id=" + db.escape(this.players[0].id) + " OR id=" + db.escape(this.players[1].id);
-        db.query(queryInsert, (error) => {
+        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + this.db.escape(this.players[0].id) + "," + this.db.escape(this.players[1].id) + ", 0, " + this.db.escape(this.type) +")";
+        const queryUpdate = "UPDATE users SET ties = ties + 1, score = score + 1 WHERE id=" + this.db.escape(this.players[0].id) + " OR id=" + this.db.escape(this.players[1].id);
+        this.db.query(queryInsert, (error) => {
             if(error){ console.log("insertFailed"); console.log(error); }
         });
-        db.query(queryUpdate, (error) => {
+        this.db.query(queryUpdate, (error) => {
             if(error){ console.log("updateFailed"); console.log(error); }
         });
     }
