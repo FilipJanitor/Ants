@@ -309,7 +309,7 @@ class Tournament {
     }
 
     applyAchievement(user, achievementNumber) {
-        const query = "INSERT INTO users_achievements(userId,achievementId) VALUES("+this.db.escape(user)+","+this.db.escape(achievementNumber)+")";
+        const query = "INSERT IGNORE INTO users_achievements(userId,achievementId) VALUES("+this.db.escape(user)+","+this.db.escape(achievementNumber)+")";
         this.db.query(queryInsert, (error) => {
             if(error){ console.log("insertFailed"); console.log(error); }
         });
