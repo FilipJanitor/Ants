@@ -308,7 +308,7 @@ class Tournament {
         this.db = db;
     }
 
-    applyAchievement(user, achievementNumber) {
+    awardAchievement(user, achievementNumber) {
         const query = "INSERT IGNORE INTO users_achievements(userId,achievementId) VALUES("+this.db.escape(user)+","+this.db.escape(achievementNumber)+")";
         this.db.query(queryInsert, (error) => {
             if(error){ console.log("insertFailed"); console.log(error); }
@@ -419,6 +419,9 @@ class Tournament {
             }
         }
         /*achievementy */
+        if(currentCard.name){
+
+        }
     }
 
     checkGameState() {
@@ -470,6 +473,8 @@ class Tournament {
 
         this.finished = true;
         this.winner = this.players[this.onTurn].id;
+        this.awardAchievement(this.players[this.onTurn].id,1); //first tie
+        this.awardAchievement(this.players[(this.onTurn+1)%2].id,5);
     }
 
     tie() {
@@ -482,6 +487,10 @@ class Tournament {
     gameResult int(11) NOT NULL,
     gameType int(11) NOT NULL,
         */
+
+        this.awardAchievement(this.players[0].id,4); //first tie
+        this.awardAchievement(this.players[1].id,4);
+
         const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + this.db.escape(this.players[0].id) + "," + this.db.escape(this.players[1].id) + ", 0, " + this.db.escape(this.type) +")";
         const queryUpdate = "UPDATE users SET ties = ties + 1, score = score + 1 WHERE id=" + this.db.escape(this.players[0].id) + " OR id=" + this.db.escape(this.players[1].id);
         this.db.query(queryInsert, (error) => {

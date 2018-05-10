@@ -609,10 +609,10 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
                             }));
                         } else {
                             tournament.tie();
-                            tournament.players[tournament.onTurn].socket.send(JSON.stringify({
+                            tournament.players[0].socket.send(JSON.stringify({
                                 typeOfResponse: TIE
                             }));
-                            tournament.players[(tournament.onTurn + 1)%2].socket.send(JSON.stringify({
+                            tournament.players[1].socket.send(JSON.stringify({
                                 typeOfResponse: TIE
                             }));
                             //unregister tournament
