@@ -262,7 +262,7 @@ app.post('/myMatches', debugMiddleware, bodyParser.json(), debugMiddleware, vali
     ' UNION ' +
     '(SELECT t.id AS id, u.name AS opponent, "loss" AS result FROM tournaments AS t, users AS u WHERE t.userId2='+ db.escape(data.userId) +' AND t.userId1=u.ID AND t.gameResult=t.userId1 )'+
     ') res ORDER BY id DESC';    //console.log(query);
-    console.log(query);
+    //console.log(query);
     db.query(validateQuery, (err, rows, fields) => {
         if(err){
             //console.log(err);
@@ -307,7 +307,7 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
             //validation successful
             db.query(queryObtained, (err, rows, fields) => {
                 if(err){
-                    //console.log(err);
+                    console.log(err); //tu je chyba, nema sa to posielat uz tu
                     res.send({result: false, error: 'AchievementsError'});
                     return;
                 }
@@ -315,7 +315,7 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
                     (function(obtained){
                         return function(err ,rows, fields){
                             if(err){
-                               // console.log(err);
+                                console.log(err);
                                 res.send({result: false, error: 'AchievementsError'});
                                 return;
                             }
@@ -444,7 +444,7 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
     const a = setInterval(() => {
         console.log("pinging");
         try{
-            if(ws.readyState !== WebSocket.OPEN){
+            if(ws.readyState !== 1 /*WebSocket.OPEN*/){
                 return;
             }
             ws.ping("heartbeat");
@@ -575,8 +575,8 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
                         }
                         //check win
                         const gameResult = tournament.checkGameState();
-                        console.log("gameresult = " + gameResult);
-                        console.log("rounds "+ tournament.rounds);
+                        //console.log("gameresult = " + gameResult);
+                        //console.log("rounds "+ tournament.rounds);
                         if(gameResult === WIN){
                              //currentplayer won
                             tournament.win();
