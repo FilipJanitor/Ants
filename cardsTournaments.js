@@ -419,8 +419,14 @@ class Tournament {
             }
         }
         /*achievementy */
-        if(currentCard.name){
-
+        if(currentCard.id === 6){ //babylon
+            this.awardAchievement(this.players[tur].id,11);
+        }
+        if(currentCard.id === 28){ //got curse
+            this.awardAchievement(this.players[opp].id,18);
+        }
+        if(currentCard.id === 14){ //got banshee
+            this.awardAchievement(this.players[opp].id,19);
         }
     }
 
@@ -430,12 +436,40 @@ class Tournament {
         }
         const tur = this.onTurn;
         const opp = (this.onTurn + 1) % 2;
+
+        if(this.playerStats[tur].castle >= 100){
+            this.awardAchievement(this.players[tur].id,6);
+        }
+        if(this.playerStats[opp].castle >= 100){
+            this.awardAchievement(this.players[opp].id,6);
+        }
+        if(this.playerStats[tur].castle <= 0){
+            this.awardAchievement(this.players[tur].id,7);
+        }
+        if(this.playerStats[opp].castle <= 0){
+            this.awardAchievement(this.players[opp].id,7);
+        }
+        if(this.playerStats[tur].castle >= 500){
+            this.awardAchievement(this.players[tur].id,8);
+        }
+        if(this.playerStats[opp].castle >= 500){
+            this.awardAchievement(this.players[opp].id,8);
+        }
         //kedze nie je karta, ktora by hracovi znizila hrad, alebo oponentovi zvysila, ak niekto vyhra, je to hrac na tahu
         //our hardcore match will be different. Original wins if player castle is >= 100 AND opponent castle <= 0. We are interested in difference only.
         if(this.type === HARDCORE && (this.playerStats[tur].castle - this.playerStats[opp].castle) >= 100 ) {
+            if (this.playerStats[tur].castle <= 100){
+                this.awardAchievement(this.players[tur].id,22);
+            }
             return WIN;
         }
         if(this.type === NORMAL && (this.playerStats[tur].castle >= 100 || this.playerStats[opp].castle <= 0)){
+            this.awardAchievement(this.players[tur].id,22);
+            if (this.playerStats[tur].castle >= 100){ //win by building
+                this.awardAchievement(this.players[tur].id,3);
+            } else { //win by destruction
+                this.awardAchievement(this.players[tur].id,2);
+            }
             return WIN;
         }
         return CONTINUE;
@@ -449,10 +483,30 @@ class Tournament {
             this.firstTurn = false;
             return;
         } else {
+            /* achievements povodneho*/
+            if(this.playerStats[this.onTurn].warriors >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,13);
+            }
+            if(this.playerStats[this.onTurn].builders >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,14);
+            }
+            if(this.playerStats[this.onTurn].mages >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,12);
+            }
             this.onTurn = (this.onTurn + 1) % 2;
             this.playerStats[this.onTurn].bricks += this.playerStats[this.onTurn].builders;
             this.playerStats[this.onTurn].weapons += this.playerStats[this.onTurn].warriors;
             this.playerStats[this.onTurn].crystals += this.playerStats[this.onTurn].mages;
+            /*achievements noveho*/
+            if(this.playerStats[this.onTurn].warriors >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,13);
+            }
+            if(this.playerStats[this.onTurn].builders >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,14);
+            }
+            if(this.playerStats[this.onTurn].mages >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,12);
+            }
             return;
         }
     }
