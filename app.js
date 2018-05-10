@@ -443,12 +443,23 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
     console.log("connectionOpened");
     const a = setInterval(() => {
         console.log("pinging");
-        ws.ping("heartbeat");
+        try{
+            if(ws.readyState !== WebSocket.OPEN){
+                return;
+            }
+            ws.ping("heartbeat");
+        } catch(err) {
+            console.log("pingpong error"+err);
+            console.log("current ids" + JSON.stringify(connectionIds));
+        }
     },10000);
+    console.log("idtimer"+ JSON.stringify(a));
     connectionIds[ws]=a;
     ws.on('close', () => {
+
         clearInterval(connectionIds[ws]);
-        console.log("unsubbed");
+        console.log("unsubbed" + JSON.stringify(connectionIds[ws]));
+        connectionIds[ws] = undefined;
     })
 
 
