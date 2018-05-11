@@ -294,7 +294,7 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
     const data = req.body;
     const validateQuery = 'SELECT ID FROM users WHERE ID=' + db.escape(data.userId) +' AND token=' + db.escape(data.token);
     const queryObtained = 'SELECT a.name, a.description FROM achievements AS a, users_achievements AS ua WHERE a.ID=ua.achievementId AND ua.userId=' + db.escape(data.userId);
-    const queryLocked = 'SELECT a.name FROM achievements AS a WHERE NOT EXISTS (SELECT ach.ID FROM achievements AS ach, users_achievements AS ua WHERE ach.ID=ua.achievementId AND ua.userId=' + db.escape(data.userId) +')';
+    const queryLocked = 'SELECT a.name FROM achievements AS a WHERE a.ID NOT IN (SELECT ach.ID FROM achievements AS ach, users_achievements AS ua WHERE ach.ID=ua.achievementId AND ua.userId=' + db.escape(data.userId) +')';
 
     //dame bez transakcie zatial
     db.query(validateQuery, (err, rows, fields) => {
