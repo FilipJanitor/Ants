@@ -307,7 +307,7 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
             //validation successful
             db.query(queryObtained, (err, rows, fields) => {
                 if(err){
-                    console.log(err); //tu je chyba, nema sa to posielat uz tu
+                    console.log(err);
                     res.send({result: false, error: 'AchievementsError'});
                     return;
                 }
@@ -319,6 +319,10 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
                                 res.send({result: false, error: 'AchievementsError'});
                                 return;
                             }
+
+                            console.log("obtained" + JSON.stringify(obtained));
+                            console.log("locked" + JSON.stringify(rows));
+
                             res.send({
                                 result: true,
                                 achievementsLocked: rows,
@@ -434,32 +438,27 @@ const getUserIdFromToken = (token) => {
 
 };
 
-let connectionIds = {};
 
 app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa najde match */
     /*ws.on('open', function(message){
 
     });*/
-    console.log("connectionOpened");
     const a = setInterval(() => {
         console.log("pinging");
         try{
-            if(ws.readyState !== 1 /*WebSocket.OPEN*/){
+            if(ws.readyState !== 1 ){ //websocket.open
                 return;
             }
             ws.ping("heartbeat");
         } catch(err) {
             console.log("pingpong error"+err);
-            console.log("current ids" + JSON.stringify(connectionIds));
         }
     },10000);
-    console.log("idtimer"+ JSON.stringify(a));
-    connectionIds[ws]=a;
-    ws.on('close', () => {
 
-        clearInterval(connectionIds[ws]);
-        console.log("unsubbed" + JSON.stringify(connectionIds[ws]));
-        connectionIds[ws] = undefined;
+    console.log("connectionOpened");
+    ws.on('close', () => {
+        clearInterval(a);
+        console.log("unsubbed" );
     })
 
 
