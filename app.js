@@ -570,10 +570,40 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
 
                         }
                         if (tournament.players[tournament.onTurn].id !== userId){
+                            if(tournament.players[tournament.onTurn].id === userId){
+                                //non rule change
+                                tournament.nextTurn();
+                            }
+                            tournament.win();
+                            tournament.players[tournament.onTurn].socket.send(JSON.stringify({
+                                typeOfResponse: YOU_WON
+                            }));
+                            tournament.players[(tournament.onTurn + 1)%2].socket.send(JSON.stringify({
+                                typeOfResponse: YOU_LOST
+                            }));
+                            //unregister tournament
+                            loggedUsersToTournament[ tournament.players[0].id ] = undefined;
+                            loggedUsersToTournament[ tournament.players[1].id ] = undefined;
+                            tournaments[ tournament.tournamentId ] = undefined;
                             ws.close(1003,"Player not on turn");
                             return;
                         }
                         if (typeof(msg.cardIndex) !== "number" || msg.cardIndex >= 8 || msg.cardIndex < 0) {
+                            if(tournament.players[tournament.onTurn].id === userId){
+                                //non rule change
+                                tournament.nextTurn();
+                            }
+                            tournament.win();
+                            tournament.players[tournament.onTurn].socket.send(JSON.stringify({
+                                typeOfResponse: YOU_WON
+                            }));
+                            tournament.players[(tournament.onTurn + 1)%2].socket.send(JSON.stringify({
+                                typeOfResponse: YOU_LOST
+                            }));
+                            //unregister tournament
+                            loggedUsersToTournament[ tournament.players[0].id ] = undefined;
+                            loggedUsersToTournament[ tournament.players[1].id ] = undefined;
+                            tournaments[ tournament.tournamentId ] = undefined;
                             ws.close(1003,"Invalid card index");
                             return;
                         }
@@ -583,6 +613,21 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
                         } else {
                             //kontrola, ci moze hrat kartu
                             if (!tournament.checkCanPlayCard(/*index of card in client array*/msg.cardIndex)){
+                                if(tournament.players[tournament.onTurn].id === userId){
+                                    //non rule change
+                                    tournament.nextTurn();
+                                }
+                                tournament.win();
+                                tournament.players[tournament.onTurn].socket.send(JSON.stringify({
+                                    typeOfResponse: YOU_WON
+                                }));
+                                tournament.players[(tournament.onTurn + 1)%2].socket.send(JSON.stringify({
+                                    typeOfResponse: YOU_LOST
+                                }));
+                                //unregister tournament
+                                loggedUsersToTournament[ tournament.players[0].id ] = undefined;
+                                loggedUsersToTournament[ tournament.players[1].id ] = undefined;
+                                tournaments[ tournament.tournamentId ] = undefined;
                                 ws.close(1003,"Player requesting invalid card");
                                 return;
                             }
