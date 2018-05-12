@@ -15,7 +15,6 @@ const playable = function(reqs, stats) {
 };
 
 const foldCard = function(index, dispatch, ws, name, token) {
-    //anim
     dispatch({type: NEXT_TURN});
     ws.send(JSON.stringify({
         typeOfRequest: NEXT_TURN,
@@ -60,7 +59,7 @@ class Cards extends React.Component {
                         reqNumber = card.requirements.crystals;
                     }
                     if(playable(card.requirements, this.props.appState.playerStats)){
-                        return ( /*ten vonkajsi sa nemeni, ten vnutorny sa bude otacat */
+                        return (
                             <div key={"card"+i} className={"card"+cardType} id={"card"+i} onClick={() => {playCard(i, this.props.dispatch, this.props.socket, this.props.appState.name, this.props.appState.token)}} onContextMenu={(e) => {e.preventDefault(); foldCard(i, this.props.dispatch, this.props.socket, this.props.appState.name, this.props.appState.token)}}>
                                 <div  style={{ backgroundImage: 'url("'+ card.img + '")'}} ><span>{reqNumber}</span> <b>{card.name}</b>
                                     <table>
@@ -79,7 +78,6 @@ class Cards extends React.Component {
                             </div>
                         );
                     } else {
-                        //render gray card unclikcable
                         return (
                             <div key={"card"+i} id={"card"+i} className={"card"+cardType+" grayCard" } onContextMenu={(e) => {e.preventDefault(); foldCard(i, this.props.dispatch, this.props.socket, this.props.appState.name, this.props.appState.token)}}>
                                 <div style={{ backgroundImage: 'url("'+ card.img + '")'}}><span>{reqNumber}</span> <b>{card.name}</b>

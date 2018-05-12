@@ -50,10 +50,5 @@ class Register extends React.Component {
 export default withRouter(connect((state) => {
     return {
         appState: state.appState
-        // name: state.name,
-        // password: state.password,
-        // failed: state.failed,
-        // userId: state.userId,
-        // token: state.token,
-    };//mapStateToProps
+    };
 })(Register));

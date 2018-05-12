@@ -24,7 +24,7 @@ export default function reducer(state, action){
             return { ...state, lookingForGame: action.type, correspondenceGame: true };
         case LOOKING_FOR_HARDCORE_CORRESPONDENCE_MATCH:
             return { ...state, lookingForGame: action.type, correspondenceGame: true };
-        case NEW_GAME_STATE: //tymto ten deepcopy oplachenme
+        case NEW_GAME_STATE:
             return { ...state,
                 opponentName: action.data.opponentName,
                 playerStats: action.data.playerStats,

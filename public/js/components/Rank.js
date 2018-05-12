@@ -3,9 +3,6 @@ import { Table } from 'react-bootstrap';
 import axios from 'axios';
 import { RANKS } from '../constants';
 
-
-//<Rank rank={this.props.rank} score={this.props.score} wins={this.props.wins} ties={this.props.ties} loses={this.props.loses} />
-// nneds to be ajaxed, no props are going to be sent
 export default class Rank extends React.Component {
     constructor(props) {
         super(props);
@@ -44,7 +41,7 @@ export default class Rank extends React.Component {
         });
     }
 
-    render() { //col 12 vsetko large
+    render() {
         if(this.state.ajaxSuccess){
             return (
                 <div className="container-fluid">

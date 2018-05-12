@@ -72,7 +72,7 @@ export const initialGlobalState = {
             wall: 10,
             castle: 35
         },
-        onTurn: false, //kym cakame na oponenta, nic sa nebude diat
+        onTurn: false,
         cards: [
             {
                 img: "",
@@ -129,4 +129,4 @@ export const initialGlobalState = {
     routing: {
         location: null
     }
-};/*toto bude tazke s tym routingom spojit */
+};

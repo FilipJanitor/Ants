@@ -1,7 +1,5 @@
 import React from 'react';
 
-//transformacia sa robi cez css
-// vnutri este <div id=flag></div>
 export default class Wall extends React.Component {
     render() {
         return (

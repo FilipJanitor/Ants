@@ -1,4 +1,3 @@
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 #p1, #p2 {
 	background: #000;
 	color: #888;
@@ -13,18 +12,15 @@
 	text-align: left;
 }
 
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 #p2 {
 	right: 0;
 	padding-right: 0.8%;
 	text-align: right;
 }
 
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 #p1.sel, #p2.sel {
 	color: #fff;
 	border-color:#08f;
-	/*box-shadow:0 0 10px #08f;*/
 }
 
 #p1info, #p2info {
@@ -51,42 +47,41 @@
 	white-space:nowrap;
 }
 
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
 .builders {
 	background: #800;
 	background-position: 8% -1%;
 }
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
 .bricks {
 	background: #800;
 	background-position: 8% 10%;
 }
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
 .warriors {
 	background: #080;
 	background-position: 8% 22%;
 }
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
 .weapons {
 	background: #080;
 	background-position: 8% 35%;
 }
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
 .mages {
-	background: #1c39db; /*#008;*/
+	background: #1c39db;
 	background-position: 8% 46%;
 }
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
 .crystals {
-	background: #1c39db; /*#008;*/
+	background: #1c39db;
 	background-position: 8% 59%;
 }
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
 .castle {
 	background: #888;
 	background-position: 8% 71%;
 }
-/*XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*/
+
 .wall {
 	background: #888;
 	background-position: 8% 80%;

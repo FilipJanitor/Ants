@@ -4,7 +4,6 @@ import { CardBack } from './Cards.js';
 export default class PlayedCard extends React.Component{
     render() {
         let card = this.props.card;
-
         if( card === -1 ){
             return (
                 <div className="card back" id="cp">
