@@ -479,6 +479,23 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
                     case INITIATE_GAME:
                     //noncorrespondence matches are inmemory
                         if(loggedUsersToTournament[userId] !== undefined){
+                            //make me lose
+                            tournament = tournaments[loggedUsersToTournament[userId]];
+                            if(tournament.players[tournament.onTurn].id === userId){
+                                //non rule change
+                                tournament.nextTurn();
+                            }
+                            tournament.win();
+                            tournament.players[tournament.onTurn].socket.send(JSON.stringify({
+                                typeOfResponse: YOU_WON
+                            }));
+                            tournament.players[(tournament.onTurn + 1)%2].socket.send(JSON.stringify({
+                                typeOfResponse: YOU_LOST
+                            }));
+                            //unregister tournament
+                            loggedUsersToTournament[ tournament.players[0].id ] = undefined;
+                            loggedUsersToTournament[ tournament.players[1].id ] = undefined;
+                            tournaments[ tournament.tournamentId ] = undefined;
                             ws.close(1003,"already matched"); // this should not happen
                             return;
                         }

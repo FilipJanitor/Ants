@@ -462,6 +462,8 @@ class Tournament {
         if(this.playerStats[opp].wall >= 100){
             this.awardAchievement(this.players[opp].id,25);
         }
+        //doplnit armory
+
         //kedze nie je karta, ktora by hracovi znizila hrad, alebo oponentovi zvysila, ak niekto vyhra, je to hrac na tahu
         //our hardcore match will be different. Original wins if player castle is >= 100 AND opponent castle <= 0. We are interested in difference only.
         if(this.type === HARDCORE && (this.playerStats[tur].castle - this.playerStats[opp].castle) >= 100 ) {
