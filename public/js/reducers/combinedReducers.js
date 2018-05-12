@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux'; //vytvara strom, to nechceme
-import reduceReducers from 'reduce-reducers'; //vytvara flat stav
+import { combineReducers } from 'redux';
+import reduceReducers from 'reduce-reducers';
 import loginRegisterReducer from './loginRegisterReducer.js';
 import gameReducer from './gameReducer.js'
 import { initialGlobalState } from '../constants.js'

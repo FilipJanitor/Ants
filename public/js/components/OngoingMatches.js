@@ -32,14 +32,14 @@ export default class OngoingMatches extends React.Component {
         });
     }
 
-    render() { //red - waiting, green going //tabulka ma byt klikatelna
+    render() {
         if( this.state.ajaxSuccess) {
             return (
                 <div className="container-fluid filler">
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="well">
-                                <Table striped bordered condensed hover>
+                                <Table striped bordered condensed>
                                     <thead>
                                         <tr>
                                             <th>Opponent</th>

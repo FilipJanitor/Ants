@@ -4,13 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { setName, setPassword, attemptToLogin, routeToRegister, getValidationState } from '../actions/loginRegisterActions.js';
 
-//{user.failedLogin && <Text text=/>}
-//z this.props vytiahne dispatch a user
-//na zaciatku je neinicializovany, ktovie preco
 class Login extends React.Component {
     constructor(props){
         super(props);
-        //props.user = {failedLogin: false};
     }
     render() {
         return (
@@ -50,20 +46,8 @@ class Login extends React.Component {
     }
 }
 
-//ten token, skore a userid pojdu niekam hore
-//{this.props.user.failedLogin && <p> FAIL </p>}
-//export default withRouter(connect((state) => {
-//    return { reduxState: state };//mapStateToProps
-//})(Login)); //toto spoji redux state s propsami komponentu
-
 export default withRouter(connect((state) => {
     return {
         appState: state.appState
-        // name: state.name,
-        // password: state.password,
-        // failed: state.failed,
-        // userId: state.userId,
-        // token: state.token,
-    };//mapStateToProps
-    })(Login)); //toto spoji redux state s propsami komponentu
-//tie nully a purte false mozno mozu ist prec
+    };
+    })(Login));

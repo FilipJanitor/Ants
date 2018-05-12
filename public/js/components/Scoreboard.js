@@ -34,7 +34,7 @@ export default class Scoreboard extends React.Component {
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="well">
-                                <Table striped bordered condensed hover>
+                                <Table striped bordered condensed>
                                     <thead>
                                         <tr>
                                             <th>Name</th>

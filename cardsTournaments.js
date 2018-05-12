@@ -14,7 +14,7 @@ const cards  = [
     {
         id:0,
         name: "wall",
-        description: "",
+        description: [["wall", "+3"]],
         img: "IMGwall",
         requirements: { bricks: 1 },
         effects: { wall: 3 }
@@ -22,7 +22,7 @@ const cards  = [
     {
         id:1,
         name: "defense",
-        description: "",
+        description: [["wall", "+6"]],
         img: "IMGdefense",
         requirements: { bricks: 6 },
         effects: { wall: 6 }
@@ -30,7 +30,7 @@ const cards  = [
     {
         id:2,
         name: "fence",
-        description: "",
+        description: [["wall", "+22"]],
         img: "IMGfence",
         requirements: { bricks: 12 },
         effects: { wall: 22 }
@@ -38,7 +38,7 @@ const cards  = [
     {
         id:3,
         name: "base",
-        description: "",
+        description: [["castle", "+2"]],
         img: "IMGbase",
         requirements: { bricks: 1 },
         effects: { castle: 2 }
@@ -46,7 +46,7 @@ const cards  = [
     {
         id:4,
         name: "tower",
-        description: "",
+        description: [["castle", "+5"]],
         img: "IMGtower",
         requirements: { bricks: 5 },
         effects: { castle: 5 }
@@ -54,7 +54,7 @@ const cards  = [
     {
         id:5,
         name: "fort",
-        description: "",
+        description: [["castle", "+20"]],
         img: "IMGfort",
         requirements: { bricks: 18 },
         effects: { castle: 20 }
@@ -62,7 +62,7 @@ const cards  = [
     {
         id:6,
         name: "babylon",
-        description: "",
+        description: [["castle", "+32"]],
         img: "IMGbabylon",
         requirements: { bricks: 39 },
         effects: { castle: 32 }
@@ -70,7 +70,7 @@ const cards  = [
     {
         id:7,
         name: "reserves",
-        description: "",
+        description: [["castle", "+8"], ["wall", "-4"]],
         img: "IMGreserves",
         requirements: { bricks:3 },
         effects: { castle: 8, wall: -4 }
@@ -78,7 +78,7 @@ const cards  = [
     {
         id:8,
         name: "pixies",
-        description: "",
+        description: [["castle", "+22"]],
         img: "IMGpixies",
         requirements: { crystals: 22 },
         effects: { castle: 22 }
@@ -86,7 +86,7 @@ const cards  = [
     {
         id:9,
         name: "wain",
-        description: "",
+        description: [["castle" ,"+8"],["enemy castle", "-4"]],
         img: "IMGwain",
         requirements: { bricks: 10 },
         effects: { castle: 8, e_castle: -4 }
@@ -94,7 +94,7 @@ const cards  = [
     {
         id:10,
         name: "archer",
-        description: "",
+        description: [["attack", "2"]],
         img: "IMGarcher",
         requirements: { weapons: 1 },
         effects: { attack: 2 }
@@ -102,7 +102,7 @@ const cards  = [
     {
         id:11,
         name: "raider",
-        description: "",
+        description: [["attack", "4"]],
         img: "IMGraider",
         requirements: { weapons: 2 },
         effects: { attack: 4 }
@@ -110,7 +110,7 @@ const cards  = [
     {
         id:12,
         name: "platoon",
-        description: "",
+        description: [["attack", "6"]],
         img: "IMGplatoon",
         requirements: { weapons: 4 },
         effects: { attack: 6 }
@@ -118,7 +118,7 @@ const cards  = [
     {
         id:13,
         name: "siege",
-        description: "",
+        description: [["attack", "12"]],
         img: "IMGsiege",
         requirements: { weapons:10 },
         effects: { attack: 12 }
@@ -126,7 +126,7 @@ const cards  = [
     {
         id:14,
         name: "banshee",
-        description: "",
+        description: [["attack", "32"]],
         img: "IMGbanshee",
         requirements: { weapons: 28 },
         effects: { attack: 32 }
@@ -134,7 +134,7 @@ const cards  = [
     {
         id:15,
         name: "swat",
-        description: "",
+        description: [["enemy castle", "-10"]],
         img: "IMGswat",
         requirements: { weapons: 18 },
         effects: { e_castle: -10 }
@@ -142,7 +142,7 @@ const cards  = [
     {
         id:16,
         name: "dragon",
-        description: "",
+        description: [["attack", "25"]],
         img: "IMGdragon",
         requirements: { crystals: 21 },
         effects: { attack: 25 }
@@ -150,7 +150,7 @@ const cards  = [
     {
         id:17,
         name: "conjure bricks",
-        description: "",
+        description: [["bricks", "+8"]],
         img: "IMGconjureBricks",
         requirements: { crystals: 4 },
         effects: { bricks: 8 }
@@ -158,7 +158,7 @@ const cards  = [
     {
         id:18,
         name: "conjure crystals",
-        description: "",
+        description: [["crystals", "+8"]],
         img: "IMGconjureCrystals",
         requirements: { crystals: 4 },
         effects: { crystals: 8 }
@@ -166,7 +166,7 @@ const cards  = [
     {
         id:19,
         name: "conjure weapons",
-        description: "",
+        description: [["weapons", "+8"]],
         img: "IMGconjureWeapons",
         requirements: { crystals: 4 },
         effects: { weapons: 8 }
@@ -174,7 +174,7 @@ const cards  = [
     {
         id:20,
         name: "destroy bricks",
-        description: "",
+        description: [["enemy bricks", "-8"]],
         img: "IMGdestroyBricks",
         requirements: { crystals: 4 },
         effects: { e_bricks: -8 }
@@ -182,7 +182,7 @@ const cards  = [
     {
         id:21,
         name: "destroy crystals",
-        description: "",
+        description: [["enemy crystals", "-8"]],
         img: "IMGdestroyCrystals",
         requirements: { crystals: 4 },
         effects: { e_crystals: -8 }
@@ -190,7 +190,7 @@ const cards  = [
     {
         id:22,
         name: "destroy weapons",
-        description: "",
+        description: [["enemy weapons", "-8"]],
         img: "IMGdestroyWeapons",
         requirements: { crystals: 4 },
         effects: { e_weapons: -8 }
@@ -198,7 +198,7 @@ const cards  = [
     {
         id:23,
         name: "saboteur",
-        description: "",
+        description: [["enemy stock", "-4"]],
         img: "IMGsaboteur",
         requirements: { weapons: 12 },
         effects: { e_bricks: -4, e_weapons: -4, e_crystals: -4 }
@@ -206,7 +206,7 @@ const cards  = [
     {
         id:24,
         name: "thief",
-        description: "",
+        description: [["Transfer stock", "5"]],
         img: "IMGthief",
         requirements: { weapons: 15 },
         effects: { weapons: 5, bricks: 5, crystals: 5, e_weapons: -5, e_crystals: -5, e_bricks: -5 }
@@ -214,7 +214,7 @@ const cards  = [
     {
         id:25,
         name: "wizard",
-        description: "",
+        description: [["wizards", "+1"]],
         img: "IMGwizard",
         requirements: { crystals: 8 },
         effects: { mages: 1 }
@@ -222,7 +222,7 @@ const cards  = [
     {
         id:26,
         name: "recruit",
-        description: "",
+        description: [["warriors", "+1"]],
         img: "IMGrecruit",
         requirements: { weapons: 8 },
         effects: { warriors: 1 }
@@ -230,7 +230,7 @@ const cards  = [
     {
         id:27,
         name: "school",
-        description: "",
+        description: [["builders", "+1"]],
         img: "IMGschool",
         requirements: { bricks: 8 },
         effects: { builders: 1 }
@@ -238,7 +238,7 @@ const cards  = [
     {
         id:28,
         name: "curse",
-        description: "",
+        description: [["all", "+1"], ["all of enemy", "-1"]],
         img: "IMGcurse",
         requirements: { crystals: 25 },
         effects: {
@@ -268,7 +268,7 @@ const generateNewCard = function() {
     return cards[generator[id]];
 };
 class Tournament {
-    constructor(player1, player2, type, id) {
+    constructor(player1, player2, type, id, db) {
         //este by sa to dalo zlepsit tak, ze by hrac mal v sebe vsetko, aj staty, aj karty
         this.playerCards = [[],[]];
         for(let i = 0; i < 8; i++){
@@ -305,6 +305,15 @@ class Tournament {
         this.tieProposed = false,
         this.finished = false
         this.winner = undefined;
+        this.db = db;
+    }
+
+    awardAchievement(user, achievementNumber) {
+        const query = "INSERT IGNORE INTO users_achievements(userId,achievementId) VALUES("+this.db.escape(user)+","+this.db.escape(achievementNumber)+")";
+        console.log("Awarding " + achievementNumber + "to user "+user);
+        this.db.query(query, (error) => {
+            if(error){ console.log("insertFailed"); console.log(error); }
+        });
     }
 
     foldCard(cardIndex) {
@@ -411,6 +420,15 @@ class Tournament {
             }
         }
         /*achievementy */
+        if(currentCard.id === 6){ //babylon
+            this.awardAchievement(this.players[tur].id,11);
+        }
+        if(currentCard.id === 28){ //got curse
+            this.awardAchievement(this.players[opp].id,18);
+        }
+        if(currentCard.id === 14){ //got banshee
+            this.awardAchievement(this.players[opp].id,19);
+        }
     }
 
     checkGameState() {
@@ -419,12 +437,50 @@ class Tournament {
         }
         const tur = this.onTurn;
         const opp = (this.onTurn + 1) % 2;
+
+        if(this.playerStats[tur].castle >= 100){
+            this.awardAchievement(this.players[tur].id,6);
+        }
+        if(this.playerStats[opp].castle >= 100){
+            this.awardAchievement(this.players[opp].id,6);
+        }
+        if(this.playerStats[tur].castle <= 0){
+            this.awardAchievement(this.players[tur].id,7);
+        }
+        if(this.playerStats[opp].castle <= 0){
+            this.awardAchievement(this.players[opp].id,7);
+        }
+        if(this.playerStats[tur].castle >= 500){
+            this.awardAchievement(this.players[tur].id,8);
+        }
+        if(this.playerStats[opp].castle >= 500){
+            this.awardAchievement(this.players[opp].id,8);
+        }
+        if(this.playerStats[tur].wall >= 100){
+            this.awardAchievement(this.players[tur].id,25);
+        }
+        if(this.playerStats[opp].wall >= 100){
+            this.awardAchievement(this.players[opp].id,25);
+        }
+        //doplnit armory
+
         //kedze nie je karta, ktora by hracovi znizila hrad, alebo oponentovi zvysila, ak niekto vyhra, je to hrac na tahu
         //our hardcore match will be different. Original wins if player castle is >= 100 AND opponent castle <= 0. We are interested in difference only.
         if(this.type === HARDCORE && (this.playerStats[tur].castle - this.playerStats[opp].castle) >= 100 ) {
+            if (this.playerStats[tur].castle <= 20){
+                this.awardAchievement(this.players[tur].id,22);
+            }
             return WIN;
         }
         if(this.type === NORMAL && (this.playerStats[tur].castle >= 100 || this.playerStats[opp].castle <= 0)){
+            if (this.playerStats[tur].castle <= 20){
+                this.awardAchievement(this.players[tur].id,22);
+            }
+            if (this.playerStats[tur].castle >= 100){ //win by building
+                this.awardAchievement(this.players[tur].id,3);
+            } else { //win by destruction
+                this.awardAchievement(this.players[tur].id,2);
+            }
             return WIN;
         }
         return CONTINUE;
@@ -438,33 +494,55 @@ class Tournament {
             this.firstTurn = false;
             return;
         } else {
+            /* achievements povodneho*/
+            if(this.playerStats[this.onTurn].warriors >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,13);
+            }
+            if(this.playerStats[this.onTurn].builders >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,14);
+            }
+            if(this.playerStats[this.onTurn].mages >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,12);
+            }
             this.onTurn = (this.onTurn + 1) % 2;
             this.playerStats[this.onTurn].bricks += this.playerStats[this.onTurn].builders;
             this.playerStats[this.onTurn].weapons += this.playerStats[this.onTurn].warriors;
             this.playerStats[this.onTurn].crystals += this.playerStats[this.onTurn].mages;
+            /*achievements noveho*/
+            if(this.playerStats[this.onTurn].warriors >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,13);
+            }
+            if(this.playerStats[this.onTurn].builders >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,14);
+            }
+            if(this.playerStats[this.onTurn].mages >= 5){
+                this.awardAchievement(this.players[this.onTurn].id,12);
+            }
             return;
         }
     }
 
-    win(db) {
-        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + db.escape(this.players[0].id) + "," + db.escape(this.players[1].id) + ","+ this.players[this.onTurn].id +", " + db.escape(this.type) +")";
+    win() {
+        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + this.db.escape(this.players[0].id) + "," + this.db.escape(this.players[1].id) + ","+ this.players[this.onTurn].id +", " + this.db.escape(this.type) +")";
         const queryUpdateWin = "UPDATE users SET wins = wins + 1, score = score + 2 WHERE id=" + this.players[this.onTurn].id;
-        const queryUpdateLose = "UPDATE users SET loses = loses + 1 WHERE id=" + db.escape(this.players[(this.onTurn + 1) % 2].id);
-        db.query(queryInsert, (error) => {
+        const queryUpdateLose = "UPDATE users SET loses = loses + 1 WHERE id=" + this.db.escape(this.players[(this.onTurn + 1) % 2].id);
+        this.db.query(queryInsert, (error) => {
             if(error){ console.log("insertFailed"); console.log(error); }
         });
-        db.query(queryUpdateWin, (error) => {
+        this.db.query(queryUpdateWin, (error) => {
             if(error){ console.log("updateWinFailed"); console.log(error); }
         });
-        db.query(queryUpdateLose, (error) => {
+        this.db.query(queryUpdateLose, (error) => {
             if(error){ console.log("updateLoseFailed"); console.log(error); }
         });
 
         this.finished = true;
         this.winner = this.players[this.onTurn].id;
+        this.awardAchievement(this.players[this.onTurn].id,1); //first win
+        this.awardAchievement(this.players[(this.onTurn+1)%2].id,5);
     }
 
-    tie(db) {
+    tie() {
         this.finished = true;
         this.winner = -1;
         /*
@@ -474,12 +552,16 @@ class Tournament {
     gameResult int(11) NOT NULL,
     gameType int(11) NOT NULL,
         */
-        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + db.escape(this.players[0].id) + "," + db.escape(this.players[1].id) + ", 0, " + db.escape(this.type) +")";
-        const queryUpdate = "UPDATE users SET ties = ties + 1, score = score + 1 WHERE id=" + db.escape(this.players[0].id) + " OR id=" + db.escape(this.players[1].id);
-        db.query(queryInsert, (error) => {
+
+        this.awardAchievement(this.players[0].id,4); //first tie
+        this.awardAchievement(this.players[1].id,4);
+
+        const queryInsert = "INSERT INTO tournaments(userId1,userId2,gameResult, gameType) VALUES(" + this.db.escape(this.players[0].id) + "," + this.db.escape(this.players[1].id) + ", 0, " + this.db.escape(this.type) +")";
+        const queryUpdate = "UPDATE users SET ties = ties + 1, score = score + 1 WHERE id=" + this.db.escape(this.players[0].id) + " OR id=" + this.db.escape(this.players[1].id);
+        this.db.query(queryInsert, (error) => {
             if(error){ console.log("insertFailed"); console.log(error); }
         });
-        db.query(queryUpdate, (error) => {
+        this.db.query(queryUpdate, (error) => {
             if(error){ console.log("updateFailed"); console.log(error); }
         });
     }

@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-//transformacia sa robi cez css
 export default class Stats extends React.Component {
     constructor(props){
         super(props);
     }
     render() {
-        return ( //width 100 pre wrappery
+        return (
             <ul id={this.props.type+"info"} >
                 <li className="builders" > {this.props.stats.builders} </li>
                 <li className="bricks" > {this.props.stats.bricks} </li>

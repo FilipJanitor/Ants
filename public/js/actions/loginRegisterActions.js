@@ -12,24 +12,18 @@ export const routeToLogin = function(dispatch){
 }
 
 export const setName = function(dispatch, name){
-    // console.log("setting name");
     dispatch({ type: "SET_NAME", data: name });
 }
 
 export const setPassword = function(dispatch, password){
-    // console.log("setting password");
     dispatch({ type: "SET_PASSWORD", data: password });
 }
 
-//LOGIN a FAIL sa daju spojit, staci result dat do state.failed
 export const attemptToLogin = function(dispatch, loginName, loginPassword) {
-    // console.log("atempting login");
-    // console.log({loginName, loginPassword});
     axios
     .post("/login", { name: loginName, password: loginPassword })
     .then(res => {
         if (res.data.result == true) {
-            // console.log("success");
             dispatch({
                 type: "LOGIN",
                 data: {
@@ -41,7 +35,6 @@ export const attemptToLogin = function(dispatch, loginName, loginPassword) {
             });
             dispatch(push('/lobby'));
         } else {
-            // console.log("Fail");
             dispatch({ type: "FAIL" });
         }
     })
@@ -49,7 +42,6 @@ export const attemptToLogin = function(dispatch, loginName, loginPassword) {
 }
 
 export const attemptToRegister = function(dispatch, registerName, registerPassword) {
-    // console.log({registerName, registerPassword});
     axios
     .post("/register", { name: registerName, password: registerPassword })
     .then(res => {

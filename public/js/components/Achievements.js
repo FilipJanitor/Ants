@@ -32,8 +32,8 @@ export default class Achievements extends React.Component {
             });
         });
     }
-//more than 12 cols wrap - vnutorny col dynamicky gfenerovaty
-    render() {/*{this.renderAchievements(this.state)}*/
+
+    render() {
         return (
             <div className="container-fluid">
                 <div className="row">
@@ -45,9 +45,9 @@ export default class Achievements extends React.Component {
                                     return (
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
                                             <div className="well">
-                                                <h4>{i.name}</h4>
+                                                <h5>{i.name}</h5>
                                                 <h6>{i.description}</h6>
-                                                <img src="/AO" className="spanner"/*"img-responsive"*/  />
+                                                <img src="/AO" className="spanner" />
                                             </div>
                                         </div>
                                     );
@@ -56,8 +56,8 @@ export default class Achievements extends React.Component {
                                     return (
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
                                             <div className="well">
-                                                <h4>{i.name}</h4>
-                                                <img src="/AL" className="spanner"/*"img-responsive"*/ />
+                                                <h5>{i.name}</h5>
+                                                <img src="/AL" className="spanner" />
                                             </div>
                                         </div>
                                     );
@@ -69,33 +69,4 @@ export default class Achievements extends React.Component {
             </div>
         );
     }
-/* in case flex breaks
-    renderAchievements(state) {
-        dataArray = [];
-        var i;
-        var counter = 1;
-        for(i = 0; i < state.achievementsObtained; i++){
-            dataArray.push(
-                <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={state.achievementsObtained[i].name}>
-                    <div className="wall">
-                        <h4>{state.achievementsObtained[i].name}</h4>
-                        <h6>{state.achievementsObtained[i].description}</h6>
-                        <img src="/AO" className="img-responsive" />
-                    </div>
-                </div>
-            );
-            counter++
-        }
-        for(i = 0; i < state.achievementsLocked; i++){
-            dataArray.push(
-                <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
-                    <div className="wall">
-                        <h4>{i.name}</h4>
-                        <img src="/AL" className="img-responsive" />
-                    </div>
-                </div>
-            );
-        }
-        return dataArray;
-    } */
 }

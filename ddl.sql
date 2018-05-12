@@ -31,6 +31,7 @@ CREATE TABLE achievements (
 CREATE TABLE users_achievements (
     achievementId int(11) NOT NULL,
     userId int(11) NOT NULL,
+    UNIQUE KEY `keykey` (userId, achievementId),
     FOREIGN KEY (achievementId) REFERENCES achievements(ID),
     FOREIGN KEY (userId) REFERENCES users(ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
