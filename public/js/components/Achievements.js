@@ -45,7 +45,7 @@ export default class Achievements extends React.Component {
                                     return (
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
                                             <div className="well">
-                                                <h4>{i.name}</h4>
+                                                <h5>{i.name}</h5>
                                                 <h6>{i.description}</h6>
                                                 <img src="/AO" className="spanner"/*"img-responsive"*/  />
                                             </div>
@@ -56,7 +56,7 @@ export default class Achievements extends React.Component {
                                     return (
                                         <div className="col-xs-6 col-sm-4, col-md-3, col-lg-2" key={i.name}>
                                             <div className="well">
-                                                <h4>{i.name}</h4>
+                                                <h5>{i.name}</h5>
                                                 <img src="/AL" className="spanner"/*"img-responsive"*/ />
                                             </div>
                                         </div>

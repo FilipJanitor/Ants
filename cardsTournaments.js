@@ -310,6 +310,7 @@ class Tournament {
 
     awardAchievement(user, achievementNumber) {
         const query = "INSERT IGNORE INTO users_achievements(userId,achievementId) VALUES("+this.db.escape(user)+","+this.db.escape(achievementNumber)+")";
+        console.log("Awarding " + achievementNumber + "to user "+user);
         this.db.query(query, (error) => {
             if(error){ console.log("insertFailed"); console.log(error); }
         });
@@ -455,16 +456,24 @@ class Tournament {
         if(this.playerStats[opp].castle >= 500){
             this.awardAchievement(this.players[opp].id,8);
         }
+        if(this.playerStats[tur].wall >= 100){
+            this.awardAchievement(this.players[tur].id,25);
+        }
+        if(this.playerStats[opp].wall >= 100){
+            this.awardAchievement(this.players[opp].id,25);
+        }
         //kedze nie je karta, ktora by hracovi znizila hrad, alebo oponentovi zvysila, ak niekto vyhra, je to hrac na tahu
         //our hardcore match will be different. Original wins if player castle is >= 100 AND opponent castle <= 0. We are interested in difference only.
         if(this.type === HARDCORE && (this.playerStats[tur].castle - this.playerStats[opp].castle) >= 100 ) {
-            if (this.playerStats[tur].castle <= 100){
+            if (this.playerStats[tur].castle <= 20){
                 this.awardAchievement(this.players[tur].id,22);
             }
             return WIN;
         }
         if(this.type === NORMAL && (this.playerStats[tur].castle >= 100 || this.playerStats[opp].castle <= 0)){
-            this.awardAchievement(this.players[tur].id,22);
+            if (this.playerStats[tur].castle <= 20){
+                this.awardAchievement(this.players[tur].id,22);
+            }
             if (this.playerStats[tur].castle >= 100){ //win by building
                 this.awardAchievement(this.players[tur].id,3);
             } else { //win by destruction
@@ -527,7 +536,7 @@ class Tournament {
 
         this.finished = true;
         this.winner = this.players[this.onTurn].id;
-        this.awardAchievement(this.players[this.onTurn].id,1); //first tie
+        this.awardAchievement(this.players[this.onTurn].id,1); //first win
         this.awardAchievement(this.players[(this.onTurn+1)%2].id,5);
     }
 

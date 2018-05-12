@@ -320,8 +320,8 @@ app.post('/myAchievements', debugMiddleware, bodyParser.json(), debugMiddleware,
                                 return;
                             }
 
-                            console.log("obtained" + JSON.stringify(obtained));
-                            console.log("locked" + JSON.stringify(rows));
+                           // console.log("obtained" + JSON.stringify(obtained));
+                           // console.log("locked" + JSON.stringify(rows));
 
                             res.send({
                                 result: true,
@@ -464,8 +464,8 @@ app.ws('/game', (ws,req) => { /*Nemusime odpovedat hned, odpovie sa, az ked sa n
 
     ws.on('message', function(message){
         const msg = JSON.parse(message);
-        console.log("UUUU");
-        console.log(msg);
+        //console.log("UUUU");
+        //console.log(msg);
         const query = 'SELECT ID FROM users WHERE name=' + db.escape(msg.name) + ' AND token=' + db.escape(msg.token) ;
         db.query(query, (err, rows, fields) => {
             if(err || rows.length !== 1){
