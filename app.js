@@ -45,11 +45,11 @@ const catchValidationErrors = function(err,req,res,next) {
 const debugMiddleware = function(req,res,next) {
     next();
 }
-
+/*
 if(process.argv.length != 3){
     console.log("Invalid arguments provided. Aborting!");
     process.exit(-1);
-}/*
+}*/
 console.log("CONNNN " + {
     host: process.env.CLEARDB_HOST,
     user: process.env.CLEARDB_USER,
@@ -62,7 +62,7 @@ const db = mysql.createPool({
     user: process.env.CLEARDB_USER,
     password: process.env.CLEARDB_PASS,
     database: process.env.CLEARDB_DB
-});*/
+});/*
 const db = mysql.createPool({
     connectionLimit : 100,
     host: 'localhost',
@@ -70,7 +70,7 @@ const db = mysql.createPool({
     password: process.argv[2],
     database: 'main',
     port: 3306
-});
+});*/
 console.log("PORT "+ process.env.PORT);
 const server = app.listen(process.env.PORT || 8080, function(){
     console.log("Server listening...");
