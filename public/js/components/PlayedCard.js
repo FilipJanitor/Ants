@@ -31,9 +31,14 @@ export default class PlayedCard extends React.Component{
                     <div  style={{backgroundImage: 'url("'+ card.img + '")'}} ><span>{reqNumber}</span> <b>{card.name}</b>
                         <table>
                             <tbody>
-                                <tr>
-                                    <td> {card.description} </td>
-                                </tr>
+                                {card.description.map((row) => {
+                                    return (
+                                        <tr>
+                                            <td>{row[0]}</td>
+                                            <td>{row[1]}</td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
