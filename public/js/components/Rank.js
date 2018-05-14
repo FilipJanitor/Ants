@@ -25,49 +25,49 @@ export default class Rank extends React.Component {
         .then(res => {
             if (res.data.result == true) {
                 let r = 0;
-                if(res.data.wins>1){
+                if(res.data.wins>=1){
                     r = 1;
                 }
-                if(res.data.wins>10){
+                if(res.data.wins>=10){
                     r = 2;
                 }
-                if(res.data.wins>20){
+                if(res.data.wins>=20){
                     r = 3;
                 }
-                if(res.data.wins>30){
+                if(res.data.wins>=30){
                     r = 4;
                 }
-                if(res.data.wins>50){
+                if(res.data.wins>=50){
                     r = 5;
                 }
-                if(res.data.wins>70){
+                if(res.data.wins>=70){
                     r = 6;
                 }
-                if(res.data.wins>90){
+                if(res.data.wins>=90){
                     r = 7;
                 }
-                if(res.data.wins>100){
+                if(res.data.wins>=100){
                     r = 8;
                 }
-                if(res.data.wins>120){
+                if(res.data.wins>=120){
                     r = 9;
                 }
-                if(res.data.wins>150){
+                if(res.data.wins>=150){
                     r = 10;
                 }
-                if(res.data.wins>200){
+                if(res.data.wins>=200){
                     r = 11;
                 }
-                if(res.data.wins>250){
+                if(res.data.wins>=250){
                     r = 12;
                 }
-                if(res.data.wins>300){
+                if(res.data.wins>=300){
                     r = 13;
                 }
-                if(res.data.wins>400){
+                if(res.data.wins>=400){
                     r = 14;
                 }
-                if(res.data.wins>500){
+                if(res.data.wins>=500){
                     r = 15;
                 }
                 this.setState({
